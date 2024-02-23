@@ -4,6 +4,7 @@ import 'package:new_digit_app/pages/languageSelection.dart';
 import 'package:new_digit_app/pages/loginpage.dart';
 
 import '../pages/home.dart';
+import '../pages/langSelection.dart';
 
 part 'routes.gr.dart';
 

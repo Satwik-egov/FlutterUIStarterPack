@@ -81,8 +81,8 @@ Map<String, dynamic> _$$InterfacesImplToJson(_$InterfacesImpl instance) =>
 
 _$LanguageImpl _$$LanguageImplFromJson(Map<String, dynamic> json) =>
     _$LanguageImpl(
-      label: json['label'] as String?,
-      value: json['value'] as String?,
+      label: json['label'] as String,
+      value: json['value'] as String,
     );
 
 Map<String, dynamic> _$$LanguageImplToJson(_$LanguageImpl instance) =>

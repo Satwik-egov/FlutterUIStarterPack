@@ -855,8 +855,8 @@ Language _$LanguageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Language {
-  String? get label => throw _privateConstructorUsedError;
-  String? get value => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+  String get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -869,7 +869,7 @@ abstract class $LanguageCopyWith<$Res> {
   factory $LanguageCopyWith(Language value, $Res Function(Language) then) =
       _$LanguageCopyWithImpl<$Res, Language>;
   @useResult
-  $Res call({String? label, String? value});
+  $Res call({String label, String value});
 }
 
 /// @nodoc
@@ -885,18 +885,18 @@ class _$LanguageCopyWithImpl<$Res, $Val extends Language>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
+    Object? label = null,
+    Object? value = null,
   }) {
     return _then(_value.copyWith(
-      label: freezed == label
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      value: freezed == value
+              as String,
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -909,7 +909,7 @@ abstract class _$$LanguageImplCopyWith<$Res>
       __$$LanguageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? label, String? value});
+  $Res call({String label, String value});
 }
 
 /// @nodoc
@@ -923,18 +923,18 @@ class __$$LanguageImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
+    Object? label = null,
+    Object? value = null,
   }) {
     return _then(_$LanguageImpl(
-      label: freezed == label
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String?,
-      value: freezed == value
+              as String,
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -948,9 +948,9 @@ class _$LanguageImpl implements _Language {
       _$$LanguageImplFromJson(json);
 
   @override
-  final String? label;
+  final String label;
   @override
-  final String? value;
+  final String value;
 
   @override
   String toString() {
@@ -986,16 +986,16 @@ class _$LanguageImpl implements _Language {
 
 abstract class _Language implements Language {
   const factory _Language(
-      {required final String? label,
-      required final String? value}) = _$LanguageImpl;
+      {required final String label,
+      required final String value}) = _$LanguageImpl;
 
   factory _Language.fromJson(Map<String, dynamic> json) =
       _$LanguageImpl.fromJson;
 
   @override
-  String? get label;
+  String get label;
   @override
-  String? get value;
+  String get value;
   @override
   @JsonKey(ignore: true)
   _$$LanguageImplCopyWith<_$LanguageImpl> get copyWith =>

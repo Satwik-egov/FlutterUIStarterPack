@@ -68,7 +68,7 @@ class Interfaces with _$Interfaces {
 
 @freezed
 class Language with _$Language {
-  const factory Language({required String? label, required String? value}) =
+  const factory Language({required String label, required String value}) =
       _Language;
 
   factory Language.fromJson(
