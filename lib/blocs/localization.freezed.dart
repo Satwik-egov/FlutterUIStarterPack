@@ -263,19 +263,23 @@ mixin _$LocalizationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(LocalizationModel localizationModel) selected,
+    required TResult Function(
+            String? locale, LocalizationModel localizationModel)
+        selected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(LocalizationModel localizationModel)? selected,
+    TResult? Function(String? locale, LocalizationModel localizationModel)?
+        selected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(LocalizationModel localizationModel)? selected,
+    TResult Function(String? locale, LocalizationModel localizationModel)?
+        selected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -360,7 +364,9 @@ class _$LocaleNotSelectedStateImpl implements _LocaleNotSelectedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(LocalizationModel localizationModel) selected,
+    required TResult Function(
+            String? locale, LocalizationModel localizationModel)
+        selected,
   }) {
     return initial();
   }
@@ -369,7 +375,8 @@ class _$LocaleNotSelectedStateImpl implements _LocaleNotSelectedState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(LocalizationModel localizationModel)? selected,
+    TResult? Function(String? locale, LocalizationModel localizationModel)?
+        selected,
   }) {
     return initial?.call();
   }
@@ -378,7 +385,8 @@ class _$LocaleNotSelectedStateImpl implements _LocaleNotSelectedState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(LocalizationModel localizationModel)? selected,
+    TResult Function(String? locale, LocalizationModel localizationModel)?
+        selected,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -429,7 +437,7 @@ abstract class _$$LocaleSelectedStateImplCopyWith<$Res> {
           $Res Function(_$LocaleSelectedStateImpl) then) =
       __$$LocaleSelectedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({LocalizationModel localizationModel});
+  $Res call({String? locale, LocalizationModel localizationModel});
 
   $LocalizationModelCopyWith<$Res> get localizationModel;
 }
@@ -445,9 +453,14 @@ class __$$LocaleSelectedStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? locale = freezed,
     Object? localizationModel = null,
   }) {
     return _then(_$LocaleSelectedStateImpl(
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as String?,
       localizationModel: null == localizationModel
           ? _value.localizationModel
           : localizationModel // ignore: cast_nullable_to_non_nullable
@@ -467,14 +480,17 @@ class __$$LocaleSelectedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LocaleSelectedStateImpl implements _LocaleSelectedState {
-  const _$LocaleSelectedStateImpl({required this.localizationModel});
+  const _$LocaleSelectedStateImpl(
+      {required this.locale, required this.localizationModel});
 
+  @override
+  final String? locale;
   @override
   final LocalizationModel localizationModel;
 
   @override
   String toString() {
-    return 'LocalizationState.selected(localizationModel: $localizationModel)';
+    return 'LocalizationState.selected(locale: $locale, localizationModel: $localizationModel)';
   }
 
   @override
@@ -482,12 +498,13 @@ class _$LocaleSelectedStateImpl implements _LocaleSelectedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LocaleSelectedStateImpl &&
+            (identical(other.locale, locale) || other.locale == locale) &&
             (identical(other.localizationModel, localizationModel) ||
                 other.localizationModel == localizationModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, localizationModel);
+  int get hashCode => Object.hash(runtimeType, locale, localizationModel);
 
   @JsonKey(ignore: true)
   @override
@@ -500,29 +517,33 @@ class _$LocaleSelectedStateImpl implements _LocaleSelectedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(LocalizationModel localizationModel) selected,
+    required TResult Function(
+            String? locale, LocalizationModel localizationModel)
+        selected,
   }) {
-    return selected(localizationModel);
+    return selected(locale, localizationModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(LocalizationModel localizationModel)? selected,
+    TResult? Function(String? locale, LocalizationModel localizationModel)?
+        selected,
   }) {
-    return selected?.call(localizationModel);
+    return selected?.call(locale, localizationModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(LocalizationModel localizationModel)? selected,
+    TResult Function(String? locale, LocalizationModel localizationModel)?
+        selected,
     required TResult orElse(),
   }) {
     if (selected != null) {
-      return selected(localizationModel);
+      return selected(locale, localizationModel);
     }
     return orElse();
   }
@@ -561,9 +582,11 @@ class _$LocaleSelectedStateImpl implements _LocaleSelectedState {
 
 abstract class _LocaleSelectedState implements LocalizationState {
   const factory _LocaleSelectedState(
-          {required final LocalizationModel localizationModel}) =
+          {required final String? locale,
+          required final LocalizationModel localizationModel}) =
       _$LocaleSelectedStateImpl;
 
+  String? get locale;
   LocalizationModel get localizationModel;
   @JsonKey(ignore: true)
   _$$LocaleSelectedStateImplCopyWith<_$LocaleSelectedStateImpl> get copyWith =>

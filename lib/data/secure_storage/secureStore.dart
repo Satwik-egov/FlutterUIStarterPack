@@ -10,13 +10,14 @@ class SecureStore {
   final storage = const FlutterSecureStorage();
   SecureStore();
 
-  Future setLocalizations(LocalizationModel localizationList) async {
+  Future setLocalizations(
+      LocalizationModel localizationList, String locale) async {
     String jsonLocalizationList = json.encode(localizationList.toJson());
-    await storage.write(key: 'localizationList', value: jsonLocalizationList);
+    await storage.write(key: locale, value: jsonLocalizationList);
   }
 
-  Future<String?> getLocalizations() async {
-    return await storage.read(key: 'localizationList');
+  Future<String?> getLocalizations(String locale) async {
+    return await storage.read(key: locale);
   }
 
   Future setAppConfig(MdmsResponseModel mdmsResponseModel) async {
@@ -30,11 +31,10 @@ class SecureStore {
 
   Future setServiceRegistry(ServiceRegistryModel serviceRegistryModel) async {
     String jsonServiceRegistryList = json.encode(serviceRegistryModel.toJson());
-    await storage.write(
-        key: 'serviceRepository', value: jsonServiceRegistryList);
+    await storage.write(key: 'serviceRegistry', value: jsonServiceRegistryList);
   }
 
   Future<String?> getServiceRegistry() async {
-    return await storage.read(key: 'serviceRepository');
+    return await storage.read(key: 'serviceRegistry');
   }
 }

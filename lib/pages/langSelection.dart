@@ -8,7 +8,7 @@ import '../blocs/localization.dart';
 import '../routes/routes.dart';
 
 class SelectLanguageScreen extends StatelessWidget {
-  var localeKey = 'en_MZ';
+  String? localeKey;
 
   SelectLanguageScreen({super.key});
 
@@ -34,7 +34,7 @@ class SelectLanguageScreen extends StatelessWidget {
                       appConfig.appConfig!.appConfig?[0].backendInterface;
 
                   const defaultLocale = 'en_MZ';
-
+                  // localeKey = 'en_MZ';
                   return BlocProvider(
                     create: (context) => Localization()
                       ..add(LocalizationEvent.onSelect(
@@ -45,27 +45,16 @@ class SelectLanguageScreen extends StatelessWidget {
                       children: [
                         BlocBuilder<Localization, LocalizationState>(
                           builder: (context, locState) {
-                            // final localizationModel = locState.maybeWhen(
-                            //     orElse: () => null,
-                            //     selected: (localizationList) => localizationList);
-
                             return DigitLanguageCard(
                               digitRowCardItems: languages!.map((e) {
-                                // var index = languages.indexOf(e);
-
-                                // int index = languages.indexWhere(
-                                //   (element) =>
-                                //       element.value.toString() ==
-                                //       rowCardValue.value.toString(),
-                                // );
-
                                 return DigitRowCardModel(
                                     label: e.label,
                                     value: e.value,
-                                    isSelected: e.value == localeKey);
+                                    isSelected: e.value ==
+                                        context.read<Localization>().locale);
                               }).toList(),
                               onLanguageChange: (rowCardValue) {
-                                localeKey = rowCardValue.value;
+                                // localeKey = rowCardValue.value;
                                 context.read<Localization>().add(
                                     LocalizationEvent.onSelect(
                                         locale: rowCardValue.value,
@@ -73,8 +62,7 @@ class SelectLanguageScreen extends StatelessWidget {
                                             .appConfig?[0].backendInterface));
                               },
                               onLanguageSubmit: () {
-                                context
-                                    .navigateTo(LoginRoute(locale: localeKey));
+                                context.navigateTo(LoginRoute());
                               },
                               languageSubmitLabel: 'Submit',
                             );

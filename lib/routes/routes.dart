@@ -14,3 +14,14 @@ part 'routes.gr.dart';
   AutoRoute(page: SelectLanguageScreen, initial: true)
 ])
 class AppRouter extends _$AppRouter {}
+
+// @MaterialAutoRouter(replaceInRouteName: 'Screen,Route', routes: [
+//   AutoRoute(page: UnauthenicatedPageWrapper, path: '/', children: [
+//     AutoRoute(page: LoginScreen),
+//     AutoRoute(page: SelectLanguageScreen, initial: true)
+//   ]),
+//   AutoRoute(page: AuthenticatedPageWrapper, path: '/', children: [
+//     AutoRoute(page: HomeScreen),
+//   ])
+// ])
+// class AppRouter extends _$AppRouter {}

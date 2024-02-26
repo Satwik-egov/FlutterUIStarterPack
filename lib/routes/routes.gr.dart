@@ -24,12 +24,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>();
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: LoginScreen(
           key: args.key,
-          locale: args.locale,
+          appLocalizations: args.appLocalizations,
         ),
       );
     },
@@ -77,13 +78,13 @@ class HomeRoute extends PageRouteInfo<void> {
 class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
   LoginRoute({
     Key? key,
-    required String? locale,
+    dynamic appLocalizations,
   }) : super(
           LoginRoute.name,
           path: '/login-screen',
           args: LoginRouteArgs(
             key: key,
-            locale: locale,
+            appLocalizations: appLocalizations,
           ),
         );
 
@@ -93,16 +94,16 @@ class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
 class LoginRouteArgs {
   const LoginRouteArgs({
     this.key,
-    required this.locale,
+    this.appLocalizations,
   });
 
   final Key? key;
 
-  final String? locale;
+  final dynamic appLocalizations;
 
   @override
   String toString() {
-    return 'LoginRouteArgs{key: $key, locale: $locale}';
+    return 'LoginRouteArgs{key: $key, appLocalizations: $appLocalizations}';
   }
 }
 
