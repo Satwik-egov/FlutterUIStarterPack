@@ -1,18 +1,40 @@
-// import 'package:flutter/widgets.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:new_digit_app/blocs/app_init.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_digit_app/blocs/authbloc.dart';
 
-// class UnauthenticatedPageWrapper extends StatelessWidget {
-//   const UnauthenticatedPageWrapper({super.key});
+import '../blocs/app_init.dart';
+import '../blocs/localization.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiBlocProvider(providers: [
-//       BlocProvider(
-//         create: (context) => AppInitialization()..add(InitEvent.onLaunch()),
-//       ),
-//     ], 
-//     child: 
-//     );
-//   }
-// }
+class UnauthenticatedScreenWrapper extends StatelessWidget {
+  const UnauthenticatedScreenWrapper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  AppInitialization()..add(const InitEvent.onLaunch()),
+            ),
+            BlocProvider(
+              create: (context) => AuthBloc(),
+            )
+          ],
+          child: BlocBuilder<AppInitialization, InitState>(
+              builder: (context, appConfigState) => appConfigState.maybeWhen(
+                  uninitialized: () => const CircularProgressIndicator(),
+                  orElse: () => const Text('error Initializing'),
+                  initialized: (appConfig, serviceRegList) {
+                    final initialModuleList =
+                        appConfig.appConfig!.appConfig?[0].backendInterface;
+
+                    const defaultLocale = 'en_MZ';
+                    // localeKey = 'en_MZ';
+                    return BlocProvider(
+                        create: (context) => Localization()
+                          ..add(LocalizationEvent.onSelect(
+                              locale: defaultLocale,
+                              moduleList: initialModuleList)),
+                        child: AutoRouter());
+                  })));
+}

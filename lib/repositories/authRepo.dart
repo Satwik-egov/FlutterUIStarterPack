@@ -16,19 +16,14 @@ class AuthRepository {
     };
 
     try {
-      final response = await client
-          // .post('https://jsonplaceholder.typicode.com/todos/1', data: formData);
-          .post("https://unified-dev.digit.org/user/oauth/token",
-              data: formData, options: Options(headers: headers));
-      // if (response.statusCode != 200) return false;
+      final response = await client.post(
+          "https://unified-dev.digit.org/user/oauth/token",
+          data: formData,
+          options: Options(headers: headers));
 
       final responseBody = ResponseModel.fromJson(response.data);
-      // print(responseBody.auth_token);
       return responseBody;
-
-      // return true;
     } catch (err) {
-      // return false;
       rethrow;
     }
   }

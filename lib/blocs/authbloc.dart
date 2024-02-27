@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:new_digit_app/model/login/loginModel.dart';
+import 'package:new_digit_app/repositories/app_init_Repo.dart';
 import 'package:new_digit_app/repositories/authRepo.dart';
 
 part 'authbloc.freezed.dart';
@@ -24,29 +24,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await authRepository.validateLogin(LoginModel(
         username: event.username,
         password: event.password,
-        tenantId: 'mz',
+        // tenantId: 'mz',
+        tenantId: envConfig.variables.tenantId,
         grant_type: 'password',
         userType: 'EMPLOYEE',
       ));
 
       _accesstoken = response.access_token;
       emit(AuthState.authenticated());
-
-      //take tenantID from an envConfig file you create later
-
-      // if (isValid)
-      //   emit(AuthState.authenticated());
-      // else {
-      //   emit(AuthState.error());
-      // }
     } catch (err) {
-      emit(AuthState.error());
+      emit(const AuthState.error());
       print(err);
     }
   }
 
   FutureOr<void> _onLogout(_AuthLogoutEvent event, Emitter<AuthState> emit) {
-    emit(AuthState.unauthenticated());
+    emit(const AuthState.unauthenticated());
   }
 }
 

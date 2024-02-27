@@ -42,7 +42,6 @@ class _MainAppState extends State<MainApp> {
                 routerDelegate: _approuter.delegate(),
                 routeInformationParser: _approuter.defaultRouteParser(),
                 localizationsDelegates: [
-                  // AppLocalizationsDelegate(appConfig.appConfig),
                   AppLocalizations.getDelegate(appConfig.appConfig!),
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,

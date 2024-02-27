@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
-import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';
-import 'package:new_digit_app/model/localization/localizationModel.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   final AppConfig? appConfig;
@@ -16,13 +13,12 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
       final results = e.value.split('_');
       if (results.isNotEmpty) return results.first;
       return null;
-    })
-        // .whereNotNull()
-        .contains(locale.languageCode);
+    }).contains(locale.languageCode);
   }
 
   @override
-  bool shouldReload(AppLocalizationsDelegate old) => false;
+  bool shouldReload(covariant LocalizationsDelegate<AppLocalizations> old) =>
+      true;
 
   @override
   Future<AppLocalizations> load(Locale locale) async {

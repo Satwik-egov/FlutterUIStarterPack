@@ -6,10 +6,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:new_digit_app/model/appconfig/mdmsRequest.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
-import '../data/secure_storage/secureStore.dart';
 import '../model/dataModel.dart';
 import '../model/serviceRegistry/serviceRegistryModel.dart';
-import '../repositories/localizationRepo.dart';
 
 part 'app_init.freezed.dart';
 
@@ -20,7 +18,6 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
 
   FutureOr<void> doInitialization(
       _AppLaunchEvent event, Emitter<InitState> emit) async {
-    //Search for app configuration
     final appInitRepo = AppInitRepo();
     try {
       final appConfig =
@@ -64,6 +61,7 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
       print(result);
       final serviceRegistryList =
           result.serviceRegistryWrapper?.serviceRegistry ?? [];
+
       //Write code here to store in secure storage
 
       emit(InitState.initialized(

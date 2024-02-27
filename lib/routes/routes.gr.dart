@@ -17,10 +17,16 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    HomeRoute.name: (routeData) {
+    UnauthenticatedRouteWrapper.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: const UnauthenticatedScreenWrapper(),
+      );
+    },
+    AuthenticatedRouteWrapper.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const AuthenticatedScreenWrapper(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -42,35 +48,70 @@ class _$AppRouter extends RootStackRouter {
         child: SelectLanguageScreen(key: args.key),
       );
     },
+    HomeRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomeScreen(),
+      );
+    },
   };
 
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          HomeRoute.name,
-          path: '/home-screen',
-        ),
-        RouteConfig(
-          LoginRoute.name,
-          path: '/login-screen',
-        ),
-        RouteConfig(
-          SelectLanguageRoute.name,
+          UnauthenticatedRouteWrapper.name,
           path: '/',
+          children: [
+            RouteConfig(
+              LoginRoute.name,
+              path: 'login-screen',
+              parent: UnauthenticatedRouteWrapper.name,
+            ),
+            RouteConfig(
+              SelectLanguageRoute.name,
+              path: '',
+              parent: UnauthenticatedRouteWrapper.name,
+            ),
+          ],
+        ),
+        RouteConfig(
+          AuthenticatedRouteWrapper.name,
+          path: '/',
+          children: [
+            RouteConfig(
+              HomeRoute.name,
+              path: 'home-screen',
+              parent: AuthenticatedRouteWrapper.name,
+            )
+          ],
         ),
       ];
 }
 
 /// generated route for
-/// [HomeScreen]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute()
+/// [UnauthenticatedScreenWrapper]
+class UnauthenticatedRouteWrapper extends PageRouteInfo<void> {
+  const UnauthenticatedRouteWrapper({List<PageRouteInfo>? children})
       : super(
-          HomeRoute.name,
-          path: '/home-screen',
+          UnauthenticatedRouteWrapper.name,
+          path: '/',
+          initialChildren: children,
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'UnauthenticatedRouteWrapper';
+}
+
+/// generated route for
+/// [AuthenticatedScreenWrapper]
+class AuthenticatedRouteWrapper extends PageRouteInfo<void> {
+  const AuthenticatedRouteWrapper({List<PageRouteInfo>? children})
+      : super(
+          AuthenticatedRouteWrapper.name,
+          path: '/',
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthenticatedRouteWrapper';
 }
 
 /// generated route for
@@ -78,10 +119,10 @@ class HomeRoute extends PageRouteInfo<void> {
 class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
   LoginRoute({
     Key? key,
-    dynamic appLocalizations,
+    AppLocalizations? appLocalizations,
   }) : super(
           LoginRoute.name,
-          path: '/login-screen',
+          path: 'login-screen',
           args: LoginRouteArgs(
             key: key,
             appLocalizations: appLocalizations,
@@ -99,7 +140,7 @@ class LoginRouteArgs {
 
   final Key? key;
 
-  final dynamic appLocalizations;
+  final AppLocalizations? appLocalizations;
 
   @override
   String toString() {
@@ -113,7 +154,7 @@ class SelectLanguageRoute extends PageRouteInfo<SelectLanguageRouteArgs> {
   SelectLanguageRoute({Key? key})
       : super(
           SelectLanguageRoute.name,
-          path: '/',
+          path: '',
           args: SelectLanguageRouteArgs(key: key),
         );
 
@@ -129,4 +170,16 @@ class SelectLanguageRouteArgs {
   String toString() {
     return 'SelectLanguageRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute()
+      : super(
+          HomeRoute.name,
+          path: 'home-screen',
+        );
+
+  static const String name = 'HomeRoute';
 }
