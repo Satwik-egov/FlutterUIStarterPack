@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_digit_app/routes/routes.dart';
@@ -23,11 +24,12 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
+      body: DigitCard(
         padding: const EdgeInsets.all(20.0),
         child: Form(
             key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
                   controller: _usernameController,
@@ -83,7 +85,7 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
                           });
                         },
                         unauthenticated: () {},
-                        authenticated: () {
+                        authenticated: (a, b, c) {
                           AutoRouter.of(context).navigate(const HomeRoute());
                         });
                   },

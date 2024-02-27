@@ -327,21 +327,27 @@ mixin _$AuthState {
   TResult when<TResult extends Object?>({
     required TResult Function() error,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)
+        authenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? error,
     TResult? Function()? unauthenticated,
-    TResult? Function()? authenticated,
+    TResult? Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? error,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -426,7 +432,9 @@ class _$ErrorStateImpl implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() error,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)
+        authenticated,
   }) {
     return error();
   }
@@ -436,7 +444,9 @@ class _$ErrorStateImpl implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? error,
     TResult? Function()? unauthenticated,
-    TResult? Function()? authenticated,
+    TResult? Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
   }) {
     return error?.call();
   }
@@ -446,7 +456,9 @@ class _$ErrorStateImpl implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? error,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -535,7 +547,9 @@ class _$UnauthenticatedStateImpl implements _UnauthenticatedState {
   TResult when<TResult extends Object?>({
     required TResult Function() error,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)
+        authenticated,
   }) {
     return unauthenticated();
   }
@@ -545,7 +559,9 @@ class _$UnauthenticatedStateImpl implements _UnauthenticatedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? error,
     TResult? Function()? unauthenticated,
-    TResult? Function()? authenticated,
+    TResult? Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
   }) {
     return unauthenticated?.call();
   }
@@ -555,7 +571,9 @@ class _$UnauthenticatedStateImpl implements _UnauthenticatedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? error,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -608,6 +626,11 @@ abstract class _$$AuthenticatedStateImplCopyWith<$Res> {
   factory _$$AuthenticatedStateImplCopyWith(_$AuthenticatedStateImpl value,
           $Res Function(_$AuthenticatedStateImpl) then) =
       __$$AuthenticatedStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String access_token, String? refresh_token, UserRequest? userRequest});
+
+  $UserRequestCopyWith<$Res>? get userRequest;
 }
 
 /// @nodoc
@@ -617,35 +640,97 @@ class __$$AuthenticatedStateImplCopyWithImpl<$Res>
   __$$AuthenticatedStateImplCopyWithImpl(_$AuthenticatedStateImpl _value,
       $Res Function(_$AuthenticatedStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? access_token = null,
+    Object? refresh_token = freezed,
+    Object? userRequest = freezed,
+  }) {
+    return _then(_$AuthenticatedStateImpl(
+      access_token: null == access_token
+          ? _value.access_token
+          : access_token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refresh_token: freezed == refresh_token
+          ? _value.refresh_token
+          : refresh_token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userRequest: freezed == userRequest
+          ? _value.userRequest
+          : userRequest // ignore: cast_nullable_to_non_nullable
+              as UserRequest?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserRequestCopyWith<$Res>? get userRequest {
+    if (_value.userRequest == null) {
+      return null;
+    }
+
+    return $UserRequestCopyWith<$Res>(_value.userRequest!, (value) {
+      return _then(_value.copyWith(userRequest: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$AuthenticatedStateImpl implements _AuthenticatedState {
-  const _$AuthenticatedStateImpl();
+  const _$AuthenticatedStateImpl(
+      {required this.access_token,
+      required this.refresh_token,
+      required this.userRequest});
+
+  @override
+  final String access_token;
+  @override
+  final String? refresh_token;
+  @override
+  final UserRequest? userRequest;
 
   @override
   String toString() {
-    return 'AuthState.authenticated()';
+    return 'AuthState.authenticated(access_token: $access_token, refresh_token: $refresh_token, userRequest: $userRequest)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthenticatedStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthenticatedStateImpl &&
+            (identical(other.access_token, access_token) ||
+                other.access_token == access_token) &&
+            (identical(other.refresh_token, refresh_token) ||
+                other.refresh_token == refresh_token) &&
+            (identical(other.userRequest, userRequest) ||
+                other.userRequest == userRequest));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, access_token, refresh_token, userRequest);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthenticatedStateImplCopyWith<_$AuthenticatedStateImpl> get copyWith =>
+      __$$AuthenticatedStateImplCopyWithImpl<_$AuthenticatedStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() error,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)
+        authenticated,
   }) {
-    return authenticated();
+    return authenticated(access_token, refresh_token, userRequest);
   }
 
   @override
@@ -653,9 +738,11 @@ class _$AuthenticatedStateImpl implements _AuthenticatedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? error,
     TResult? Function()? unauthenticated,
-    TResult? Function()? authenticated,
+    TResult? Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
   }) {
-    return authenticated?.call();
+    return authenticated?.call(access_token, refresh_token, userRequest);
   }
 
   @override
@@ -663,11 +750,13 @@ class _$AuthenticatedStateImpl implements _AuthenticatedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? error,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(String access_token, String? refresh_token,
+            UserRequest? userRequest)?
+        authenticated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated();
+      return authenticated(access_token, refresh_token, userRequest);
     }
     return orElse();
   }
@@ -708,5 +797,15 @@ class _$AuthenticatedStateImpl implements _AuthenticatedState {
 }
 
 abstract class _AuthenticatedState implements AuthState {
-  const factory _AuthenticatedState() = _$AuthenticatedStateImpl;
+  const factory _AuthenticatedState(
+      {required final String access_token,
+      required final String? refresh_token,
+      required final UserRequest? userRequest}) = _$AuthenticatedStateImpl;
+
+  String get access_token;
+  String? get refresh_token;
+  UserRequest? get userRequest;
+  @JsonKey(ignore: true)
+  _$$AuthenticatedStateImplCopyWith<_$AuthenticatedStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
