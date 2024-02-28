@@ -4,6 +4,7 @@ import 'package:new_digit_app/blocs/app_localization_delegate.dart';
 import '../data/secure_storage/secureStore.dart';
 import '../model/appconfig/mdmsResponse.dart';
 import '../model/localization/localizationModel.dart';
+import 'localization.dart';
 
 class AppLocalizations {
   final Locale locale;
@@ -15,6 +16,9 @@ class AppLocalizations {
   }
 
   static LocalizationModel? localizationModel;
+
+  static late List<LocalizationMessageModel> _localizedStrings =
+      <LocalizationMessageModel>[];
 
   static LocalizationsDelegate<AppLocalizations> getDelegate(
     AppConfig config,
@@ -30,16 +34,32 @@ class AppLocalizations {
     if (jsonlocString != null) {
       final Map<String, dynamic> jsonMap = json.decode(jsonlocString);
       localizationModel = LocalizationModel.fromJson(jsonMap);
+      //////////////
+      _localizedStrings = localizationModel?.messages ?? [];
+      /////////////
     }
     return localizationModel;
   }
 
-  String translate(String code) {
-    final message = localizationModel?.messages.firstWhere(
-      (message) => message.code == code,
-      orElse: () => LocalizationMessageModel(
-          code: code, message: '${code}', module: '', locale: ''),
-    );
-    return message?.message ?? code;
+  // String translate(String code) {
+  //   // final message = localizationModel?.messages.firstWhere(
+  //     final  message = _localizedStrings.firstWhere(
+  //     (message) => message.code == code,
+  //     orElse: () => LocalizationMessageModel(
+  //         code: code, message: '${code}', module: '', locale: ''),
+  //   );
+  //   return message?.message ?? code;
+  // }
+
+  String translate(String localizedValues) {
+    if (_localizedStrings.isEmpty) {
+      return localizedValues;
+    } else {
+      final index = _localizedStrings.indexWhere(
+        (medium) => medium.code == localizedValues,
+      );
+
+      return index != -1 ? _localizedStrings[index].message : localizedValues;
+    }
   }
 }

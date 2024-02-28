@@ -17,7 +17,7 @@ class AuthRepository {
 
     try {
       final response = await client.post(
-          "https://unified-dev.digit.org/user/oauth/token",
+          "https://unified-qa.digit.org/user/oauth/token",
           data: formData,
           options: Options(headers: headers));
 

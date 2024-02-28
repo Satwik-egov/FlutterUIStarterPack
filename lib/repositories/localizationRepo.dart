@@ -27,8 +27,7 @@ class LocalizationRepository {
         return handler.next(options);
       }));
       final response = await client.post(
-          // 'https://unified-dev.digit.org/localization/messages/v1/_search',
-          Constants.localizationApiPath,
+          'https://unified-qa.digit.org/localization/messages/v1/_search',
           queryParameters: queryParameters,
           data: {});
 

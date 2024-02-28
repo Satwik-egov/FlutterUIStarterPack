@@ -28,7 +28,9 @@ class HCMAttendanceBloc extends AttendanceListeners {
     return onRegistersLoaded();
   }
 
-  void onRegistersLoaded() async {}
+  void onRegistersLoaded()  {
+    _registersLoaded([AttendanceRegisterModel(id: '',name: 'Attendance')]);
+  }
 
   @override
   void searchAttendanceLog(
