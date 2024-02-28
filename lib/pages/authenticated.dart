@@ -12,14 +12,7 @@ class AuthenticatedScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider(
-          create: (context) =>
-              AppInitialization()..add(const InitEvent.onLaunch()),
-        ),
-        BlocProvider(
-          create: (context) => AuthBloc(),
-        ),
-        // BlocProvider(
-        //   create: (context) => UserBloc(),
-        // )
-      ], child: AutoRouter());
+          create: (context) => UserBloc(),
+        )
+      ], child: const AutoRouter());
 }

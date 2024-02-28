@@ -63,13 +63,20 @@ class _$AppRouter extends RootStackRouter {
           path: '/',
           children: [
             RouteConfig(
+              '#redirect',
+              path: '',
+              parent: UnauthenticatedRouteWrapper.name,
+              redirectTo: 'langscreen',
+              fullMatch: true,
+            ),
+            RouteConfig(
               LoginRoute.name,
-              path: 'login-screen',
+              path: 'login',
               parent: UnauthenticatedRouteWrapper.name,
             ),
             RouteConfig(
               SelectLanguageRoute.name,
-              path: '',
+              path: 'langscreen',
               parent: UnauthenticatedRouteWrapper.name,
             ),
           ],
@@ -80,7 +87,7 @@ class _$AppRouter extends RootStackRouter {
           children: [
             RouteConfig(
               HomeRoute.name,
-              path: 'home-screen',
+              path: 'home',
               parent: AuthenticatedRouteWrapper.name,
             )
           ],
@@ -122,7 +129,7 @@ class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
     AppLocalizations? appLocalizations,
   }) : super(
           LoginRoute.name,
-          path: 'login-screen',
+          path: 'login',
           args: LoginRouteArgs(
             key: key,
             appLocalizations: appLocalizations,
@@ -154,7 +161,7 @@ class SelectLanguageRoute extends PageRouteInfo<SelectLanguageRouteArgs> {
   SelectLanguageRoute({Key? key})
       : super(
           SelectLanguageRoute.name,
-          path: '',
+          path: 'langscreen',
           args: SelectLanguageRouteArgs(key: key),
         );
 
@@ -178,7 +185,7 @@ class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
-          path: 'home-screen',
+          path: 'home',
         );
 
   static const String name = 'HomeRoute';

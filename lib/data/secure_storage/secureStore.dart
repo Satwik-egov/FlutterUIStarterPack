@@ -37,4 +37,16 @@ class SecureStore {
   Future<String?> getServiceRegistry() async {
     return await storage.read(key: 'serviceRegistry');
   }
+
+  Future setAccessToken(String? accessToken) async {
+    await storage.write(key: 'accessToken', value: accessToken);
+  }
+
+  Future<String?> getAccessToken() async {
+    return await storage.read(key: 'accessToken');
+  }
+
+  Future deleteAccessToken() async {
+    await storage.delete(key: 'accessToken');
+  }
 }

@@ -7,6 +7,7 @@ import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
 import '../blocs/localization.dart';
 import '../routes/routes.dart';
+import '../utils/i18_key_constants.dart' as i18;
 
 class SelectLanguageScreen extends StatelessWidget {
   String? localeKey;
@@ -45,11 +46,10 @@ class SelectLanguageScreen extends StatelessWidget {
                     onLanguageSubmit: () {
                       context.navigateTo(LoginRoute());
                     },
-                    languageSubmitLabel: 'Submit',
+                    // languageSubmitLabel: 'Submit',
+                    languageSubmitLabel: AppLocalizations.of(context)
+                        .translate(i18.common.coreCommonContinue),
                   ),
-                  // ElevatedButton(
-                  //     onPressed: () {},
-                  //     child: Text(AppLocalizations.of(context).translate))
                 ]),
               );
             }));

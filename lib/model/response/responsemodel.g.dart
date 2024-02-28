@@ -28,7 +28,7 @@ Map<String, dynamic> _$$ResponseModelImplToJson(_$ResponseModelImpl instance) =>
 
 _$UserRequestImpl _$$UserRequestImplFromJson(Map<String, dynamic> json) =>
     _$UserRequestImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       uuid: json['uuid'] as String,
       userName: json['userName'] as String?,
       name: json['name'] as String?,

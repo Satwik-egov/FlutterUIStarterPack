@@ -8,6 +8,8 @@ import 'package:new_digit_app/routes/routes.dart';
 import 'package:new_digit_app/utils/constants.dart';
 import 'package:new_digit_app/utils/envConfig.dart';
 
+import 'blocs/authbloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // final AppInitialization appinit = AppInitialization();
@@ -30,11 +32,19 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: BlocProvider(
-          create: (context) => AppInitialization()..add(InitEvent.onLaunch()),
+      child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  AppInitialization()..add(const InitEvent.onLaunch()),
+            ),
+            BlocProvider(
+              create: (context) => AuthBloc(),
+            )
+          ],
           child: BlocBuilder<AppInitialization, InitState>(
             builder: (context, state) => state.maybeWhen(
-              orElse: () => Text('error Initializing'),
+              orElse: () => const Text('error Initializing'),
               initialized: (appConfig, serviceRegistryModel) =>
                   MaterialApp.router(
                 scaffoldMessengerKey: scaffoldMessengerKey,

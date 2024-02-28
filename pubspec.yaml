@@ -23,6 +23,12 @@ dependencies:
   dart_mappable: ^4.2.0
   dart_mappable_builder: ^4.2.0
   recase: ^4.1.0
+  reactive_forms: ^14.1.0
+  attendance_management:
+    git:
+      url: https://github.com/egovernments/health-campaign-field-worker-app
+      ref: master
+      path: ./packages/attendance_management
   
       
 dev_dependencies:

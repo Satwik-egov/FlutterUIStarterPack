@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/login/loginModel.dart';
 import 'package:new_digit_app/model/response/responsemodel.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
@@ -27,7 +28,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await authRepository.validateLogin(LoginModel(
         username: event.username,
         password: event.password,
-        // tenantId: 'mz',
         tenantId: envConfig.variables.tenantId,
         grant_type: 'password',
         userType: 'EMPLOYEE',
@@ -37,9 +37,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       _refreshtoken = response.refresh_token!;
       _userRequest = response.userRequest!;
 
+      //store accessToken in secure storage
+      final secureStore = SecureStore();
+      secureStore.setAccessToken(_accesstoken);
+
       emit(AuthState.authenticated(
-          access_token: _accesstoken,
-          refresh_token: _refreshtoken,
+          accesstoken: _accesstoken,
+          refreshtoken: _refreshtoken,
           userRequest: _userRequest));
     } catch (err) {
       emit(const AuthState.error());
@@ -66,8 +70,8 @@ class AuthState with _$AuthState {
   const factory AuthState.error() = _ErrorState;
   const factory AuthState.unauthenticated() = _UnauthenticatedState;
   const factory AuthState.authenticated({
-    required String access_token,
-    required String? refresh_token,
+    required String accesstoken,
+    required String? refreshtoken,
     required UserRequest? userRequest,
   }) = _AuthenticatedState;
 }

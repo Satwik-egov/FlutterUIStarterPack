@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../model/localization/localizationModel.dart';
 import '../model/request/requestInfo.dart';
+import '../utils/constants.dart';
 
 class LocalizationRepository {
   final client = Dio();
@@ -26,17 +27,12 @@ class LocalizationRepository {
         return handler.next(options);
       }));
       final response = await client.post(
-          'https://unified-dev.digit.org/localization/messages/v1/_search',
-          // queryParameters: {"locale": "", "module": []},
+          // 'https://unified-dev.digit.org/localization/messages/v1/_search',
+          Constants.localizationApiPath,
           queryParameters: queryParameters,
           data: {});
 
-      // final responseBody =
-      //     LocalizationModel.fromJson(response.data['messages']);
-
       final responseBody = LocalizationModel.fromJson(response.data);
-
-      // final responseBody = LocalizationModel(messages: message);
 
       return responseBody;
     } catch (err) {

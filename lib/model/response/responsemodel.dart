@@ -21,7 +21,7 @@ class ResponseModel with _$ResponseModel {
 @freezed
 class UserRequest with _$UserRequest {
   const factory UserRequest(
-      {required String id,
+      {required int id,
       required String uuid,
       required String? userName,
       required String? name,

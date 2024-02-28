@@ -38,7 +38,7 @@ class AppLocalizations {
     final message = localizationModel?.messages.firstWhere(
       (message) => message.code == code,
       orElse: () => LocalizationMessageModel(
-          code: code, message: '${code}_message', module: '', locale: ''),
+          code: code, message: '${code}', module: '', locale: ''),
     );
     return message?.message ?? code;
   }

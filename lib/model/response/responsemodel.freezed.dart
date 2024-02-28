@@ -266,7 +266,7 @@ UserRequest _$UserRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserRequest {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
@@ -290,7 +290,7 @@ abstract class $UserRequestCopyWith<$Res> {
       _$UserRequestCopyWithImpl<$Res, UserRequest>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String uuid,
       String? userName,
       String? name,
@@ -330,7 +330,7 @@ class _$UserRequestCopyWithImpl<$Res, $Val extends UserRequest>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -380,7 +380,7 @@ abstract class _$$UserRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String uuid,
       String? userName,
       String? name,
@@ -418,7 +418,7 @@ class __$$UserRequestImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -479,7 +479,7 @@ class _$UserRequestImpl implements _UserRequest {
       _$$UserRequestImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String uuid;
   @override
@@ -561,7 +561,7 @@ class _$UserRequestImpl implements _UserRequest {
 
 abstract class _UserRequest implements UserRequest {
   const factory _UserRequest(
-      {required final String id,
+      {required final int id,
       required final String uuid,
       required final String? userName,
       required final String? name,
@@ -576,7 +576,7 @@ abstract class _UserRequest implements UserRequest {
       _$UserRequestImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get uuid;
   @override

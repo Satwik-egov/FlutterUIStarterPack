@@ -16,43 +16,42 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserEvent {
+  String get uuid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) searchUser,
-    required TResult Function(UserModel user, UserModel olduser) updateUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? searchUser,
-    TResult? Function(UserModel user, UserModel olduser)? updateUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? searchUser,
-    TResult Function(UserModel user, UserModel olduser)? updateUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UserSearchEvent value) searchUser,
-    required TResult Function(_UserUpdateEvent value) updateUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserSearchEvent value)? searchUser,
-    TResult? Function(_UserUpdateEvent value)? updateUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserSearchEvent value)? searchUser,
-    TResult Function(_UserUpdateEvent value)? updateUser,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UserEventCopyWith<UserEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,6 +59,8 @@ mixin _$UserEvent {
 abstract class $UserEventCopyWith<$Res> {
   factory $UserEventCopyWith(UserEvent value, $Res Function(UserEvent) then) =
       _$UserEventCopyWithImpl<$Res, UserEvent>;
+  @useResult
+  $Res call({String uuid});
 }
 
 /// @nodoc
@@ -71,13 +72,28 @@ class _$UserEventCopyWithImpl<$Res, $Val extends UserEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uuid = null,
+  }) {
+    return _then(_value.copyWith(
+      uuid: null == uuid
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$UserSearchEventImplCopyWith<$Res> {
+abstract class _$$UserSearchEventImplCopyWith<$Res>
+    implements $UserEventCopyWith<$Res> {
   factory _$$UserSearchEventImplCopyWith(_$UserSearchEventImpl value,
           $Res Function(_$UserSearchEventImpl) then) =
       __$$UserSearchEventImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String uuid});
 }
@@ -139,7 +155,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) searchUser,
-    required TResult Function(UserModel user, UserModel olduser) updateUser,
   }) {
     return searchUser(uuid);
   }
@@ -148,7 +163,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? searchUser,
-    TResult? Function(UserModel user, UserModel olduser)? updateUser,
   }) {
     return searchUser?.call(uuid);
   }
@@ -157,7 +171,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? searchUser,
-    TResult Function(UserModel user, UserModel olduser)? updateUser,
     required TResult orElse(),
   }) {
     if (searchUser != null) {
@@ -170,7 +183,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UserSearchEvent value) searchUser,
-    required TResult Function(_UserUpdateEvent value) updateUser,
   }) {
     return searchUser(this);
   }
@@ -179,7 +191,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserSearchEvent value)? searchUser,
-    TResult? Function(_UserUpdateEvent value)? updateUser,
   }) {
     return searchUser?.call(this);
   }
@@ -188,7 +199,6 @@ class _$UserSearchEventImpl implements _UserSearchEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserSearchEvent value)? searchUser,
-    TResult Function(_UserUpdateEvent value)? updateUser,
     required TResult orElse(),
   }) {
     if (searchUser != null) {
@@ -202,154 +212,11 @@ abstract class _UserSearchEvent implements UserEvent {
   const factory _UserSearchEvent({required final String uuid}) =
       _$UserSearchEventImpl;
 
+  @override
   String get uuid;
+  @override
   @JsonKey(ignore: true)
   _$$UserSearchEventImplCopyWith<_$UserSearchEventImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UserUpdateEventImplCopyWith<$Res> {
-  factory _$$UserUpdateEventImplCopyWith(_$UserUpdateEventImpl value,
-          $Res Function(_$UserUpdateEventImpl) then) =
-      __$$UserUpdateEventImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UserModel user, UserModel olduser});
-}
-
-/// @nodoc
-class __$$UserUpdateEventImplCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserUpdateEventImpl>
-    implements _$$UserUpdateEventImplCopyWith<$Res> {
-  __$$UserUpdateEventImplCopyWithImpl(
-      _$UserUpdateEventImpl _value, $Res Function(_$UserUpdateEventImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = null,
-    Object? olduser = null,
-  }) {
-    return _then(_$UserUpdateEventImpl(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
-      olduser: null == olduser
-          ? _value.olduser
-          : olduser // ignore: cast_nullable_to_non_nullable
-              as UserModel,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$UserUpdateEventImpl implements _UserUpdateEvent {
-  const _$UserUpdateEventImpl({required this.user, required this.olduser});
-
-  @override
-  final UserModel user;
-  @override
-  final UserModel olduser;
-
-  @override
-  String toString() {
-    return 'UserEvent.updateUser(user: $user, olduser: $olduser)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserUpdateEventImpl &&
-            (identical(other.user, user) || other.user == user) &&
-            (identical(other.olduser, olduser) || other.olduser == olduser));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, user, olduser);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserUpdateEventImplCopyWith<_$UserUpdateEventImpl> get copyWith =>
-      __$$UserUpdateEventImplCopyWithImpl<_$UserUpdateEventImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String uuid) searchUser,
-    required TResult Function(UserModel user, UserModel olduser) updateUser,
-  }) {
-    return updateUser(user, olduser);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String uuid)? searchUser,
-    TResult? Function(UserModel user, UserModel olduser)? updateUser,
-  }) {
-    return updateUser?.call(user, olduser);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String uuid)? searchUser,
-    TResult Function(UserModel user, UserModel olduser)? updateUser,
-    required TResult orElse(),
-  }) {
-    if (updateUser != null) {
-      return updateUser(user, olduser);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_UserSearchEvent value) searchUser,
-    required TResult Function(_UserUpdateEvent value) updateUser,
-  }) {
-    return updateUser(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_UserSearchEvent value)? searchUser,
-    TResult? Function(_UserUpdateEvent value)? updateUser,
-  }) {
-    return updateUser?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_UserSearchEvent value)? searchUser,
-    TResult Function(_UserUpdateEvent value)? updateUser,
-    required TResult orElse(),
-  }) {
-    if (updateUser != null) {
-      return updateUser(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UserUpdateEvent implements UserEvent {
-  const factory _UserUpdateEvent(
-      {required final UserModel user,
-      required final UserModel olduser}) = _$UserUpdateEventImpl;
-
-  UserModel get user;
-  UserModel get olduser;
-  @JsonKey(ignore: true)
-  _$$UserUpdateEventImplCopyWith<_$UserUpdateEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
