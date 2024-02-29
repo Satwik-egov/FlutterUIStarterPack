@@ -11,12 +11,12 @@ import '../model/localization/localizationModel.dart';
 
 part 'localization.freezed.dart';
 
-class Localization extends Bloc<LocalizationEvent, LocalizationState> {
+class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
   // late LocalizationModel localizationsList;
   late LocalizationModel localizationList;
   String? _locale;
 
-  Localization() : super(LocalizationState.initial()) {
+  LocalizationBloc() : super(LocalizationState.initial()) {
     on<_LocaleSelectedEvent>(onLocaleSelected);
   }
 

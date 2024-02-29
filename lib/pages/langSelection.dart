@@ -23,7 +23,7 @@ class SelectLanguageScreen extends StatelessWidget {
             orElse: () => const CircularProgressIndicator(),
             initialized: (appConfig, serviceRegList) {
               final languages = appConfig.appConfig!.appConfig?[0].languages;
-              return BlocBuilder<Localization, LocalizationState>(
+              return BlocBuilder<LocalizationBloc, LocalizationState>(
                 builder: (context, locState) =>
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   DigitLanguageCard(
@@ -31,13 +31,13 @@ class SelectLanguageScreen extends StatelessWidget {
                       return DigitRowCardModel(
                           label: e.label,
                           value: e.value,
-                          isSelected:
-                              e.value == context.read<Localization>().locale);
+                          isSelected: e.value ==
+                              context.read<LocalizationBloc>().locale);
                       // e.value == locState.locale ?? );
                     }).toList(),
                     onLanguageChange: (rowCardValue) {
                       // localeKey = rowCardValue.value;
-                      context.read<Localization>().add(
+                      context.read<LocalizationBloc>().add(
                           LocalizationEvent.onSelect(
                               locale: rowCardValue.value,
                               moduleList: appConfig

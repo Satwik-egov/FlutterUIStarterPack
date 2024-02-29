@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_localization_delegate.dart';
+import 'package:new_digit_app/data/nosql/localization.dart';
 import '../data/secure_storage/secureStore.dart';
 import '../model/appconfig/mdmsResponse.dart';
 import '../model/localization/localizationModel.dart';
-import 'localization.dart';
 
 class AppLocalizations {
   final Locale locale;
+  // final Isar isar;
 
   AppLocalizations(this.locale);
 
@@ -17,7 +19,7 @@ class AppLocalizations {
 
   static LocalizationModel? localizationModel;
 
-  static late List<LocalizationMessageModel> _localizedStrings =
+  static List<LocalizationMessageModel> _localizedStrings =
       <LocalizationMessageModel>[];
 
   static LocalizationsDelegate<AppLocalizations> getDelegate(
@@ -34,11 +36,23 @@ class AppLocalizations {
     if (jsonlocString != null) {
       final Map<String, dynamic> jsonMap = json.decode(jsonlocString);
       localizationModel = LocalizationModel.fromJson(jsonMap);
-      //////////////
       _localizedStrings = localizationModel?.messages ?? [];
-      /////////////
     }
     return localizationModel;
+
+    //implementing using ISAR
+    // _localizedStrings.clear();
+    // final List<LocalizationWrapper> localizationList = await isar
+    //     .localizationWrappers
+    //     .filter()
+    //     .localeEqualTo('${locale.languageCode}_${locale.countryCode}')
+    //     .findAll();
+
+    // if (localizationList.isNotEmpty) {
+    //   _localizedStrings.addAll(localizationList.first.localization!);
+    // }
+
+    // return true;
   }
 
   // String translate(String code) {

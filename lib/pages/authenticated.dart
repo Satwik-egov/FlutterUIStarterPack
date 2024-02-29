@@ -10,9 +10,10 @@ class AuthenticatedScreenWrapper extends StatelessWidget {
   const AuthenticatedScreenWrapper({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (context) => UserBloc(),
-        )
-      ], child: const AutoRouter());
+  // Widget build(BuildContext context) => MultiBlocProvider(providers: [
+  //       BlocProvider(
+  //         create: (context) => UserBloc(),
+  //       )
+  //     ], child: const AutoRouter());
+  Widget build(BuildContext context) => const AutoRouter();
 }
