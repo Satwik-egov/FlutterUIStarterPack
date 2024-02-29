@@ -6,7 +6,9 @@ import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
 import 'package:new_digit_app/blocs/localization.dart';
+import 'package:new_digit_app/data/app_shared_preferences.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
+import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/routes/routes.dart';
 import 'package:new_digit_app/utils/constants.dart';
 import 'package:new_digit_app/utils/envConfig.dart';
@@ -20,6 +22,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await envConfig.initialize();
   _isar = await Constants().isar; //new addition
+
+  await AppSharedPreferences().init();
+  if (AppSharedPreferences().isFirstLaunch) {
+    AppLogger.instance.info('App Launched First Time', title: 'main');
+    await AppSharedPreferences().appLaunchedFirstTime();
+  }
+
   runApp(MainApp(
     isar: _isar,
   ));
@@ -62,8 +71,10 @@ class _MainAppState extends State<MainApp> {
                   var firstLanguage;
                   firstLanguage = languages?.last.value;
 
+                  final selectedLocale =
+                      AppSharedPreferences().getSelectedLocale ?? firstLanguage;
                   return BlocProvider(
-                      create: (context) => LocalizationBloc()
+                      create: (context) => LocalizationBloc(widget.isar)
                         ..add(LocalizationEvent.onSelect(
                             locale: defaultLocale,
                             moduleList: initialModuleList)),
@@ -82,21 +93,25 @@ class _MainAppState extends State<MainApp> {
                               })
                             : [firstLanguage],
                         localizationsDelegates: [
-                          AppLocalizations.getDelegate(appConfig.appConfig!),
+                          AppLocalizations.getDelegate(
+                              appConfig.appConfig!, widget.isar),
                           GlobalWidgetsLocalizations.delegate,
                           GlobalCupertinoLocalizations.delegate,
                           GlobalMaterialLocalizations.delegate,
                           //new addition
                           attendance_localization.AttendanceLocalization
                               .getDelegate(
-                            getLocalizationString(
-                                widget.isar,
-                                // selectedLocale,
-                                "en_MZ"),
+                            getLocalizationString(widget.isar, selectedLocale),
+                            // "en_MZ"),
                             languages!,
                           )
                         ],
-                        locale: Locale("en", "MZ"),
+                        locale: languages != null
+                            ? Locale(
+                                selectedLocale!.split("_").first,
+                                selectedLocale.split("_").last,
+                              )
+                            : firstLanguage,
                       ));
                 }),
           )),

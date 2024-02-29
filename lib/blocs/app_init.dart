@@ -84,7 +84,7 @@ class InitState with _$InitState {
   const factory InitState.uninitialized() = _Uninitialized;
   const factory InitState.initialized(
       {required MdmsResponseModel appConfig,
-      required List<ServiceRegistry> serviceRegistryModel}) = _Initialized;
+      required List<ServiceRegistry> serviceRegistryModel}) = Initialized;
 
   Map<DataModelType, Map<ApiOperation, String>> get entityActionMapping {
     return when(

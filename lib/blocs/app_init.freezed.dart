@@ -193,19 +193,19 @@ mixin _$InitState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
+    required TResult Function(Initialized value) initialized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Uninitialized value)? uninitialized,
-    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(Initialized value)? initialized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
+    TResult Function(Initialized value)? initialized,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -304,7 +304,7 @@ class _$UninitializedImpl extends _Uninitialized {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
+    required TResult Function(Initialized value) initialized,
   }) {
     return uninitialized(this);
   }
@@ -313,7 +313,7 @@ class _$UninitializedImpl extends _Uninitialized {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Uninitialized value)? uninitialized,
-    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(Initialized value)? initialized,
   }) {
     return uninitialized?.call(this);
   }
@@ -322,7 +322,7 @@ class _$UninitializedImpl extends _Uninitialized {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
+    TResult Function(Initialized value)? initialized,
     required TResult orElse(),
   }) {
     if (uninitialized != null) {
@@ -387,7 +387,7 @@ class __$$InitializedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitializedImpl extends _Initialized {
+class _$InitializedImpl extends Initialized {
   const _$InitializedImpl(
       {required this.appConfig,
       required final List<ServiceRegistry> serviceRegistryModel})
@@ -472,7 +472,7 @@ class _$InitializedImpl extends _Initialized {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Uninitialized value) uninitialized,
-    required TResult Function(_Initialized value) initialized,
+    required TResult Function(Initialized value) initialized,
   }) {
     return initialized(this);
   }
@@ -481,7 +481,7 @@ class _$InitializedImpl extends _Initialized {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Uninitialized value)? uninitialized,
-    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(Initialized value)? initialized,
   }) {
     return initialized?.call(this);
   }
@@ -490,7 +490,7 @@ class _$InitializedImpl extends _Initialized {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Initialized value)? initialized,
+    TResult Function(Initialized value)? initialized,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -500,12 +500,12 @@ class _$InitializedImpl extends _Initialized {
   }
 }
 
-abstract class _Initialized extends InitState {
-  const factory _Initialized(
+abstract class Initialized extends InitState {
+  const factory Initialized(
           {required final MdmsResponseModel appConfig,
           required final List<ServiceRegistry> serviceRegistryModel}) =
       _$InitializedImpl;
-  const _Initialized._() : super._();
+  const Initialized._() : super._();
 
   MdmsResponseModel get appConfig;
   List<ServiceRegistry> get serviceRegistryModel;

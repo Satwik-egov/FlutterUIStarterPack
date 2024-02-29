@@ -10,8 +10,6 @@ import '../routes/routes.dart';
 import '../utils/i18_key_constants.dart' as i18;
 
 class SelectLanguageScreen extends StatelessWidget {
-  String? localeKey;
-
   SelectLanguageScreen({super.key});
 
   @override
@@ -33,10 +31,8 @@ class SelectLanguageScreen extends StatelessWidget {
                           value: e.value,
                           isSelected: e.value ==
                               context.read<LocalizationBloc>().locale);
-                      // e.value == locState.locale ?? );
                     }).toList(),
                     onLanguageChange: (rowCardValue) {
-                      // localeKey = rowCardValue.value;
                       context.read<LocalizationBloc>().add(
                           LocalizationEvent.onSelect(
                               locale: rowCardValue.value,
