@@ -22,6 +22,7 @@ mixin _$AuthEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)
         login,
     required TResult Function() logout,
+    required TResult Function() attemptLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$AuthEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult? Function()? logout,
+    TResult? Function()? attemptLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$AuthEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult Function()? logout,
+    TResult Function()? attemptLoad,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -45,18 +48,21 @@ mixin _$AuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_AuthLoginEvent value) login,
     required TResult Function(_AuthLogoutEvent value) logout,
+    required TResult Function(AuthLoadEvent value) attemptLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AuthLoginEvent value)? login,
     TResult? Function(_AuthLogoutEvent value)? logout,
+    TResult? Function(AuthLoadEvent value)? attemptLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AuthLoginEvent value)? login,
     TResult Function(_AuthLogoutEvent value)? logout,
+    TResult Function(AuthLoadEvent value)? attemptLoad,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -182,6 +188,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)
         login,
     required TResult Function() logout,
+    required TResult Function() attemptLoad,
   }) {
     return login(username, password, actionMap);
   }
@@ -193,6 +200,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult? Function()? logout,
+    TResult? Function()? attemptLoad,
   }) {
     return login?.call(username, password, actionMap);
   }
@@ -204,6 +212,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult Function()? logout,
+    TResult Function()? attemptLoad,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -217,6 +226,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_AuthLoginEvent value) login,
     required TResult Function(_AuthLogoutEvent value) logout,
+    required TResult Function(AuthLoadEvent value) attemptLoad,
   }) {
     return login(this);
   }
@@ -226,6 +236,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AuthLoginEvent value)? login,
     TResult? Function(_AuthLogoutEvent value)? logout,
+    TResult? Function(AuthLoadEvent value)? attemptLoad,
   }) {
     return login?.call(this);
   }
@@ -235,6 +246,7 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AuthLoginEvent value)? login,
     TResult Function(_AuthLogoutEvent value)? logout,
+    TResult Function(AuthLoadEvent value)? attemptLoad,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -301,6 +313,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)
         login,
     required TResult Function() logout,
+    required TResult Function() attemptLoad,
   }) {
     return logout();
   }
@@ -312,6 +325,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult? Function()? logout,
+    TResult? Function()? attemptLoad,
   }) {
     return logout?.call();
   }
@@ -323,6 +337,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
             Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
         login,
     TResult Function()? logout,
+    TResult Function()? attemptLoad,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -336,6 +351,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_AuthLoginEvent value) login,
     required TResult Function(_AuthLogoutEvent value) logout,
+    required TResult Function(AuthLoadEvent value) attemptLoad,
   }) {
     return logout(this);
   }
@@ -345,6 +361,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AuthLoginEvent value)? login,
     TResult? Function(_AuthLogoutEvent value)? logout,
+    TResult? Function(AuthLoadEvent value)? attemptLoad,
   }) {
     return logout?.call(this);
   }
@@ -354,6 +371,7 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AuthLoginEvent value)? login,
     TResult Function(_AuthLogoutEvent value)? logout,
+    TResult Function(AuthLoadEvent value)? attemptLoad,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -365,6 +383,120 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
 
 abstract class _AuthLogoutEvent implements AuthEvent {
   const factory _AuthLogoutEvent() = _$AuthLogoutEventImpl;
+}
+
+/// @nodoc
+abstract class _$$AuthLoadEventImplCopyWith<$Res> {
+  factory _$$AuthLoadEventImplCopyWith(
+          _$AuthLoadEventImpl value, $Res Function(_$AuthLoadEventImpl) then) =
+      __$$AuthLoadEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$AuthLoadEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$AuthLoadEventImpl>
+    implements _$$AuthLoadEventImplCopyWith<$Res> {
+  __$$AuthLoadEventImplCopyWithImpl(
+      _$AuthLoadEventImpl _value, $Res Function(_$AuthLoadEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$AuthLoadEventImpl implements AuthLoadEvent {
+  const _$AuthLoadEventImpl();
+
+  @override
+  String toString() {
+    return 'AuthEvent.attemptLoad()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AuthLoadEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)
+        login,
+    required TResult Function() logout,
+    required TResult Function() attemptLoad,
+  }) {
+    return attemptLoad();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
+    TResult? Function()? logout,
+    TResult? Function()? attemptLoad,
+  }) {
+    return attemptLoad?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
+    TResult Function()? logout,
+    TResult Function()? attemptLoad,
+    required TResult orElse(),
+  }) {
+    if (attemptLoad != null) {
+      return attemptLoad();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AuthLoginEvent value) login,
+    required TResult Function(_AuthLogoutEvent value) logout,
+    required TResult Function(AuthLoadEvent value) attemptLoad,
+  }) {
+    return attemptLoad(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AuthLoginEvent value)? login,
+    TResult? Function(_AuthLogoutEvent value)? logout,
+    TResult? Function(AuthLoadEvent value)? attemptLoad,
+  }) {
+    return attemptLoad?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AuthLoginEvent value)? login,
+    TResult Function(_AuthLogoutEvent value)? logout,
+    TResult Function(AuthLoadEvent value)? attemptLoad,
+    required TResult orElse(),
+  }) {
+    if (attemptLoad != null) {
+      return attemptLoad(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AuthLoadEvent implements AuthEvent {
+  const factory AuthLoadEvent() = _$AuthLoadEventImpl;
 }
 
 /// @nodoc

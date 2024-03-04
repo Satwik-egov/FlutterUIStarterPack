@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';
+import 'package:new_digit_app/model/response/responsemodel.dart';
 import 'package:new_digit_app/model/role_actions/role_actions_model.dart';
 import 'package:new_digit_app/model/serviceRegistry/serviceRegistryModel.dart';
 
@@ -21,6 +22,7 @@ class SecureStore {
     return await storage.read(key: locale);
   }
 
+  //App configs
   Future setAppConfig(MdmsResponseModel mdmsResponseModel) async {
     String jsonMdmsResponse = json.encode(mdmsResponseModel.toJson());
     await storage.write(key: 'appConfig', value: jsonMdmsResponse);
@@ -30,6 +32,7 @@ class SecureStore {
     return await storage.read(key: 'appConfig');
   }
 
+  //service Registry
   Future setServiceRegistry(ServiceRegistryModel serviceRegistryModel) async {
     String jsonServiceRegistryList = json.encode(serviceRegistryModel.toJson());
     await storage.write(key: 'serviceRegistry', value: jsonServiceRegistryList);
@@ -39,6 +42,7 @@ class SecureStore {
     return await storage.read(key: 'serviceRegistry');
   }
 
+  //access token
   Future setAccessToken(String? accessToken) async {
     await storage.write(key: 'accessToken', value: accessToken);
   }
@@ -51,6 +55,28 @@ class SecureStore {
     await storage.delete(key: 'accessToken');
   }
 
+  //other auth information
+  Future setAccessInfo(ResponseModel accessInfo) async {
+    String jsonAccessInfo = json.encode(accessInfo.toJson());
+    await storage.write(key: 'accessInfo', value: jsonAccessInfo);
+  }
+
+  Future<ResponseModel?> getAccessInfo() async {
+    String? jsonAccessInfo = await storage.read(key: 'accessInfo');
+    if (jsonAccessInfo == null) return null;
+    try {
+      return ResponseModel.fromJson(json.decode(jsonAccessInfo));
+    } catch (err) {
+      print(err);
+      rethrow;
+    }
+  }
+
+  Future deleteAccessInfo() async {
+    await storage.delete(key: 'accessInfo');
+  }
+
+  //role actions
   Future setRoleActions(RoleActionsWrapperModel actionsWrapper) async {
     String jsonActionsWrapper = json.encode(actionsWrapper.toJson());
     await storage.write(key: 'actionsWrapper', value: jsonActionsWrapper);

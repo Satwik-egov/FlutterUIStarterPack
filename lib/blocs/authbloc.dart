@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(const AuthState.unauthenticated()) {
     on<_AuthLoginEvent>(_onLogin);
     on<_AuthLogoutEvent>(_onLogout);
+    on<AuthLoadEvent>(_onLoad);
   }
 
   FutureOr<void> _onLogin(
@@ -48,6 +49,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       //store accessToken in secure storage
       secureStore.setAccessToken(_accesstoken);
 
+      //store other access Information in secure storage
+      secureStore.setAccessInfo(ResponseModel(
+          access_token: _accesstoken,
+          token_type: response.token_type,
+          refresh_token: _refreshtoken,
+          scope: response.scope,
+          userRequest: _userRequest));
+
+      //change to authenticated state now that we have access
       emit(AuthState.authenticated(
           accesstoken: _accesstoken,
           refreshtoken: _refreshtoken,
@@ -67,7 +77,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onLogout(_AuthLogoutEvent event, Emitter<AuthState> emit) {
+    final secureStore = SecureStore();
+    secureStore.deleteAccessToken();
+    secureStore.deleteAccessInfo();
+
     emit(const AuthState.unauthenticated());
+  }
+
+  Future<FutureOr<void>> _onLoad(
+      AuthLoadEvent event, Emitter<AuthState> emit) async {
+    final secureStore = SecureStore();
+
+    ResponseModel? accessInfo;
+    accessInfo = await secureStore.getAccessInfo();
+
+    if (accessInfo != null) {
+      _accesstoken = accessInfo.access_token;
+      _refreshtoken = accessInfo.refresh_token!;
+      _userRequest = accessInfo.userRequest!;
+
+      emit(AuthState.authenticated(
+          accesstoken: _accesstoken,
+          refreshtoken: _refreshtoken,
+          userRequest: _userRequest));
+    } else {
+      emit(const AuthState.unauthenticated());
+    }
   }
 }
 
@@ -79,6 +114,7 @@ class AuthEvent with _$AuthEvent {
           Map<DataModelType, Map<ApiOperation, String>>? actionMap}) =
       _AuthLoginEvent;
   const factory AuthEvent.logout() = _AuthLogoutEvent;
+  const factory AuthEvent.attemptLoad() = AuthLoadEvent;
 }
 
 @freezed

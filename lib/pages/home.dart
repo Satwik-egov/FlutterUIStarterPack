@@ -25,60 +25,47 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppInitialization, InitState>(builder: (context, state) {
       final actionMap = state.entityActionMapping;
-      return BlocBuilder<LocalizationBloc, LocalizationState>(
-        builder: (context, state) {
-          return BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) => state.maybeWhen(
-                  orElse: () => const CircularProgressIndicator(),
-                  authenticated: (accesstoken, refreshtoken, userRequest) =>
-                      Scaffold(
-                        appBar: AppBar(),
-                        // body: BlocBuilder<UserBloc, UserState>(
-                        //   builder: (context, state) => Column(children: [
-                        //     ElevatedButton(
-                        //       onPressed: () {
-                        //         context.read<UserBloc>().add(
-                        //             UserEvent.searchUser(
-                        //                 actionMap: actionMap,
-                        //                 uuid: userRequest!.uuid));
-                        //       },
-                        //       child: const Text(''),
-                        //     ),
-                        body: BlocBuilder<UserBloc, UserState>(
-                            builder: (context, state) {
-                          context.read<UserBloc>().add(UserEvent.searchUser(
-                              uuid: userRequest!.uuid, actionMap: actionMap));
-                          return Column(
-                            children: [
-                              DigitIconButton(
-                                icon: Icons.fingerprint,
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ManageAttendancePage(
-                                                projectId: "",
-                                                userId: "",
-                                                appVersion: '1.3',
-                                                attendanceListeners:
-                                                    HCMAttendanceBloc(
-                                                  context: context,
-                                                ),
-                                              )));
-                                },
-                              ),
-                              const Text(
-                                  'Text below to see if translation occurs'),
-                              Text(localizations
-                                  .translate(i18.common.coreCommonContinue))
-                            ],
-                          );
-                        }),
-                        drawer: Drawer(child: SideBar()),
-                      )));
-        },
-      );
+      return BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) => state.maybeWhen(
+                orElse: () => const CircularProgressIndicator(),
+                authenticated: (accesstoken, refreshtoken, userRequest) =>
+                    BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                  context.read<UserBloc>().add(UserEvent.searchUser(
+                      uuid: userRequest!.uuid, actionMap: actionMap));
+                  return BlocBuilder<LocalizationBloc, LocalizationState>(
+                      builder: (context, state) {
+                    return Scaffold(
+                      appBar: AppBar(),
+                      body: Column(
+                        children: [
+                          DigitIconButton(
+                            icon: Icons.fingerprint,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ManageAttendancePage(
+                                            projectId: "",
+                                            userId: "",
+                                            appVersion: '1.3',
+                                            attendanceListeners:
+                                                HCMAttendanceBloc(
+                                              context: context,
+                                            ),
+                                          )));
+                            },
+                          ),
+                          const Text('Text below to see if translation occurs'),
+                          Text(localizations
+                              .translate(i18.common.coreCommonContinue))
+                        ],
+                      ),
+                      drawer: Drawer(child: SideBar()),
+                    );
+                  });
+                }),
+              ));
     });
   }
 }
