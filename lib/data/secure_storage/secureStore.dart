@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';
+import 'package:new_digit_app/model/role_actions/role_actions_model.dart';
 import 'package:new_digit_app/model/serviceRegistry/serviceRegistryModel.dart';
 
 import '../../model/localization/localizationModel.dart';
@@ -48,5 +49,23 @@ class SecureStore {
 
   Future deleteAccessToken() async {
     await storage.delete(key: 'accessToken');
+  }
+
+  Future setRoleActions(RoleActionsWrapperModel actionsWrapper) async {
+    String jsonActionsWrapper = json.encode(actionsWrapper.toJson());
+    await storage.write(key: 'actionsWrapper', value: jsonActionsWrapper);
+  }
+
+  Future<RoleActionsWrapperModel?> getRoleActions() async {
+    String? jsonActionsWrapper = await storage.read(key: 'actionsWrapper');
+
+    if (jsonActionsWrapper == null) return null;
+
+    try {
+      return RoleActionsWrapperModel.fromJson(json.decode(jsonActionsWrapper));
+    } catch (err) {
+      print(err);
+      rethrow;
+    }
   }
 }

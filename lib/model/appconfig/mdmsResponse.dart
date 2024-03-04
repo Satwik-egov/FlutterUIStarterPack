@@ -19,7 +19,7 @@ class MdmsResponseModel with _$MdmsResponseModel {
 class AppConfig with _$AppConfig {
   const factory AppConfig(
       {@JsonKey(name: 'appConfig')
-          required List<AppConfigListItems>? appConfig}) = _AppConfig;
+      required List<AppConfigListItems>? appConfig}) = _AppConfig;
 
   factory AppConfig.fromJson(
     Map<String, dynamic> json,
@@ -30,18 +30,29 @@ class AppConfig with _$AppConfig {
 @freezed
 class AppConfigListItems with _$AppConfigListItems {
   const factory AppConfigListItems({
-    @JsonKey(name: 'TENANT_ID')
-        required String? tenantId,
-    @JsonKey(name: 'LANGUAGES')
-        required List<Language> languages,
+    @JsonKey(name: 'TENANT_ID') required String? tenantId,
+    @JsonKey(name: 'LANGUAGES') required List<Language> languages,
     @JsonKey(name: 'BACKEND_INTERFACE')
-        required InterfacesList? backendInterface,
+    required InterfacesList? backendInterface,
+    @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+    required List<GenderOptions> genderOptions,
   }) = _AppConfigListItems;
 
   factory AppConfigListItems.fromJson(
     Map<String, dynamic> json,
   ) =>
       _$AppConfigListItemsFromJson(json);
+}
+
+@freezed
+class GenderOptions with _$GenderOptions {
+  factory GenderOptions({
+    required String name,
+    required String code,
+  }) = _GenderOptions;
+
+  factory GenderOptions.fromJson(Map<String, dynamic> json) =>
+      _$GenderOptionsFromJson(json);
 }
 
 @freezed

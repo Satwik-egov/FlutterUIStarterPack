@@ -2,9 +2,22 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 part 'userModel.mapper.dart';
 
+@MappableClass(ignoreNull: true, discriminatorValue: MappableClass.useAsDefault)
+class UserSearchModel with UserSearchModelMappable {
+  final String? id;
+  final String? userName;
+  final List<String>? uuid;
+
+  UserSearchModel({
+    this.id,
+    this.userName,
+    this.uuid,
+  }) : super();
+}
+
 @MappableClass(ignoreNull: true)
 class UserModel with UserModelMappable {
-  static const schemaName = 'User';
+  static const schemaName = 'user';
 
   final String? id;
   final String? userName;
@@ -37,7 +50,7 @@ class UserModel with UserModelMappable {
   final int? createdBy;
   final String? lastModifiedBy;
   final String? tenantId;
-  final List<String>? uuid;
+  final String? uuid;
   final String? createdDate;
   final bool? nonRecoverableError;
   final int? rowVersion;

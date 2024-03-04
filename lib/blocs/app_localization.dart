@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_localization_delegate.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
-import '../data/secure_storage/secureStore.dart';
 import '../model/appconfig/mdmsResponse.dart';
 import '../model/localization/localizationModel.dart';
 

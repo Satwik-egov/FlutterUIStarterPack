@@ -5,6 +5,7 @@ import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/appconfig/mdmsRequest.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';
 import 'package:new_digit_app/model/serviceRegistry/serviceRegistryModel.dart';
+import 'package:new_digit_app/utils/constants.dart';
 
 import '../model/request/requestInfo.dart';
 import '../utils/envConfig.dart';
@@ -38,13 +39,12 @@ class AppInitRepo {
         options.data = {
           ...options.data,
           "RequestInfo": RequestInfoModel(
-            apiId: 'hcm',
-            ver: '0.1',
+            apiId: RequestInfoData.apiId,
+            ver: RequestInfoData.ver,
             ts: DateTime.now().millisecondsSinceEpoch,
             action: options.path.split('/').last,
-            did: "1",
-            key: "1",
-            // authToken: authToken,
+            did: RequestInfoData.did,
+            key: RequestInfoData.key,
           ).toJson(),
         };
         return handler.next(options);

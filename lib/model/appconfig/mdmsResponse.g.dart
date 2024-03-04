@@ -44,6 +44,9 @@ _$AppConfigListItemsImpl _$$AppConfigListItemsImplFromJson(
           ? null
           : InterfacesList.fromJson(
               json['BACKEND_INTERFACE'] as Map<String, dynamic>),
+      genderOptions: (json['GENDER_OPTIONS_POPULATOR'] as List<dynamic>)
+          .map((e) => GenderOptions.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$AppConfigListItemsImplToJson(
@@ -52,6 +55,19 @@ Map<String, dynamic> _$$AppConfigListItemsImplToJson(
       'TENANT_ID': instance.tenantId,
       'LANGUAGES': instance.languages,
       'BACKEND_INTERFACE': instance.backendInterface,
+      'GENDER_OPTIONS_POPULATOR': instance.genderOptions,
+    };
+
+_$GenderOptionsImpl _$$GenderOptionsImplFromJson(Map<String, dynamic> json) =>
+    _$GenderOptionsImpl(
+      name: json['name'] as String,
+      code: json['code'] as String,
+    );
+
+Map<String, dynamic> _$$GenderOptionsImplToJson(_$GenderOptionsImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'code': instance.code,
     };
 
 _$InterfacesListImpl _$$InterfacesListImplFromJson(Map<String, dynamic> json) =>

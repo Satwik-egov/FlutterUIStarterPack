@@ -49,9 +49,25 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: HomeScreen(
+          key: args.key,
+          appLocalizations: args.appLocalizations,
+        ),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileRouteArgs>(
+          orElse: () => const ProfileRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: ProfileScreen(
+          key: args.key,
+          appLocalizations: args.appLocalizations,
+        ),
       );
     },
   };
@@ -89,7 +105,12 @@ class _$AppRouter extends RootStackRouter {
               HomeRoute.name,
               path: 'home',
               parent: AuthenticatedRouteWrapper.name,
-            )
+            ),
+            RouteConfig(
+              ProfileRoute.name,
+              path: 'profile',
+              parent: AuthenticatedRouteWrapper.name,
+            ),
           ],
         ),
       ];
@@ -181,12 +202,68 @@ class SelectLanguageRouteArgs {
 
 /// generated route for
 /// [HomeScreen]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute()
-      : super(
+class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({
+    Key? key,
+    AppLocalizations? appLocalizations,
+  }) : super(
           HomeRoute.name,
           path: 'home',
+          args: HomeRouteArgs(
+            key: key,
+            appLocalizations: appLocalizations,
+          ),
         );
 
   static const String name = 'HomeRoute';
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({
+    this.key,
+    this.appLocalizations,
+  });
+
+  final Key? key;
+
+  final AppLocalizations? appLocalizations;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{key: $key, appLocalizations: $appLocalizations}';
+  }
+}
+
+/// generated route for
+/// [ProfileScreen]
+class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({
+    Key? key,
+    AppLocalizations? appLocalizations,
+  }) : super(
+          ProfileRoute.name,
+          path: 'profile',
+          args: ProfileRouteArgs(
+            key: key,
+            appLocalizations: appLocalizations,
+          ),
+        );
+
+  static const String name = 'ProfileRoute';
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({
+    this.key,
+    this.appLocalizations,
+  });
+
+  final Key? key;
+
+  final AppLocalizations? appLocalizations;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{key: $key, appLocalizations: $appLocalizations}';
+  }
 }

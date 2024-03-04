@@ -15,13 +15,12 @@ class LocalizationRepository {
         options.data = {
           ...options.data,
           "RequestInfo": RequestInfoModel(
-            apiId: 'hcm',
-            ver: '0.1',
+            apiId: RequestInfoData.apiId,
+            ver: RequestInfoData.ver,
             ts: DateTime.now().millisecondsSinceEpoch,
             action: options.path.split('/').last,
-            did: "1",
-            key: "1",
-            // authToken: authToken,
+            did: RequestInfoData.did,
+            key: RequestInfoData.key,
           ).toJson(),
         };
         return handler.next(options);

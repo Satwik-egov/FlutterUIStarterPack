@@ -6,6 +6,143 @@
 
 part of 'userModel.dart';
 
+class UserSearchModelMapper extends ClassMapperBase<UserSearchModel> {
+  UserSearchModelMapper._();
+
+  static UserSearchModelMapper? _instance;
+  static UserSearchModelMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = UserSearchModelMapper._());
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'UserSearchModel';
+
+  static String? _$id(UserSearchModel v) => v.id;
+  static const Field<UserSearchModel, String> _f$id =
+      Field('id', _$id, opt: true);
+  static String? _$userName(UserSearchModel v) => v.userName;
+  static const Field<UserSearchModel, String> _f$userName =
+      Field('userName', _$userName, opt: true);
+  static List<String>? _$uuid(UserSearchModel v) => v.uuid;
+  static const Field<UserSearchModel, List<String>> _f$uuid =
+      Field('uuid', _$uuid, opt: true);
+
+  @override
+  final MappableFields<UserSearchModel> fields = const {
+    #id: _f$id,
+    #userName: _f$userName,
+    #uuid: _f$uuid,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static UserSearchModel _instantiate(DecodingData data) {
+    return UserSearchModel(
+        id: data.dec(_f$id),
+        userName: data.dec(_f$userName),
+        uuid: data.dec(_f$uuid));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static UserSearchModel fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<UserSearchModel>(map);
+  }
+
+  static UserSearchModel fromJson(String json) {
+    return ensureInitialized().decodeJson<UserSearchModel>(json);
+  }
+}
+
+mixin UserSearchModelMappable {
+  String toJson() {
+    return UserSearchModelMapper.ensureInitialized()
+        .encodeJson<UserSearchModel>(this as UserSearchModel);
+  }
+
+  Map<String, dynamic> toMap() {
+    return UserSearchModelMapper.ensureInitialized()
+        .encodeMap<UserSearchModel>(this as UserSearchModel);
+  }
+
+  UserSearchModelCopyWith<UserSearchModel, UserSearchModel, UserSearchModel>
+      get copyWith => _UserSearchModelCopyWithImpl(
+          this as UserSearchModel, $identity, $identity);
+  @override
+  String toString() {
+    return UserSearchModelMapper.ensureInitialized()
+        .stringifyValue(this as UserSearchModel);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            UserSearchModelMapper.ensureInitialized()
+                .isValueEqual(this as UserSearchModel, other));
+  }
+
+  @override
+  int get hashCode {
+    return UserSearchModelMapper.ensureInitialized()
+        .hashValue(this as UserSearchModel);
+  }
+}
+
+extension UserSearchModelValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, UserSearchModel, $Out> {
+  UserSearchModelCopyWith<$R, UserSearchModel, $Out> get $asUserSearchModel =>
+      $base.as((v, t, t2) => _UserSearchModelCopyWithImpl(v, t, t2));
+}
+
+abstract class UserSearchModelCopyWith<$R, $In extends UserSearchModel, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get uuid;
+  $R call({String? id, String? userName, List<String>? uuid});
+  UserSearchModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
+}
+
+class _UserSearchModelCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, UserSearchModel, $Out>
+    implements UserSearchModelCopyWith<$R, UserSearchModel, $Out> {
+  _UserSearchModelCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<UserSearchModel> $mapper =
+      UserSearchModelMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get uuid =>
+      $value.uuid != null
+          ? ListCopyWith($value.uuid!,
+              (v, t) => ObjectCopyWith(v, $identity, t), (v) => call(uuid: v))
+          : null;
+  @override
+  $R call(
+          {Object? id = $none,
+          Object? userName = $none,
+          Object? uuid = $none}) =>
+      $apply(FieldCopyWithData({
+        if (id != $none) #id: id,
+        if (userName != $none) #userName: userName,
+        if (uuid != $none) #uuid: uuid
+      }));
+  @override
+  UserSearchModel $make(CopyWithData data) => UserSearchModel(
+      id: data.get(#id, or: $value.id),
+      userName: data.get(#userName, or: $value.userName),
+      uuid: data.get(#uuid, or: $value.uuid));
+
+  @override
+  UserSearchModelCopyWith<$R2, UserSearchModel, $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _UserSearchModelCopyWithImpl($value, $cast, t);
+}
+
 class UserModelMapper extends ClassMapperBase<UserModel> {
   UserModelMapper._();
 
@@ -114,8 +251,8 @@ class UserModelMapper extends ClassMapperBase<UserModel> {
   static String? _$tenantId(UserModel v) => v.tenantId;
   static const Field<UserModel, String> _f$tenantId =
       Field('tenantId', _$tenantId, opt: true);
-  static List<String>? _$uuid(UserModel v) => v.uuid;
-  static const Field<UserModel, List<String>> _f$uuid =
+  static String? _$uuid(UserModel v) => v.uuid;
+  static const Field<UserModel, String> _f$uuid =
       Field('uuid', _$uuid, opt: true);
   static String? _$createdDate(UserModel v) => v.createdDate;
   static const Field<UserModel, String> _f$createdDate =
@@ -260,7 +397,6 @@ extension UserModelValueCopy<$R, $Out> on ObjectCopyWith<$R, UserModel, $Out> {
 
 abstract class UserModelCopyWith<$R, $In extends UserModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get uuid;
   $R call(
       {String? id,
       String? userName,
@@ -293,7 +429,7 @@ abstract class UserModelCopyWith<$R, $In extends UserModel, $Out>
       int? createdBy,
       String? lastModifiedBy,
       String? tenantId,
-      List<String>? uuid,
+      String? uuid,
       String? createdDate,
       bool? nonRecoverableError,
       int? rowVersion});
@@ -308,12 +444,6 @@ class _UserModelCopyWithImpl<$R, $Out>
   @override
   late final ClassMapperBase<UserModel> $mapper =
       UserModelMapper.ensureInitialized();
-  @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get uuid =>
-      $value.uuid != null
-          ? ListCopyWith($value.uuid!,
-              (v, t) => ObjectCopyWith(v, $identity, t), (v) => call(uuid: v))
-          : null;
   @override
   $R call(
           {Object? id = $none,

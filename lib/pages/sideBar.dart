@@ -55,7 +55,7 @@ class SideBar extends StatelessWidget {
               onPressed: () {
                 // Navigator.of(context, rootNavigator: true).pop();
                 context.router.popUntilRoot();
-                context.router.push(const HomeRoute());
+                context.router.push(HomeRoute());
               },
             ),
             DigitIconTile(
@@ -112,9 +112,9 @@ class SideBar extends StatelessWidget {
             DigitIconTile(
               title: AppLocalizations.of(context)
                   .translate(i18.common.coreCommonProfile),
-              icon: Icons.logout,
+              icon: Icons.person,
               onPressed: () {
-                // context.navigateTo(ProfileRoute());
+                context.navigateTo(ProfileRoute());
               },
             ),
             SizedBox(

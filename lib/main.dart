@@ -1,4 +1,5 @@
 import 'package:digit_components/digit_components.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,6 +9,7 @@ import 'package:new_digit_app/blocs/app_localization.dart';
 import 'package:new_digit_app/blocs/localization.dart';
 import 'package:new_digit_app/data/app_shared_preferences.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
+import 'package:new_digit_app/data/remote_client.dart';
 import 'package:new_digit_app/routes/routes.dart';
 import 'package:new_digit_app/utils/constants.dart';
 import 'package:new_digit_app/utils/envConfig.dart';
@@ -16,12 +18,13 @@ import 'package:attendance_management/blocs/app_localization.dart'
 import 'blocs/authbloc.dart';
 
 late Isar _isar; //new addition
+late Dio _dio;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await envConfig.initialize();
+  _dio = DioClient().dio;
   _isar = await Constants().isar; //new addition
-
   await AppSharedPreferences().init();
   if (AppSharedPreferences().isFirstLaunch) {
     AppLogger.instance.info('App Launched First Time', title: 'main');

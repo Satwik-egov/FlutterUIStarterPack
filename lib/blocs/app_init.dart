@@ -12,7 +12,7 @@ import '../model/serviceRegistry/serviceRegistryModel.dart';
 part 'app_init.freezed.dart';
 
 class AppInitialization extends Bloc<InitEvent, InitState> {
-  AppInitialization() : super(InitState.uninitialized()) {
+  AppInitialization() : super(const InitState.uninitialized()) {
     on<_AppLaunchEvent>(doInitialization);
   }
 
@@ -58,7 +58,6 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
       );
 
       //convert the wrapper form into a map form
-      print(result);
       final serviceRegistryList =
           result.serviceRegistryWrapper?.serviceRegistry ?? [];
 
@@ -67,7 +66,6 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
       emit(InitState.initialized(
           appConfig: appConfig, serviceRegistryModel: serviceRegistryList));
     } catch (err) {
-      print(err);
       rethrow;
     }
   }

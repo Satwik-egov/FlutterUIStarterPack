@@ -339,6 +339,8 @@ mixin _$AppConfigListItems {
   List<Language> get languages => throw _privateConstructorUsedError;
   @JsonKey(name: 'BACKEND_INTERFACE')
   InterfacesList? get backendInterface => throw _privateConstructorUsedError;
+  @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+  List<GenderOptions> get genderOptions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -355,7 +357,9 @@ abstract class $AppConfigListItemsCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'TENANT_ID') String? tenantId,
       @JsonKey(name: 'LANGUAGES') List<Language> languages,
-      @JsonKey(name: 'BACKEND_INTERFACE') InterfacesList? backendInterface});
+      @JsonKey(name: 'BACKEND_INTERFACE') InterfacesList? backendInterface,
+      @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+      List<GenderOptions> genderOptions});
 
   $InterfacesListCopyWith<$Res>? get backendInterface;
 }
@@ -376,6 +380,7 @@ class _$AppConfigListItemsCopyWithImpl<$Res, $Val extends AppConfigListItems>
     Object? tenantId = freezed,
     Object? languages = null,
     Object? backendInterface = freezed,
+    Object? genderOptions = null,
   }) {
     return _then(_value.copyWith(
       tenantId: freezed == tenantId
@@ -390,6 +395,10 @@ class _$AppConfigListItemsCopyWithImpl<$Res, $Val extends AppConfigListItems>
           ? _value.backendInterface
           : backendInterface // ignore: cast_nullable_to_non_nullable
               as InterfacesList?,
+      genderOptions: null == genderOptions
+          ? _value.genderOptions
+          : genderOptions // ignore: cast_nullable_to_non_nullable
+              as List<GenderOptions>,
     ) as $Val);
   }
 
@@ -417,7 +426,9 @@ abstract class _$$AppConfigListItemsImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'TENANT_ID') String? tenantId,
       @JsonKey(name: 'LANGUAGES') List<Language> languages,
-      @JsonKey(name: 'BACKEND_INTERFACE') InterfacesList? backendInterface});
+      @JsonKey(name: 'BACKEND_INTERFACE') InterfacesList? backendInterface,
+      @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+      List<GenderOptions> genderOptions});
 
   @override
   $InterfacesListCopyWith<$Res>? get backendInterface;
@@ -437,6 +448,7 @@ class __$$AppConfigListItemsImplCopyWithImpl<$Res>
     Object? tenantId = freezed,
     Object? languages = null,
     Object? backendInterface = freezed,
+    Object? genderOptions = null,
   }) {
     return _then(_$AppConfigListItemsImpl(
       tenantId: freezed == tenantId
@@ -451,6 +463,10 @@ class __$$AppConfigListItemsImplCopyWithImpl<$Res>
           ? _value.backendInterface
           : backendInterface // ignore: cast_nullable_to_non_nullable
               as InterfacesList?,
+      genderOptions: null == genderOptions
+          ? _value._genderOptions
+          : genderOptions // ignore: cast_nullable_to_non_nullable
+              as List<GenderOptions>,
     ));
   }
 }
@@ -461,8 +477,11 @@ class _$AppConfigListItemsImpl implements _AppConfigListItems {
   const _$AppConfigListItemsImpl(
       {@JsonKey(name: 'TENANT_ID') required this.tenantId,
       @JsonKey(name: 'LANGUAGES') required final List<Language> languages,
-      @JsonKey(name: 'BACKEND_INTERFACE') required this.backendInterface})
-      : _languages = languages;
+      @JsonKey(name: 'BACKEND_INTERFACE') required this.backendInterface,
+      @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+      required final List<GenderOptions> genderOptions})
+      : _languages = languages,
+        _genderOptions = genderOptions;
 
   factory _$AppConfigListItemsImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppConfigListItemsImplFromJson(json);
@@ -482,10 +501,18 @@ class _$AppConfigListItemsImpl implements _AppConfigListItems {
   @override
   @JsonKey(name: 'BACKEND_INTERFACE')
   final InterfacesList? backendInterface;
+  final List<GenderOptions> _genderOptions;
+  @override
+  @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+  List<GenderOptions> get genderOptions {
+    if (_genderOptions is EqualUnmodifiableListView) return _genderOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genderOptions);
+  }
 
   @override
   String toString() {
-    return 'AppConfigListItems(tenantId: $tenantId, languages: $languages, backendInterface: $backendInterface)';
+    return 'AppConfigListItems(tenantId: $tenantId, languages: $languages, backendInterface: $backendInterface, genderOptions: $genderOptions)';
   }
 
   @override
@@ -498,13 +525,19 @@ class _$AppConfigListItemsImpl implements _AppConfigListItems {
             const DeepCollectionEquality()
                 .equals(other._languages, _languages) &&
             (identical(other.backendInterface, backendInterface) ||
-                other.backendInterface == backendInterface));
+                other.backendInterface == backendInterface) &&
+            const DeepCollectionEquality()
+                .equals(other._genderOptions, _genderOptions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, tenantId,
-      const DeepCollectionEquality().hash(_languages), backendInterface);
+  int get hashCode => Object.hash(
+      runtimeType,
+      tenantId,
+      const DeepCollectionEquality().hash(_languages),
+      backendInterface,
+      const DeepCollectionEquality().hash(_genderOptions));
 
   @JsonKey(ignore: true)
   @override
@@ -526,7 +559,9 @@ abstract class _AppConfigListItems implements AppConfigListItems {
           {@JsonKey(name: 'TENANT_ID') required final String? tenantId,
           @JsonKey(name: 'LANGUAGES') required final List<Language> languages,
           @JsonKey(name: 'BACKEND_INTERFACE')
-          required final InterfacesList? backendInterface}) =
+          required final InterfacesList? backendInterface,
+          @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+          required final List<GenderOptions> genderOptions}) =
       _$AppConfigListItemsImpl;
 
   factory _AppConfigListItems.fromJson(Map<String, dynamic> json) =
@@ -542,8 +577,165 @@ abstract class _AppConfigListItems implements AppConfigListItems {
   @JsonKey(name: 'BACKEND_INTERFACE')
   InterfacesList? get backendInterface;
   @override
+  @JsonKey(name: 'GENDER_OPTIONS_POPULATOR')
+  List<GenderOptions> get genderOptions;
+  @override
   @JsonKey(ignore: true)
   _$$AppConfigListItemsImplCopyWith<_$AppConfigListItemsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+GenderOptions _$GenderOptionsFromJson(Map<String, dynamic> json) {
+  return _GenderOptions.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GenderOptions {
+  String get name => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GenderOptionsCopyWith<GenderOptions> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GenderOptionsCopyWith<$Res> {
+  factory $GenderOptionsCopyWith(
+          GenderOptions value, $Res Function(GenderOptions) then) =
+      _$GenderOptionsCopyWithImpl<$Res, GenderOptions>;
+  @useResult
+  $Res call({String name, String code});
+}
+
+/// @nodoc
+class _$GenderOptionsCopyWithImpl<$Res, $Val extends GenderOptions>
+    implements $GenderOptionsCopyWith<$Res> {
+  _$GenderOptionsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? code = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GenderOptionsImplCopyWith<$Res>
+    implements $GenderOptionsCopyWith<$Res> {
+  factory _$$GenderOptionsImplCopyWith(
+          _$GenderOptionsImpl value, $Res Function(_$GenderOptionsImpl) then) =
+      __$$GenderOptionsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String code});
+}
+
+/// @nodoc
+class __$$GenderOptionsImplCopyWithImpl<$Res>
+    extends _$GenderOptionsCopyWithImpl<$Res, _$GenderOptionsImpl>
+    implements _$$GenderOptionsImplCopyWith<$Res> {
+  __$$GenderOptionsImplCopyWithImpl(
+      _$GenderOptionsImpl _value, $Res Function(_$GenderOptionsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? code = null,
+  }) {
+    return _then(_$GenderOptionsImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GenderOptionsImpl implements _GenderOptions {
+  _$GenderOptionsImpl({required this.name, required this.code});
+
+  factory _$GenderOptionsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GenderOptionsImplFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String code;
+
+  @override
+  String toString() {
+    return 'GenderOptions(name: $name, code: $code)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GenderOptionsImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GenderOptionsImplCopyWith<_$GenderOptionsImpl> get copyWith =>
+      __$$GenderOptionsImplCopyWithImpl<_$GenderOptionsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GenderOptionsImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GenderOptions implements GenderOptions {
+  factory _GenderOptions(
+      {required final String name,
+      required final String code}) = _$GenderOptionsImpl;
+
+  factory _GenderOptions.fromJson(Map<String, dynamic> json) =
+      _$GenderOptionsImpl.fromJson;
+
+  @override
+  String get name;
+  @override
+  String get code;
+  @override
+  @JsonKey(ignore: true)
+  _$$GenderOptionsImplCopyWith<_$GenderOptionsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

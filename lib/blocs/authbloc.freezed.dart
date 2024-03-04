@@ -18,19 +18,25 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? username, String? password) login,
+    required TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)
+        login,
     required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? username, String? password)? login,
+    TResult? Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? username, String? password)? login,
+    TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult Function()? logout,
     required TResult orElse(),
   }) =>
@@ -79,7 +85,10 @@ abstract class _$$AuthLoginEventImplCopyWith<$Res> {
           $Res Function(_$AuthLoginEventImpl) then) =
       __$$AuthLoginEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? username, String? password});
+  $Res call(
+      {String? username,
+      String? password,
+      Map<DataModelType, Map<ApiOperation, String>>? actionMap});
 }
 
 /// @nodoc
@@ -95,6 +104,7 @@ class __$$AuthLoginEventImplCopyWithImpl<$Res>
   $Res call({
     Object? username = freezed,
     Object? password = freezed,
+    Object? actionMap = freezed,
   }) {
     return _then(_$AuthLoginEventImpl(
       username: freezed == username
@@ -105,6 +115,10 @@ class __$$AuthLoginEventImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
+      actionMap: freezed == actionMap
+          ? _value._actionMap
+          : actionMap // ignore: cast_nullable_to_non_nullable
+              as Map<DataModelType, Map<ApiOperation, String>>?,
     ));
   }
 }
@@ -112,16 +126,29 @@ class __$$AuthLoginEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthLoginEventImpl implements _AuthLoginEvent {
-  const _$AuthLoginEventImpl({this.username, this.password});
+  const _$AuthLoginEventImpl(
+      {this.username,
+      this.password,
+      final Map<DataModelType, Map<ApiOperation, String>>? actionMap})
+      : _actionMap = actionMap;
 
   @override
   final String? username;
   @override
   final String? password;
+  final Map<DataModelType, Map<ApiOperation, String>>? _actionMap;
+  @override
+  Map<DataModelType, Map<ApiOperation, String>>? get actionMap {
+    final value = _actionMap;
+    if (value == null) return null;
+    if (_actionMap is EqualUnmodifiableMapView) return _actionMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString() {
-    return 'AuthEvent.login(username: $username, password: $password)';
+    return 'AuthEvent.login(username: $username, password: $password, actionMap: $actionMap)';
   }
 
   @override
@@ -132,11 +159,14 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            const DeepCollectionEquality()
+                .equals(other._actionMap, _actionMap));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, username, password,
+      const DeepCollectionEquality().hash(_actionMap));
 
   @JsonKey(ignore: true)
   @override
@@ -148,30 +178,36 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? username, String? password) login,
+    required TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)
+        login,
     required TResult Function() logout,
   }) {
-    return login(username, password);
+    return login(username, password, actionMap);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? username, String? password)? login,
+    TResult? Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult? Function()? logout,
   }) {
-    return login?.call(username, password);
+    return login?.call(username, password, actionMap);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? username, String? password)? login,
+    TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (login != null) {
-      return login(username, password);
+      return login(username, password, actionMap);
     }
     return orElse();
   }
@@ -210,10 +246,14 @@ class _$AuthLoginEventImpl implements _AuthLoginEvent {
 
 abstract class _AuthLoginEvent implements AuthEvent {
   const factory _AuthLoginEvent(
-      {final String? username, final String? password}) = _$AuthLoginEventImpl;
+          {final String? username,
+          final String? password,
+          final Map<DataModelType, Map<ApiOperation, String>>? actionMap}) =
+      _$AuthLoginEventImpl;
 
   String? get username;
   String? get password;
+  Map<DataModelType, Map<ApiOperation, String>>? get actionMap;
   @JsonKey(ignore: true)
   _$$AuthLoginEventImplCopyWith<_$AuthLoginEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -257,7 +297,9 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? username, String? password) login,
+    required TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)
+        login,
     required TResult Function() logout,
   }) {
     return logout();
@@ -266,7 +308,9 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? username, String? password)? login,
+    TResult? Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult? Function()? logout,
   }) {
     return logout?.call();
@@ -275,7 +319,9 @@ class _$AuthLogoutEventImpl implements _AuthLogoutEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? username, String? password)? login,
+    TResult Function(String? username, String? password,
+            Map<DataModelType, Map<ApiOperation, String>>? actionMap)?
+        login,
     TResult Function()? logout,
     required TResult orElse(),
   }) {

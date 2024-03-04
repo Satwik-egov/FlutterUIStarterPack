@@ -54,3 +54,12 @@ class Constants {
 
   static const String localizationApiPath = 'localization/messages/v1/_search';
 }
+
+class RequestInfoData {
+  static const String apiId = 'hcm';
+  static const String ver = '.01';
+  static num ts = DateTime.now().millisecondsSinceEpoch;
+  static const did = "1";
+  static const key = "1";
+  static String? authToken;
+}

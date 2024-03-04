@@ -16,7 +16,7 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
 
   String? _locale;
 
-  LocalizationBloc(this.isar) : super(LocalizationState.initial()) {
+  LocalizationBloc(this.isar) : super(const LocalizationState.initial()) {
     on<_LocaleSelectedEvent>(onLocaleSelected);
   }
 
@@ -77,7 +77,6 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
                 .put(localizationsListObject); // insert & update
           });
         } catch (err) {
-          print(err);
           rethrow;
         }
       }
