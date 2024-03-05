@@ -47,7 +47,7 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
                 orElse: () => null,
                 initialized: (appConfig, serviceRegistryList) {
                   return appConfig.appConfig!.appConfig?[0].genderOptions
-                      .map((e) => localizations.translate(e.name))
+                      .map((e) => e.code)
                       .firstWhere((element) => element == user?.gender,
                           orElse: () => '');
                 },
