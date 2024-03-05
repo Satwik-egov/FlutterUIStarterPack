@@ -43,6 +43,6 @@ class DioClient {
             .baseUrl, // Base URL for API endpoints from the environment configuration
       );
 
-    _dio = Dio()..options.baseUrl = envConfig.variables.baseUrl;
+    _dio.options.baseUrl = envConfig.variables.baseUrl;
   }
 }

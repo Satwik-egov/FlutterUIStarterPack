@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/appconfig/mdmsRequest.dart';
 import 'package:new_digit_app/model/appconfig/mdmsResponse.dart';

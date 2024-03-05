@@ -11,8 +11,8 @@ class AuthTokenInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     final secureStore = SecureStore();
-
     final authToken = await secureStore.getAccessToken();
+
     if (options.data is Map) {
       options.data = {
         ...options.data,
@@ -27,6 +27,6 @@ class AuthTokenInterceptor extends Interceptor {
         ).toJson(),
       };
     }
-    super.onRequest(options, handler);
+    return super.onRequest(options, handler);
   }
 }

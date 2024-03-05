@@ -115,6 +115,7 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
                           child: Text(
                               localizations.translate(i18.login.labelText)),
                           onPressed: () {
+                            form.markAllAsTouched();
                             if (form.valid) {
                               context.read<AuthBloc>().add(AuthEvent.login(
                                   username: (form

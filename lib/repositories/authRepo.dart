@@ -16,6 +16,10 @@ class AuthRepository {
   Future<ResponseModel> validateLogin(String url, LoginModel body) async {
     final formData = body.toJson();
 
+    //make a custom Dio client which will not send the with the interceptor
+    final authClient = Dio();
+    authClient.options.baseUrl = envConfig.variables.baseUrl;
+
     final headers = <String, String>{
       "content-type": 'application/x-www-form-urlencoded',
       "Access-Control-Allow-Origin": "*",
@@ -23,13 +27,14 @@ class AuthRepository {
     };
 
     try {
-      final response = await client.post(
+      final response = await authClient.post(
           // "https://unified-qa.digit.org/user/oauth/token",
           url,
           data: formData,
           options: Options(headers: headers));
 
       final responseBody = ResponseModel.fromJson(response.data);
+      authClient.close();
       return responseBody;
     } catch (err) {
       rethrow;
