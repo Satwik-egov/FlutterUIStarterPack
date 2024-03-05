@@ -26,7 +26,9 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     FormGroup buildForm(UserState state) {
+      // Extract user model from the state using mapOrNull method
       final user = state.mapOrNull(
+        // Map UserModel from the state
         user: (value) => value.userModel,
       );
 
@@ -45,10 +47,13 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
         genderKey: FormControl<String>(
           value: context.read<AppInitialization>().state.maybeWhen(
                 orElse: () => null,
+                // If the app is initialized, set value based on user's gender
                 initialized: (appConfig, serviceRegistryList) {
+                  // Map gender options to their codes and find the code matching user's gender
                   return appConfig.appConfig!.appConfig?[0].genderOptions
                       .map((e) => e.code)
                       .firstWhere((element) => element == user?.gender,
+                          // If user's gender is not found, default to an empty string
                           orElse: () => '');
                 },
               ),
@@ -104,25 +109,29 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
                     BlocBuilder<AppInitialization, InitState>(
                       builder: (context, state) => state.maybeWhen(
                         orElse: () => const Offstage(),
+                        // If the app is initialized, display the gender options
                         initialized: (appConfig, _) {
                           return Column(
                             children: [
+                              // Display label for gender options
                               Row(
                                 children: [
                                   Text(
-                                    localizations.translate(
-                                      i18.common.coreCommonGender,
-                                    ),
+                                    localizations
+                                        .translate(i18.common.coreCommonGender),
                                     style: theme.textTheme.labelMedium,
                                   ),
                                 ],
                               ),
+                              // Generate RadioListTiles for each gender option
                               ...appConfig
                                   .appConfig!.appConfig![0].genderOptions
                                   .map((e) => ReactiveRadioListTile<String>(
                                         value: e.code,
                                         title: Text(
-                                            localizations.translate(e.code)),
+                                          localizations.translate(e.code),
+                                        ),
+                                        // Set form control name for reactive form handling
                                         formControlName: genderKey,
                                       ))
                                   .toList(),
@@ -144,26 +153,35 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
                       },
                     ),
                     DigitElevatedButton(
-                        child: Text(
-                            localizations.translate(i18.common.coreCommonSave)),
-                        onPressed: () {
-                          UserModel? user = state.mapOrNull(
-                            user: (value) => value.userModel,
-                          );
+                      child: Text(
+                        localizations.translate(i18.common.coreCommonSave),
+                      ),
+                      // Define onPressed callback function
+                      onPressed: () {
+                        // Extract user details from the state
+                        UserModel? user = state.mapOrNull(
+                          user: (value) => value.userModel,
+                        );
 
-                          final updatedUser = user!.copyWith(
-                            gender:
-                                formGroup.control(genderKey).value as String,
-                            mobileNumber: formGroup.control(mobileNoKey).value,
-                            name: formGroup.control(nameKey).value as String,
-                            emailId:
-                                formGroup.control(emailIdKey).value as String,
-                          );
-                          context.read<UserBloc>().add(UserEvent.updateUser(
-                              actionMap: actionMap,
-                              user: updatedUser,
-                              olduser: user));
-                        })
+                        // Create an updated user model with form data
+                        final updatedUser = user!.copyWith(
+                          gender: formGroup.control(genderKey).value as String,
+                          mobileNumber: formGroup.control(mobileNoKey).value,
+                          name: formGroup.control(nameKey).value as String,
+                          emailId:
+                              formGroup.control(emailIdKey).value as String,
+                        );
+
+                        // Dispatch updateUser event to UserBloc with updated user details
+                        context.read<UserBloc>().add(
+                              UserEvent.updateUser(
+                                actionMap: actionMap,
+                                user: updatedUser,
+                                olduser: user,
+                              ),
+                            );
+                      },
+                    )
                   ],
                 )),
               ),

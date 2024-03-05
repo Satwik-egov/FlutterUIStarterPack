@@ -25,24 +25,33 @@ class SelectLanguageScreen extends StatelessWidget {
                 builder: (context, locState) =>
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   DigitLanguageCard(
+                    // Provide language items to display in DigitRowCardItems
                     digitRowCardItems: languages!.map((e) {
                       return DigitRowCardModel(
-                          label: e.label,
-                          value: e.value,
-                          isSelected: e.value ==
-                              context.read<LocalizationBloc>().locale);
+                        label: e.label,
+                        value: e.value,
+                        // Check if the language is selected based on the current locale
+                        isSelected:
+                            e.value == context.read<LocalizationBloc>().locale,
+                      );
                     }).toList(),
+                    // Define callback function for language change
                     onLanguageChange: (rowCardValue) {
+                      // Dispatch localization event to select the new locale
                       context.read<LocalizationBloc>().add(
-                          LocalizationEvent.onSelect(
+                            LocalizationEvent.onSelect(
                               locale: rowCardValue.value,
                               moduleList: appConfig
-                                  .appConfig!.appConfig?[0].backendInterface));
+                                  .appConfig!.appConfig?[0].backendInterface,
+                            ),
+                          );
                     },
+                    // Define callback function for language submission
                     onLanguageSubmit: () {
+                      // Navigate to the LoginRoute upon language submission
                       context.navigateTo(LoginRoute());
                     },
-                    // languageSubmitLabel: 'Submit',
+                    // Define label for language submission button
                     languageSubmitLabel: AppLocalizations.of(context)
                         .translate(i18.common.coreCommonContinue),
                   ),

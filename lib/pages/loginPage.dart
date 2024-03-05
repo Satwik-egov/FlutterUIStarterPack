@@ -23,12 +23,16 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // Function to build a IconButton for toggling password visibility
     Widget buildPasswordVisibility() {
       return IconButton(
+        // Display appropriate icon based on password visibility state
         icon: Icon(
           _obscureText ? Icons.visibility_off : Icons.visibility,
         ),
+        // Define onPressed callback function
         onPressed: () {
+          // Toggle password visibility state
           setState(() {
             _obscureText = !_obscureText;
           });
@@ -113,20 +117,31 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
                         },
                         builder: (context, state) => DigitElevatedButton(
                           child: Text(
-                              localizations.translate(i18.login.labelText)),
+                            localizations.translate(i18.login.labelText),
+                          ),
+                          // Define onPressed callback function
                           onPressed: () {
+                            // Mark all form fields as touched
                             form.markAllAsTouched();
+                            // Check if the form is valid
                             if (form.valid) {
-                              context.read<AuthBloc>().add(AuthEvent.login(
-                                  username: (form
-                                          .control(_usernameController)
-                                          .value as String)
-                                      .trim(),
-                                  password: (form
-                                          .control(_passwordController)
-                                          .value as String)
-                                      .trim(),
-                                  actionMap: actionMap));
+                              // Dispatch login event to AuthBloc with entered username and password
+                              context.read<AuthBloc>().add(
+                                    AuthEvent.login(
+                                      // Extract and trim username from form control
+                                      username: (form
+                                              .control(_usernameController)
+                                              .value as String)
+                                          .trim(),
+                                      // Extract and trim password from form control
+                                      password: (form
+                                              .control(_passwordController)
+                                              .value as String)
+                                          .trim(),
+                                      // Pass action map if needed
+                                      actionMap: actionMap,
+                                    ),
+                                  );
                             }
                           },
                         ),

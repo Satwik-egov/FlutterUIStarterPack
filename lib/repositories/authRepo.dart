@@ -28,9 +28,11 @@ class AuthRepository {
     try {
       final response = await authClient.post(url,
           data: formData, options: Options(headers: headers));
-
       final responseBody = ResponseModel.fromJson(response.data);
+
+      //close this client so it doesnt interfere with other instances of DioClient
       authClient.close();
+
       return responseBody;
     } catch (err) {
       rethrow;
