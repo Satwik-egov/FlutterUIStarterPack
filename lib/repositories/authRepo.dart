@@ -10,13 +10,12 @@ import 'package:new_digit_app/utils/constants.dart';
 
 class AuthRepository {
   AuthRepository();
-  // final client = Dio();
   final client = DioClient().dio;
 
   Future<ResponseModel> validateLogin(String url, LoginModel body) async {
     final formData = body.toJson();
 
-    //make a custom Dio client which will not send the with the interceptor
+    //make a custom Dio client which will not send the request with the interceptor
     final authClient = Dio();
     authClient.options.baseUrl = envConfig.variables.baseUrl;
 
@@ -27,11 +26,8 @@ class AuthRepository {
     };
 
     try {
-      final response = await authClient.post(
-          // "https://unified-qa.digit.org/user/oauth/token",
-          url,
-          data: formData,
-          options: Options(headers: headers));
+      final response = await authClient.post(url,
+          data: formData, options: Options(headers: headers));
 
       final responseBody = ResponseModel.fromJson(response.data);
       authClient.close();
@@ -44,9 +40,7 @@ class AuthRepository {
   Future<RoleActionsWrapperModel> searchRoleActions(
     Map<String, dynamic> body,
   ) async {
-    String url =
-        // "https://unified-qa.digit.org/" +
-        envConfig.variables.actionMapApiPath;
+    String url = envConfig.variables.actionMapApiPath;
 
     try {
       client.interceptors.add(InterceptorsWrapper(onRequest:

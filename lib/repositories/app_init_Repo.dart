@@ -9,6 +9,8 @@ import 'package:new_digit_app/utils/constants.dart';
 import '../model/request/requestInfo.dart';
 import '../utils/envConfig.dart';
 
+//create an instance of the environmentConfiguration class
+//envConfig is used everywhere to get certain variables, either from the .env file or by using certain predefined fallback values
 EnvironmentConfiguration envConfig = EnvironmentConfiguration.instance;
 
 class AppInitRepo {
@@ -17,7 +19,6 @@ class AppInitRepo {
     final client = Dio();
     final body = mdmsRequestBody.toJson();
 
-    // const FlutterSecureStorage storage = FlutterSecureStorage();
     final SecureStore storage = SecureStore();
 
     // try to fetch locally
@@ -49,28 +50,24 @@ class AppInitRepo {
         return handler.next(options);
       }));
 
-      final response = await client.post(
-          // 'https://unified-dev.digit.org/egov-mdms-service/v1/_search',
-          envConfig.variables.completeMdmsApiUrl,
-          data: body,
-          options: Options(headers: headers));
+      //make am api call
+      final response = await client.post(envConfig.variables.completeMdmsApiUrl,
+          data: body, options: Options(headers: headers));
 
       final responseBody = MdmsResponseModel.fromJson(
         json.decode(response.toString())['MdmsRes'],
       );
 
-      // storage.write(key: 'app_config', value: response.data.toString());
+      //storage locally to avoid fetching in future
       storage.setAppConfig(responseBody);
 
       return responseBody;
     } catch (err) {
-      print(err);
       rethrow;
     }
   }
 
   Future<ServiceRegistryModel> searchServiceRegistry(
-    // String apiEndPoint,
     Map<String, dynamic> body,
   ) async {
     final SecureStore storage = SecureStore();
@@ -89,6 +86,7 @@ class AppInitRepo {
       "authorization": "Basic ZWdvdi11c2VyLWNsaWVudDo=",
     };
 
+    //this request needs an interceptor to add RequestInfo
     try {
       client.interceptors.add(InterceptorsWrapper(onRequest:
           (RequestOptions options, RequestInterceptorHandler handler) {
@@ -101,19 +99,19 @@ class AppInitRepo {
             action: options.path.split('/').last,
             did: "1",
             key: "1",
-            // authToken: authToken,
           ).toJson(),
         };
         return handler.next(options);
       }));
 
+      //make an api call
       final response = await client.post(envConfig.variables.completeMdmsApiUrl,
           data: body, options: Options(headers: headers));
 
       final responseBody = ServiceRegistryModel.fromJson(
           json.decode(response.toString())['MdmsRes']);
 
-      // storage.write(key: 'service_register', value: response.data.toString());
+      //store locally to avoid fetching online in future
       storage.setServiceRegistry(responseBody);
 
       return responseBody;

@@ -11,8 +11,6 @@ import 'package:new_digit_app/pages/sideBar.dart';
 import 'package:new_digit_app/widget/localized.dart';
 import '../utils/i18_key_constants.dart' as i18;
 
-// import '../blocs/userbloc.dart';
-
 class HomeScreen extends LocalizedStatefulWidget {
   const HomeScreen({super.key, super.appLocalizations});
 

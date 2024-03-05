@@ -104,6 +104,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           refreshtoken: _refreshtoken,
           userRequest: _userRequest));
     } else {
+      //stay in the unauthenicated state
       emit(const AuthState.unauthenticated());
     }
   }

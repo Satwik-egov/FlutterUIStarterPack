@@ -13,5 +13,4 @@ class AuthenticatedScreenWrapper extends StatelessWidget {
           create: (context) => UserBloc(),
         )
       ], child: const AutoRouter());
-  // Widget build(BuildContext context) => const AutoRouter();
 }
