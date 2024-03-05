@@ -17,8 +17,7 @@ class AppLocalizations {
 
   static LocalizationModel? localizationModel;
 
-  // static List<LocalizationMessageModel> _localizedStrings =
-  //     <LocalizationMessageModel>[];
+  //creating a list for storing the localization strings
   static final List<Localization> _localizedStrings = <Localization>[];
 
   static LocalizationsDelegate<AppLocalizations> getDelegate(
@@ -26,19 +25,7 @@ class AppLocalizations {
       AppLocalizationsDelegate(config, isar);
 
   Future<bool> load() async {
-    // Future<LocalizationModel?> load() async {
-    //implementing using secure store
-    // final secureStore = SecureStore();
-    // final jsonlocString = await secureStore
-    //     .getLocalizations('${locale.languageCode}_${locale.countryCode}');
-    // if (jsonlocString != null) {
-    //   final Map<String, dynamic> jsonMap = json.decode(jsonlocString);
-    //   localizationModel = LocalizationModel.fromJson(jsonMap);
-    //   _localizedStrings = localizationModel?.messages ?? [];
-    // }
-    // return localizationModel;
-
-    //implementing using ISAR
+    //loading localizations from ISAR
     _localizedStrings.clear();
     final List<LocalizationWrapper> localizationList = await isar
         .localizationWrappers
@@ -54,16 +41,8 @@ class AppLocalizations {
     return false;
   }
 
-  // String translate(String code) {
-  //   // final message = localizationModel?.messages.firstWhere(
-  //     final  message = _localizedStrings.firstWhere(
-  //     (message) => message.code == code,
-  //     orElse: () => LocalizationMessageModel(
-  //         code: code, message: '${code}', module: '', locale: ''),
-  //   );
-  //   return message?.message ?? code;
-  // }
-
+  //This translate method is what we will evoke according to our need. The localizations are already fetched from the load method.
+  //In order use this method in any page, use "localizations.translate(code)" with the appropriate code fetched from the module list
   String translate(String localizedValues) {
     if (_localizedStrings.isEmpty) {
       return localizedValues;

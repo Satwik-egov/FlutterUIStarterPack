@@ -70,6 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         "enabled": true,
       });
 
+      //role actions must also be stored in secureStore so that we don't have to make calls for it repeatedly
       await secureStore.setRoleActions(actionsWrapper);
     } catch (err) {
       rethrow;
@@ -77,6 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onLogout(_AuthLogoutEvent event, Emitter<AuthState> emit) {
+    //when we logout, we need the access token to be deleted and invalidated. All the AccessInfo stored locally is now redundant. Delete it.
     final secureStore = SecureStore();
     secureStore.deleteAccessToken();
     secureStore.deleteAccessInfo();
@@ -88,6 +90,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AuthLoadEvent event, Emitter<AuthState> emit) async {
     final secureStore = SecureStore();
 
+    //first attempt to get the accessToken from local secure storage, if successful, the user need not go through the login page again
     ResponseModel? accessInfo;
     accessInfo = await secureStore.getAccessInfo();
 

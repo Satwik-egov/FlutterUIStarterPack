@@ -16,12 +16,16 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
     on<_AppLaunchEvent>(doInitialization);
   }
 
+  //deal with AppInitEvent, fetches appConfig
   FutureOr<void> doInitialization(
       _AppLaunchEvent event, Emitter<InitState> emit) async {
+    //initialize repo for fetching appConfig
     final appInitRepo = AppInitRepo();
     try {
       final appConfig =
           await appInitRepo.searchAppConfiguration(const MdmsRequestModel(
+        //send the request in MdmsRequestModel format
+        //take the response in ResponseModel format
         mdmsCriteria: MdmsCriteriaModel(
           tenantId: 'mz',
           moduleDetails: [
@@ -61,8 +65,7 @@ class AppInitialization extends Bloc<InitEvent, InitState> {
       final serviceRegistryList =
           result.serviceRegistryWrapper?.serviceRegistry ?? [];
 
-      //Write code here to store in secure storage
-
+      //go to the initialized state once configuration details are fetched
       emit(InitState.initialized(
           appConfig: appConfig, serviceRegistryModel: serviceRegistryList));
     } catch (err) {
@@ -84,6 +87,7 @@ class InitState with _$InitState {
       {required MdmsResponseModel appConfig,
       required List<ServiceRegistry> serviceRegistryModel}) = Initialized;
 
+  //create an actionMap that will make it easier to maintain endpoints for specific use cases and perform requests
   Map<DataModelType, Map<ApiOperation, String>> get entityActionMapping {
     return when(
       uninitialized: () => {},

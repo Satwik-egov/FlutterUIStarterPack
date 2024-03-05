@@ -18,8 +18,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   FutureOr<void> _handleSearchUser(
       UserSearchEvent event, Emitter<UserState> emit) async {
     try {
+      //fetch the Api endpoint from the actionMap
       final searchUrl =
           event.actionMap[DataModelType.user]?[ApiOperation.search];
+
+      //make the api call and process the response
       final Response response =
           await UserRepository().searchUser(searchUrl!, event.uuid);
       final responseMap = response.data;
@@ -28,8 +31,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           entityResponse.whereType<Map<String, dynamic>>();
       final results =
           entityList.map((e) => UserModelMapper.fromMap(e)).toList();
+
+      //go to the user state while providing the userModel
+      //this userModel contains all of the details that are to be displayed on the profile page
       emit(UserState.user(userModel: results.first));
-      // emit(UserState.user(userModel: response));
     } catch (err) {
       emit(const UserState.error());
       rethrow;
@@ -42,9 +47,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   ) async {
     emit(const UserState.loading());
     try {
+      //fetch endpoint for update from the actionMap
       final updateUrl =
           event.actionMap[DataModelType.user]?[ApiOperation.update];
 
+      //make the request and process the response
       final Response response =
           await UserRepository().updateUser(updateUrl!, event.user);
       final responseMap = response.data;
@@ -54,10 +61,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       final results =
           entityList.map((e) => UserModelMapper.fromMap(e)).toList();
+
+      //change the userState, it had an old user data, now it has a new user data in the UserModel parameter
       emit(UserState.user(userModel: results.first));
     } on DioError catch (error) {
       final String errorCode = error.response?.data['Errors'][0]['code'];
       emit(UserState.error(errorCode));
+
+      //if the updation fails, you would ideally want to change back to the old user data and display whatever details were already there
       emit(UserState.user(userModel: event.olduser));
 
       rethrow;

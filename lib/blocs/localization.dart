@@ -31,6 +31,8 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
     try {
       final localizationRepository = LocalizationRepository();
 
+      //defining parameters in case we need to fetch localizations from online
+      //the module name list is essentially a list of all the use cases or modules we need our localizations for
       List<String?> moduleNameList = [];
       if (event.moduleList != null) {
         for (var list in event.moduleList!.interfaces!) {
@@ -39,14 +41,13 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
           }
         }
       }
-
       final Map<String, String> queryParam = {
         'locale': event.locale.toString(),
         'module': moduleNameList.join(','),
         'tenantId': 'mz'
       };
 
-      //initialize appLocalizations for searching secure storage or setting locmodel
+      //initialize appLocalizations for searching ISAR or setting locmodel
       final splitLocale = event.locale!.split('_');
       AppLocalizations appLocalizations =
           AppLocalizations(Locale(splitLocale[0], splitLocale[1]), isar);
@@ -54,7 +55,7 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
       //attempt to fetch from isar
       var localizationsListFetched = await appLocalizations.load();
 
-      //fetch localizationList online
+      //fetch localizationList online if localizations could not be fetched from ISAR
       if (localizationsListFetched == false) {
         final localizationsList =
             await localizationRepository.getLocalizationsList(queryParam);
@@ -83,9 +84,6 @@ class LocalizationBloc extends Bloc<LocalizationEvent, LocalizationState> {
 
       //Change the bloc to make it not necessary to take a localizationsList
       emit(LocalizationState.selected(locale: event.locale));
-
-      //trying to pass state variable locale
-      // locale = event.locale.toString();
     } catch (err) {
       print(err);
       rethrow;
