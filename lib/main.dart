@@ -11,6 +11,7 @@ import 'package:new_digit_app/data/app_shared_preferences.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
 import 'package:new_digit_app/data/remote_client.dart';
 import 'package:new_digit_app/data/secure_storage/secureStore.dart';
+import 'package:new_digit_app/model/data_model.init.dart';
 import 'package:new_digit_app/routes/routes.dart';
 import 'package:new_digit_app/utils/constants.dart';
 import 'package:new_digit_app/utils/envConfig.dart';
@@ -24,6 +25,7 @@ late Dio _dio;
 void main() async {
   // Ensure Flutter widgets are initialized
   WidgetsFlutterBinding.ensureInitialized();
+  initializeMappers();
 
   // Initialize environment configurations, ISAR, dio
   await envConfig.initialize();

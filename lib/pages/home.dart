@@ -49,6 +49,7 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                                             appVersion: '1.3',
                                             attendanceListeners:
                                                 HCMAttendanceBloc(
+                                              actionMap: actionMap,
                                               context: context,
                                             ),
                                           )));

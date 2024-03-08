@@ -7,6 +7,8 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
+  drift: ^2.0.0
+  drift_db_viewer: ^2.0.0
   auto_route: ^5.0.2
   auto_route_generator: ^5.0.2
   digit_components: ^0.0.1+9
@@ -34,12 +36,16 @@ dependencies:
   path_provider: ^2.1.2
   shared_preferences: ^2.1.0
   collection: ^1.18.0
+  uuid: ^3.0.6
+  collection: ^1.16.0
+
 
       
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  drift_dev: ^2.14.1
   build_runner: ^2.4.8
   json_serializable: ^6.4.0
   isar_generator: ^3.1.0+1

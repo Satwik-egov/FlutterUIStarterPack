@@ -6,37 +6,7 @@ part 'dataModel.mapper.dart';
 enum ApiOperation { login, create, search, update, delete }
 
 @MappableEnum()
-enum DataModelType {
-  user,
-  facility,
-  address,
-  household,
-  individual,
-  projectBeneficiary,
-  householdMember,
-  product,
-  productVariant,
-  project,
-  projectFacility,
-  projectProductVariant,
-  projectStaff,
-  projectResource,
-  projectType,
-  stock,
-  stockReconciliation,
-  task,
-  sideEffect,
-  referral,
-  serviceDefinition,
-  service,
-  complaints,
-  attributes,
-  boundary,
-  serviceAttributes,
-  locality,
-  downsync,
-  downsyncCriteria,
-}
+enum DataModelType { user, address, individual, attendanceRegister, attendance }
 
 // // @MappableClass()
 class ActionPathModel {
@@ -49,4 +19,36 @@ class ActionPathModel {
     required this.type,
     required this.path,
   });
+}
+
+@MappableClass()
+class AuditDetails with AuditDetailsMappable {
+  final String createdBy;
+  final String lastModifiedBy;
+  final int createdTime;
+  final int lastModifiedTime;
+
+  const AuditDetails({
+    required this.createdBy,
+    required this.createdTime,
+    String? lastModifiedBy,
+    int? lastModifiedTime,
+  })  : lastModifiedBy = lastModifiedBy ?? createdBy,
+        lastModifiedTime = lastModifiedTime ?? createdTime;
+}
+
+@MappableClass()
+class ClientAuditDetails with ClientAuditDetailsMappable {
+  final int createdTime;
+  final int? lastModifiedTime;
+  final String createdBy;
+  final String lastModifiedBy;
+
+  ClientAuditDetails({
+    required this.createdBy,
+    required this.createdTime,
+    String? lastModifiedBy,
+    int? lastModifiedTime,
+  })  : lastModifiedBy = lastModifiedBy ?? createdBy,
+        lastModifiedTime = lastModifiedTime ?? createdTime;
 }
