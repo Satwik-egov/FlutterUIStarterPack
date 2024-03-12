@@ -1,9 +1,8 @@
-import 'package:attendance_management/pages/manage_attendance.dart';
+// import 'package:attendance_management/pages/manage_attendance.dart';
 import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
-import 'package:new_digit_app/blocs/attendencebloc.dart';
 import 'package:new_digit_app/blocs/authbloc.dart';
 import 'package:new_digit_app/blocs/localization.dart';
 import 'package:new_digit_app/blocs/userbloc.dart';
@@ -39,20 +38,19 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                           DigitIconButton(
                             icon: Icons.fingerprint,
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ManageAttendancePage(
-                                            projectId: "",
-                                            userId: "",
-                                            appVersion: '1.3',
-                                            attendanceListeners:
-                                                HCMAttendanceBloc(
-                                              actionMap: actionMap,
-                                              context: context,
-                                            ),
-                                          )));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => ManageAttendancePage(
+                              //         projectId: "",
+                              //         userId: "",
+                              //         appVersion: '1.3',
+                              //         attendanceListeners: HCMAttendanceBloc(
+                              //           actionMap: actionMap,
+                              //           context: context,
+                              //         ),
+                              //       ),
+                              //     ));
                             },
                           ),
                           const Text('Text below to see if translation occurs'),
