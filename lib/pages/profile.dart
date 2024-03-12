@@ -82,108 +82,114 @@ class _ProfileScreenState extends LocalizedState<ProfileScreen> {
                 builder: (BuildContext context, FormGroup formGroup,
                         Widget? child) =>
                     DigitCard(
-                        child: Column(
-                  children: [
-                    DigitTextFormField(
-                      formControlName: nameKey,
-                      maxLength: 200,
-                      label: localizations.translate(i18.common.coreCommonName),
-                      validationMessages: {
-                        'required': (object) => localizations.translate(
-                              '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
-                            ),
-                      },
-                    ),
-                    DigitTextFormField(
-                      formControlName: mobileNoKey,
-                      minLength: 10,
-                      maxLength: 10,
-                      label: localizations
-                          .translate(i18.common.coreCommonMobileNumber),
-                      validationMessages: {
-                        'required': (object) => localizations.translate(
-                              '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
-                            ),
-                      },
-                    ),
-                    BlocBuilder<AppInitialization, InitState>(
-                      builder: (context, state) => state.maybeWhen(
-                        orElse: () => const Offstage(),
-                        // If the app is initialized, display the gender options
-                        initialized: (appConfig, _) {
-                          return Column(
-                            children: [
-                              // Display label for gender options
-                              Row(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        DigitTextFormField(
+                          formControlName: nameKey,
+                          maxLength: 200,
+                          label: localizations
+                              .translate(i18.common.coreCommonName),
+                          validationMessages: {
+                            'required': (object) => localizations.translate(
+                                  '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
+                                ),
+                          },
+                        ),
+                        DigitTextFormField(
+                          formControlName: mobileNoKey,
+                          minLength: 10,
+                          maxLength: 10,
+                          label: localizations
+                              .translate(i18.common.coreCommonMobileNumber),
+                          validationMessages: {
+                            'required': (object) => localizations.translate(
+                                  '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
+                                ),
+                          },
+                        ),
+                        BlocBuilder<AppInitialization, InitState>(
+                          builder: (context, state) => state.maybeWhen(
+                            orElse: () => const Offstage(),
+                            // If the app is initialized, display the gender options
+                            initialized: (appConfig, _) {
+                              return Column(
                                 children: [
-                                  Text(
-                                    localizations
-                                        .translate(i18.common.coreCommonGender),
-                                    style: theme.textTheme.labelMedium,
+                                  // Display label for gender options
+                                  Row(
+                                    children: [
+                                      Text(
+                                        localizations.translate(
+                                            i18.common.coreCommonGender),
+                                        style: theme.textTheme.labelMedium,
+                                      ),
+                                    ],
                                   ),
+                                  // Generate RadioListTiles for each gender option
+                                  ...appConfig
+                                      .appConfig!.appConfig![0].genderOptions
+                                      .map((e) => ReactiveRadioListTile<String>(
+                                            value: e.code,
+                                            title: Text(
+                                              localizations.translate(e.code),
+                                            ),
+                                            // Set form control name for reactive form handling
+                                            formControlName: genderKey,
+                                          ))
+                                      .toList(),
                                 ],
-                              ),
-                              // Generate RadioListTiles for each gender option
-                              ...appConfig
-                                  .appConfig!.appConfig![0].genderOptions
-                                  .map((e) => ReactiveRadioListTile<String>(
-                                        value: e.code,
-                                        title: Text(
-                                          localizations.translate(e.code),
-                                        ),
-                                        // Set form control name for reactive form handling
-                                        formControlName: genderKey,
-                                      ))
-                                  .toList(),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    DigitTextFormField(
-                      formControlName: emailIdKey,
-                      label: localizations.translate(
-                        i18.common.coreCommonEmailId,
-                      ),
-                      maxLength: 200,
-                      validationMessages: {
-                        'required': (object) => localizations.translate(
-                              '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
-                            ),
-                      },
-                    ),
-                    DigitElevatedButton(
-                      child: Text(
-                        localizations.translate(i18.common.coreCommonSave),
-                      ),
-                      // Define onPressed callback function
-                      onPressed: () {
-                        // Extract user details from the state
-                        UserModel? user = state.mapOrNull(
-                          user: (value) => value.userModel,
-                        );
-
-                        // Create an updated user model with form data
-                        final updatedUser = user!.copyWith(
-                          gender: formGroup.control(genderKey).value as String,
-                          mobileNumber: formGroup.control(mobileNoKey).value,
-                          name: formGroup.control(nameKey).value as String,
-                          emailId:
-                              formGroup.control(emailIdKey).value as String,
-                        );
-
-                        // Dispatch updateUser event to UserBloc with updated user details
-                        context.read<UserBloc>().add(
-                              UserEvent.updateUser(
-                                actionMap: actionMap,
-                                user: updatedUser,
-                                olduser: user,
-                              ),
+                              );
+                            },
+                          ),
+                        ),
+                        DigitTextFormField(
+                          formControlName: emailIdKey,
+                          label: localizations.translate(
+                            i18.common.coreCommonEmailId,
+                          ),
+                          maxLength: 200,
+                          validationMessages: {
+                            'required': (object) => localizations.translate(
+                                  '${i18.individualDetails.nameLabelText}_IS_REQUIRED',
+                                ),
+                          },
+                        ),
+                        DigitElevatedButton(
+                          child: Text(
+                            localizations.translate(i18.common.coreCommonSave),
+                          ),
+                          // Define onPressed callback function
+                          onPressed: () {
+                            // Extract user details from the state
+                            UserModel? user = state.mapOrNull(
+                              user: (value) => value.userModel,
                             );
-                      },
-                    )
-                  ],
-                )),
+
+                            // Create an updated user model with form data
+                            final updatedUser = user!.copyWith(
+                              gender:
+                                  formGroup.control(genderKey).value as String,
+                              mobileNumber:
+                                  formGroup.control(mobileNoKey).value,
+                              name: formGroup.control(nameKey).value as String,
+                              emailId:
+                                  formGroup.control(emailIdKey).value as String,
+                            );
+
+                            // Dispatch updateUser event to UserBloc with updated user details
+                            context.read<UserBloc>().add(
+                                  UserEvent.updateUser(
+                                    actionMap: actionMap,
+                                    user: updatedUser,
+                                    olduser: user,
+                                  ),
+                                );
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           );
