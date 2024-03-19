@@ -93,6 +93,18 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return DataModelType.attendanceRegister;
       case 'attendance':
         return DataModelType.attendance;
+      case 'project':
+        return DataModelType.project;
+      case 'projectFacility':
+        return DataModelType.projectFacility;
+      case 'projectProductVariant':
+        return DataModelType.projectProductVariant;
+      case 'projectStaff':
+        return DataModelType.projectStaff;
+      case 'projectResource':
+        return DataModelType.projectResource;
+      case 'projectType':
+        return DataModelType.projectType;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -111,6 +123,18 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return 'attendanceRegister';
       case DataModelType.attendance:
         return 'attendance';
+      case DataModelType.project:
+        return 'project';
+      case DataModelType.projectFacility:
+        return 'projectFacility';
+      case DataModelType.projectProductVariant:
+        return 'projectProductVariant';
+      case DataModelType.projectStaff:
+        return 'projectStaff';
+      case DataModelType.projectResource:
+        return 'projectResource';
+      case DataModelType.projectType:
+        return 'projectType';
     }
   }
 }

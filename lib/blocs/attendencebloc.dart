@@ -2,13 +2,14 @@ import 'package:attendance_management/blocs/attendance_listeners.dart';
 import 'package:attendance_management/models/attendance_log.dart';
 import 'package:attendance_management/models/attendance_register.dart';
 import 'package:flutter/material.dart';
+import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/attendance/hcm_attendance_log_model.dart';
 import 'package:new_digit_app/model/attendance/hcm_attendance_model.dart';
-import 'package:new_digit_app/model/attendance/individual.dart';
+import 'package:new_digit_app/model/individual/individual.dart';
 import 'package:new_digit_app/model/dataModel.dart';
 import 'package:new_digit_app/repositories/attendence/attendenceLogsRepo.dart';
 import 'package:new_digit_app/repositories/attendence/attendenceRegistersRepo.dart';
-import 'package:new_digit_app/repositories/attendence/individualSearchRepo.dart';
+import 'package:new_digit_app/repositories/individualSearchRepo.dart';
 import 'package:new_digit_app/utils/utils.dart';
 import 'package:collection/collection.dart';
 
@@ -45,6 +46,10 @@ class HCMAttendanceBloc extends AttendanceListeners {
     final individualRepository = IndividualSearchRemoteRepository();
     final attendanceLogRepository = AttendanceLogRemoteRepository();
 
+    //fetch individualId from secureStore
+    final secureStore = SecureStore();
+    final individualId = await secureStore.getSelectedIndividual();
+
     // _registersLoaded([AttendanceRegisterModel(id: '', name: 'Attendance')]);
     final registers = await AttendenceRemoteRepository().searchRegisters(
         HCMAttendanceSearchModel(staffId: individualId, referenceId: projectId),
@@ -58,7 +63,7 @@ class HCMAttendanceBloc extends AttendanceListeners {
         actionMap,
         HCMAttendanceLogSearchModel(
           registerId: e.attendanceRegister.id,
-          uploadToServer: true,
+          // uploadToServer: true,
         ),
       );
 
@@ -222,10 +227,10 @@ class HCMAttendanceBloc extends AttendanceListeners {
         hcmAttendanceLogs.groupListsBy((ele) => ele.attendance?.individualId);
 
     // for (final log in groupedIndividuals.entries) {
-    //   await attendanceLogRemoteRepository?.create(
+    //   await attendanceLogRemoteRepository.create(
     //     log.value.where((l) => l.attendance?.type == 'ENTRY').last,
     //   );
-    //   await attendanceLogRemoteRepository?.create(
+    //   await attendanceLogRemoteRepository.create(
     //     log.value.where((l) => l.attendance?.type == 'EXIT').last,
     //   );
     // }

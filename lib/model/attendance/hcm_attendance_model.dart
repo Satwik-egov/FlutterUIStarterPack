@@ -1,6 +1,6 @@
 import 'package:attendance_management/models/attendance_register.dart';
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:new_digit_app/model/attendance/individual.dart';
+import 'package:new_digit_app/model/individual/individual.dart';
 import 'package:new_digit_app/model/dataModel.dart';
 
 part 'hcm_attendance_model.mapper.dart';

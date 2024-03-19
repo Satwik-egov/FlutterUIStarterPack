@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:new_digit_app/data/secure_storage/secureStore.dart';
+import 'package:new_digit_app/model/individual/individual.dart';
 import 'package:new_digit_app/model/dataModel.dart';
 import 'package:new_digit_app/model/login/loginModel.dart';
 import 'package:new_digit_app/model/response/responsemodel.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
+import 'package:new_digit_app/repositories/individualSearchRepo.dart';
 import 'package:new_digit_app/repositories/authRepo.dart';
 
 part 'authbloc.freezed.dart';
@@ -72,6 +74,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       //role actions must also be stored in secureStore so that we don't have to make calls for it repeatedly
       await secureStore.setRoleActions(actionsWrapper);
+
+      final individualRemoteRepository = IndividualSearchRemoteRepository();
+
+      final loggedInIndividual =
+          await individualRemoteRepository.searchIndividual(
+              IndividualSearchModel(
+                userUuid: [response.userRequest!.uuid],
+              ),
+              event.actionMap);
+
+      secureStore.setSelectedIndividual(loggedInIndividual.first.id);
     } catch (err) {
       rethrow;
     }
@@ -82,6 +95,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final secureStore = SecureStore();
     secureStore.deleteAccessToken();
     secureStore.deleteAccessInfo();
+    secureStore.deleteSelectedIndividual();
 
     emit(const AuthState.unauthenticated());
   }

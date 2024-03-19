@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:new_digit_app/data/remote_client.dart';
-import 'package:new_digit_app/model/attendance/individual.dart';
+import 'package:new_digit_app/model/individual/individual.dart';
 import 'package:new_digit_app/model/dataModel.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
 import 'package:new_digit_app/repositories/attendence/attendenceRegistersRepo.dart';
@@ -26,8 +26,8 @@ class IndividualSearchRemoteRepository {
         searchPath,
         queryParameters: {
           'tenantId': envConfig.variables.tenantId,
-          'limit': 0,
-          'offset': 100
+          'limit': 100,
+          'offset': 0
         },
         data: {"Individual": body.toMap()},
       );

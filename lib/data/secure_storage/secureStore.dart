@@ -94,4 +94,18 @@ class SecureStore {
       rethrow;
     }
   }
+
+  //Individual ID
+  Future setSelectedIndividual(String? id) async {
+    await storage.write(key: 'individualId', value: id);
+  }
+
+  Future<String?> getSelectedIndividual() async {
+    final result = await storage.read(key: 'individualId');
+    return result;
+  }
+
+  Future deleteSelectedIndividual() async {
+    await storage.delete(key: 'individualId');
+  }
 }

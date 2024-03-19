@@ -24,7 +24,8 @@ class AttendenceRemoteRepository {
       searchPath,
       queryParameters: {
         'tenantId': envConfig.variables.tenantId,
-        ...body.toMap(),
+        // ...body.toMap(),
+        'staffId': body.staffId
       },
       data: {},
     );

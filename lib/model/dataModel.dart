@@ -6,7 +6,19 @@ part 'dataModel.mapper.dart';
 enum ApiOperation { login, create, search, update, delete }
 
 @MappableEnum()
-enum DataModelType { user, address, individual, attendanceRegister, attendance }
+enum DataModelType {
+  user,
+  address,
+  individual,
+  attendanceRegister,
+  attendance,
+  project,
+  projectFacility,
+  projectProductVariant,
+  projectStaff,
+  projectResource,
+  projectType,
+}
 
 // // @MappableClass()
 class ActionPathModel {
