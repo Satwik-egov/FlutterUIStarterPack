@@ -150,6 +150,7 @@ class UserModelMapper extends ClassMapperBase<UserModel> {
   static UserModelMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = UserModelMapper._());
+      RoleMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -264,6 +265,9 @@ class UserModelMapper extends ClassMapperBase<UserModel> {
   static int? _$rowVersion(UserModel v) => v.rowVersion;
   static const Field<UserModel, int> _f$rowVersion =
       Field('rowVersion', _$rowVersion, opt: true);
+  static List<Role>? _$roles(UserModel v) => v.roles;
+  static const Field<UserModel, List<Role>> _f$roles =
+      Field('roles', _$roles, opt: true);
 
   @override
   final MappableFields<UserModel> fields = const {
@@ -302,6 +306,7 @@ class UserModelMapper extends ClassMapperBase<UserModel> {
     #createdDate: _f$createdDate,
     #nonRecoverableError: _f$nonRecoverableError,
     #rowVersion: _f$rowVersion,
+    #roles: _f$roles,
   };
   @override
   final bool ignoreNull = true;
@@ -342,7 +347,8 @@ class UserModelMapper extends ClassMapperBase<UserModel> {
         uuid: data.dec(_f$uuid),
         createdDate: data.dec(_f$createdDate),
         nonRecoverableError: data.dec(_f$nonRecoverableError),
-        rowVersion: data.dec(_f$rowVersion));
+        rowVersion: data.dec(_f$rowVersion),
+        roles: data.dec(_f$roles));
   }
 
   @override
@@ -397,6 +403,7 @@ extension UserModelValueCopy<$R, $Out> on ObjectCopyWith<$R, UserModel, $Out> {
 
 abstract class UserModelCopyWith<$R, $In extends UserModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, Role, RoleCopyWith<$R, Role, Role>>? get roles;
   $R call(
       {String? id,
       String? userName,
@@ -432,7 +439,8 @@ abstract class UserModelCopyWith<$R, $In extends UserModel, $Out>
       String? uuid,
       String? createdDate,
       bool? nonRecoverableError,
-      int? rowVersion});
+      int? rowVersion,
+      List<Role>? roles});
   UserModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -444,6 +452,12 @@ class _UserModelCopyWithImpl<$R, $Out>
   @override
   late final ClassMapperBase<UserModel> $mapper =
       UserModelMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, Role, RoleCopyWith<$R, Role, Role>>? get roles =>
+      $value.roles != null
+          ? ListCopyWith($value.roles!, (v, t) => v.copyWith.$chain(t),
+              (v) => call(roles: v))
+          : null;
   @override
   $R call(
           {Object? id = $none,
@@ -480,7 +494,8 @@ class _UserModelCopyWithImpl<$R, $Out>
           Object? uuid = $none,
           Object? createdDate = $none,
           Object? nonRecoverableError = $none,
-          Object? rowVersion = $none}) =>
+          Object? rowVersion = $none,
+          Object? roles = $none}) =>
       $apply(FieldCopyWithData({
         if (id != $none) #id: id,
         if (userName != $none) #userName: userName,
@@ -523,7 +538,8 @@ class _UserModelCopyWithImpl<$R, $Out>
         if (createdDate != $none) #createdDate: createdDate,
         if (nonRecoverableError != $none)
           #nonRecoverableError: nonRecoverableError,
-        if (rowVersion != $none) #rowVersion: rowVersion
+        if (rowVersion != $none) #rowVersion: rowVersion,
+        if (roles != $none) #roles: roles
       }));
   @override
   UserModel $make(CopyWithData data) => UserModel(
@@ -572,10 +588,127 @@ class _UserModelCopyWithImpl<$R, $Out>
       createdDate: data.get(#createdDate, or: $value.createdDate),
       nonRecoverableError:
           data.get(#nonRecoverableError, or: $value.nonRecoverableError),
-      rowVersion: data.get(#rowVersion, or: $value.rowVersion));
+      rowVersion: data.get(#rowVersion, or: $value.rowVersion),
+      roles: data.get(#roles, or: $value.roles));
 
   @override
   UserModelCopyWith<$R2, UserModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
       _UserModelCopyWithImpl($value, $cast, t);
+}
+
+class RoleMapper extends ClassMapperBase<Role> {
+  RoleMapper._();
+
+  static RoleMapper? _instance;
+  static RoleMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = RoleMapper._());
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'Role';
+
+  static String? _$code(Role v) => v.code;
+  static const Field<Role, String> _f$code = Field('code', _$code);
+  static String? _$name(Role v) => v.name;
+  static const Field<Role, String> _f$name = Field('name', _$name);
+  static String? _$tenantId(Role v) => v.tenantId;
+  static const Field<Role, String> _f$tenantId = Field('tenantId', _$tenantId);
+
+  @override
+  final MappableFields<Role> fields = const {
+    #code: _f$code,
+    #name: _f$name,
+    #tenantId: _f$tenantId,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static Role _instantiate(DecodingData data) {
+    return Role(
+        code: data.dec(_f$code),
+        name: data.dec(_f$name),
+        tenantId: data.dec(_f$tenantId));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static Role fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<Role>(map);
+  }
+
+  static Role fromJson(String json) {
+    return ensureInitialized().decodeJson<Role>(json);
+  }
+}
+
+mixin RoleMappable {
+  String toJson() {
+    return RoleMapper.ensureInitialized().encodeJson<Role>(this as Role);
+  }
+
+  Map<String, dynamic> toMap() {
+    return RoleMapper.ensureInitialized().encodeMap<Role>(this as Role);
+  }
+
+  RoleCopyWith<Role, Role, Role> get copyWith =>
+      _RoleCopyWithImpl(this as Role, $identity, $identity);
+  @override
+  String toString() {
+    return RoleMapper.ensureInitialized().stringifyValue(this as Role);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            RoleMapper.ensureInitialized().isValueEqual(this as Role, other));
+  }
+
+  @override
+  int get hashCode {
+    return RoleMapper.ensureInitialized().hashValue(this as Role);
+  }
+}
+
+extension RoleValueCopy<$R, $Out> on ObjectCopyWith<$R, Role, $Out> {
+  RoleCopyWith<$R, Role, $Out> get $asRole =>
+      $base.as((v, t, t2) => _RoleCopyWithImpl(v, t, t2));
+}
+
+abstract class RoleCopyWith<$R, $In extends Role, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  $R call({String? code, String? name, String? tenantId});
+  RoleCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
+}
+
+class _RoleCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Role, $Out>
+    implements RoleCopyWith<$R, Role, $Out> {
+  _RoleCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<Role> $mapper = RoleMapper.ensureInitialized();
+  @override
+  $R call(
+          {Object? code = $none,
+          Object? name = $none,
+          Object? tenantId = $none}) =>
+      $apply(FieldCopyWithData({
+        if (code != $none) #code: code,
+        if (name != $none) #name: name,
+        if (tenantId != $none) #tenantId: tenantId
+      }));
+  @override
+  Role $make(CopyWithData data) => Role(
+      code: data.get(#code, or: $value.code),
+      name: data.get(#name, or: $value.name),
+      tenantId: data.get(#tenantId, or: $value.tenantId));
+
+  @override
+  RoleCopyWith<$R2, Role, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+      _RoleCopyWithImpl($value, $cast, t);
 }

@@ -105,6 +105,10 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return DataModelType.projectResource;
       case 'projectType':
         return DataModelType.projectType;
+      case 'Facility':
+        return DataModelType.Facility;
+      case 'stock':
+        return DataModelType.stock;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -135,6 +139,10 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return 'projectResource';
       case DataModelType.projectType:
         return 'projectType';
+      case DataModelType.Facility:
+        return 'Facility';
+      case DataModelType.stock:
+        return 'stock';
     }
   }
 }

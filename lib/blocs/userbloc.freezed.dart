@@ -496,7 +496,7 @@ mixin _$UserState {
   TResult map<TResult extends Object?>({
     required TResult Function(_UserEmptyState value) empty,
     required TResult Function(_UserLoadingState value) loading,
-    required TResult Function(_UserUserState value) user,
+    required TResult Function(UserUserState value) user,
     required TResult Function(_UserErrorState value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -504,7 +504,7 @@ mixin _$UserState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserEmptyState value)? empty,
     TResult? Function(_UserLoadingState value)? loading,
-    TResult? Function(_UserUserState value)? user,
+    TResult? Function(UserUserState value)? user,
     TResult? Function(_UserErrorState value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -512,7 +512,7 @@ mixin _$UserState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserEmptyState value)? empty,
     TResult Function(_UserLoadingState value)? loading,
-    TResult Function(_UserUserState value)? user,
+    TResult Function(UserUserState value)? user,
     TResult Function(_UserErrorState value)? error,
     required TResult orElse(),
   }) =>
@@ -613,7 +613,7 @@ class _$UserEmptyStateImpl implements _UserEmptyState {
   TResult map<TResult extends Object?>({
     required TResult Function(_UserEmptyState value) empty,
     required TResult Function(_UserLoadingState value) loading,
-    required TResult Function(_UserUserState value) user,
+    required TResult Function(UserUserState value) user,
     required TResult Function(_UserErrorState value) error,
   }) {
     return empty(this);
@@ -624,7 +624,7 @@ class _$UserEmptyStateImpl implements _UserEmptyState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserEmptyState value)? empty,
     TResult? Function(_UserLoadingState value)? loading,
-    TResult? Function(_UserUserState value)? user,
+    TResult? Function(UserUserState value)? user,
     TResult? Function(_UserErrorState value)? error,
   }) {
     return empty?.call(this);
@@ -635,7 +635,7 @@ class _$UserEmptyStateImpl implements _UserEmptyState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserEmptyState value)? empty,
     TResult Function(_UserLoadingState value)? loading,
-    TResult Function(_UserUserState value)? user,
+    TResult Function(UserUserState value)? user,
     TResult Function(_UserErrorState value)? error,
     required TResult orElse(),
   }) {
@@ -727,7 +727,7 @@ class _$UserLoadingStateImpl implements _UserLoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_UserEmptyState value) empty,
     required TResult Function(_UserLoadingState value) loading,
-    required TResult Function(_UserUserState value) user,
+    required TResult Function(UserUserState value) user,
     required TResult Function(_UserErrorState value) error,
   }) {
     return loading(this);
@@ -738,7 +738,7 @@ class _$UserLoadingStateImpl implements _UserLoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserEmptyState value)? empty,
     TResult? Function(_UserLoadingState value)? loading,
-    TResult? Function(_UserUserState value)? user,
+    TResult? Function(UserUserState value)? user,
     TResult? Function(_UserErrorState value)? error,
   }) {
     return loading?.call(this);
@@ -749,7 +749,7 @@ class _$UserLoadingStateImpl implements _UserLoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserEmptyState value)? empty,
     TResult Function(_UserLoadingState value)? loading,
-    TResult Function(_UserUserState value)? user,
+    TResult Function(UserUserState value)? user,
     TResult Function(_UserErrorState value)? error,
     required TResult orElse(),
   }) {
@@ -797,7 +797,7 @@ class __$$UserUserStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserUserStateImpl implements _UserUserState {
+class _$UserUserStateImpl implements UserUserState {
   const _$UserUserStateImpl({this.userModel});
 
   @override
@@ -868,7 +868,7 @@ class _$UserUserStateImpl implements _UserUserState {
   TResult map<TResult extends Object?>({
     required TResult Function(_UserEmptyState value) empty,
     required TResult Function(_UserLoadingState value) loading,
-    required TResult Function(_UserUserState value) user,
+    required TResult Function(UserUserState value) user,
     required TResult Function(_UserErrorState value) error,
   }) {
     return user(this);
@@ -879,7 +879,7 @@ class _$UserUserStateImpl implements _UserUserState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserEmptyState value)? empty,
     TResult? Function(_UserLoadingState value)? loading,
-    TResult? Function(_UserUserState value)? user,
+    TResult? Function(UserUserState value)? user,
     TResult? Function(_UserErrorState value)? error,
   }) {
     return user?.call(this);
@@ -890,7 +890,7 @@ class _$UserUserStateImpl implements _UserUserState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserEmptyState value)? empty,
     TResult Function(_UserLoadingState value)? loading,
-    TResult Function(_UserUserState value)? user,
+    TResult Function(UserUserState value)? user,
     TResult Function(_UserErrorState value)? error,
     required TResult orElse(),
   }) {
@@ -901,8 +901,8 @@ class _$UserUserStateImpl implements _UserUserState {
   }
 }
 
-abstract class _UserUserState implements UserState {
-  const factory _UserUserState({final UserModel? userModel}) =
+abstract class UserUserState implements UserState {
+  const factory UserUserState({final UserModel? userModel}) =
       _$UserUserStateImpl;
 
   UserModel? get userModel;
@@ -1015,7 +1015,7 @@ class _$UserErrorStateImpl implements _UserErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(_UserEmptyState value) empty,
     required TResult Function(_UserLoadingState value) loading,
-    required TResult Function(_UserUserState value) user,
+    required TResult Function(UserUserState value) user,
     required TResult Function(_UserErrorState value) error,
   }) {
     return error(this);
@@ -1026,7 +1026,7 @@ class _$UserErrorStateImpl implements _UserErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserEmptyState value)? empty,
     TResult? Function(_UserLoadingState value)? loading,
-    TResult? Function(_UserUserState value)? user,
+    TResult? Function(UserUserState value)? user,
     TResult? Function(_UserErrorState value)? error,
   }) {
     return error?.call(this);
@@ -1037,7 +1037,7 @@ class _$UserErrorStateImpl implements _UserErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserEmptyState value)? empty,
     TResult Function(_UserLoadingState value)? loading,
-    TResult Function(_UserUserState value)? user,
+    TResult Function(UserUserState value)? user,
     TResult Function(_UserErrorState value)? error,
     required TResult orElse(),
   }) {

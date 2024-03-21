@@ -17,6 +17,8 @@ import 'package:new_digit_app/utils/constants.dart';
 import 'package:new_digit_app/utils/envConfig.dart';
 import 'package:attendance_management/blocs/app_localization.dart'
     as attendance_localization;
+import 'package:inventory_management/blocs/app_localization.dart'
+    as inventory_localization;
 import 'blocs/authbloc.dart';
 
 late Isar _isar; //new addition
@@ -120,14 +122,18 @@ class _MainAppState extends State<MainApp> {
                           GlobalWidgetsLocalizations.delegate,
                           GlobalCupertinoLocalizations.delegate,
                           GlobalMaterialLocalizations.delegate,
-                          //new addition
                           attendance_localization.AttendanceLocalization
                               .getDelegate(
                             // Fetch the localization string based on selected locale
                             getLocalizationString(widget.isar, selectedLocale),
                             // Pass available languages
                             languages!,
-                          )
+                          ),
+                          inventory_localization.InventoryLocalization
+                              .getDelegate(
+                                  getLocalizationString(
+                                      widget.isar, selectedLocale),
+                                  languages)
                         ],
                         // Set the locale for the app
                         locale: languages != null

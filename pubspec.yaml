@@ -37,8 +37,11 @@ dependencies:
   shared_preferences: ^2.1.0
   uuid: ^3.0.6
   collection: ^1.16.0
-
-
+  inventory_management:
+    git:
+      url: https://github.com/egovernments/health-campaign-field-worker-app
+      ref: HLM-5094
+      path: ./packages/inventory_management
       
 dev_dependencies:
   flutter_test:

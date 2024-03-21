@@ -93,6 +93,6 @@ class UserEvent with _$UserEvent {
 class UserState with _$UserState {
   const factory UserState.empty() = _UserEmptyState;
   const factory UserState.loading() = _UserLoadingState;
-  const factory UserState.user({UserModel? userModel}) = _UserUserState;
+  const factory UserState.user({UserModel? userModel}) = UserUserState;
   const factory UserState.error([String? error]) = _UserErrorState;
 }

@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:flutter/material.dart';
 
 part 'userModel.mapper.dart';
 
@@ -54,42 +55,53 @@ class UserModel with UserModelMappable {
   final String? createdDate;
   final bool? nonRecoverableError;
   final int? rowVersion;
+  final List<Role>? roles;
 
-  UserModel({
-    this.id,
-    this.userName,
-    this.salutation,
-    this.name,
-    this.gender,
-    this.mobileNumber,
-    this.emailId,
-    this.altContactNumber,
-    this.pan,
-    this.aadhaarNumber,
-    this.permanentAddress,
-    this.permanentCity,
-    this.permanentPinCode,
-    this.correspondenceAddress,
-    this.correspondenceCity,
-    this.correspondencePinCode,
-    this.alternatemobilenumber,
-    this.active,
-    this.locale,
-    this.type,
-    this.accountLocked,
-    this.accountLockedDate,
-    this.fatherOrHusbandName,
-    this.relationship,
-    this.signature,
-    this.bloodGroup,
-    this.photo,
-    this.identificationMark,
-    this.createdBy,
-    this.lastModifiedBy,
-    this.tenantId,
-    this.uuid,
-    this.createdDate,
-    this.nonRecoverableError = false,
-    this.rowVersion,
-  }) : super();
+  UserModel(
+      {this.id,
+      this.userName,
+      this.salutation,
+      this.name,
+      this.gender,
+      this.mobileNumber,
+      this.emailId,
+      this.altContactNumber,
+      this.pan,
+      this.aadhaarNumber,
+      this.permanentAddress,
+      this.permanentCity,
+      this.permanentPinCode,
+      this.correspondenceAddress,
+      this.correspondenceCity,
+      this.correspondencePinCode,
+      this.alternatemobilenumber,
+      this.active,
+      this.locale,
+      this.type,
+      this.accountLocked,
+      this.accountLockedDate,
+      this.fatherOrHusbandName,
+      this.relationship,
+      this.signature,
+      this.bloodGroup,
+      this.photo,
+      this.identificationMark,
+      this.createdBy,
+      this.lastModifiedBy,
+      this.tenantId,
+      this.uuid,
+      this.createdDate,
+      this.nonRecoverableError = false,
+      this.rowVersion,
+      this.roles})
+      : super();
+}
+
+@MappableClass(ignoreNull: true)
+class Role with RoleMappable {
+  final String? code;
+  final String? name;
+  final String? tenantId;
+
+  Role({required this.code, required this.name, required this.tenantId});
 }
