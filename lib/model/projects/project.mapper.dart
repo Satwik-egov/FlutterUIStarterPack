@@ -6,6 +6,142 @@
 
 part of 'project.dart';
 
+class ProjectSearchModelWrapperMapper
+    extends ClassMapperBase<ProjectSearchModelWrapper> {
+  ProjectSearchModelWrapperMapper._();
+
+  static ProjectSearchModelWrapperMapper? _instance;
+  static ProjectSearchModelWrapperMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals
+          .use(_instance = ProjectSearchModelWrapperMapper._());
+      ProjectSearchModelMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'ProjectSearchModelWrapper';
+
+  static List<ProjectSearchModel>? _$projects(ProjectSearchModelWrapper v) =>
+      v.projects;
+  static const Field<ProjectSearchModelWrapper, List<ProjectSearchModel>>
+      _f$projects = Field('projects', _$projects, opt: true);
+
+  @override
+  final MappableFields<ProjectSearchModelWrapper> fields = const {
+    #projects: _f$projects,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static ProjectSearchModelWrapper _instantiate(DecodingData data) {
+    return ProjectSearchModelWrapper(projects: data.dec(_f$projects));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static ProjectSearchModelWrapper fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<ProjectSearchModelWrapper>(map);
+  }
+
+  static ProjectSearchModelWrapper fromJson(String json) {
+    return ensureInitialized().decodeJson<ProjectSearchModelWrapper>(json);
+  }
+}
+
+mixin ProjectSearchModelWrapperMappable {
+  String toJson() {
+    return ProjectSearchModelWrapperMapper.ensureInitialized()
+        .encodeJson<ProjectSearchModelWrapper>(
+            this as ProjectSearchModelWrapper);
+  }
+
+  Map<String, dynamic> toMap() {
+    return ProjectSearchModelWrapperMapper.ensureInitialized()
+        .encodeMap<ProjectSearchModelWrapper>(
+            this as ProjectSearchModelWrapper);
+  }
+
+  ProjectSearchModelWrapperCopyWith<ProjectSearchModelWrapper,
+          ProjectSearchModelWrapper, ProjectSearchModelWrapper>
+      get copyWith => _ProjectSearchModelWrapperCopyWithImpl(
+          this as ProjectSearchModelWrapper, $identity, $identity);
+  @override
+  String toString() {
+    return ProjectSearchModelWrapperMapper.ensureInitialized()
+        .stringifyValue(this as ProjectSearchModelWrapper);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            ProjectSearchModelWrapperMapper.ensureInitialized()
+                .isValueEqual(this as ProjectSearchModelWrapper, other));
+  }
+
+  @override
+  int get hashCode {
+    return ProjectSearchModelWrapperMapper.ensureInitialized()
+        .hashValue(this as ProjectSearchModelWrapper);
+  }
+}
+
+extension ProjectSearchModelWrapperValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, ProjectSearchModelWrapper, $Out> {
+  ProjectSearchModelWrapperCopyWith<$R, ProjectSearchModelWrapper, $Out>
+      get $asProjectSearchModelWrapper => $base
+          .as((v, t, t2) => _ProjectSearchModelWrapperCopyWithImpl(v, t, t2));
+}
+
+abstract class ProjectSearchModelWrapperCopyWith<
+    $R,
+    $In extends ProjectSearchModelWrapper,
+    $Out> implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<
+      $R,
+      ProjectSearchModel,
+      ProjectSearchModelCopyWith<$R, ProjectSearchModel,
+          ProjectSearchModel>>? get projects;
+  $R call({List<ProjectSearchModel>? projects});
+  ProjectSearchModelWrapperCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
+}
+
+class _ProjectSearchModelWrapperCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, ProjectSearchModelWrapper, $Out>
+    implements
+        ProjectSearchModelWrapperCopyWith<$R, ProjectSearchModelWrapper, $Out> {
+  _ProjectSearchModelWrapperCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<ProjectSearchModelWrapper> $mapper =
+      ProjectSearchModelWrapperMapper.ensureInitialized();
+  @override
+  ListCopyWith<
+      $R,
+      ProjectSearchModel,
+      ProjectSearchModelCopyWith<$R, ProjectSearchModel,
+          ProjectSearchModel>>? get projects => $value.projects != null
+      ? ListCopyWith($value.projects!, (v, t) => v.copyWith.$chain(t),
+          (v) => call(projects: v))
+      : null;
+  @override
+  $R call({Object? projects = $none}) =>
+      $apply(FieldCopyWithData({if (projects != $none) #projects: projects}));
+  @override
+  ProjectSearchModelWrapper $make(CopyWithData data) =>
+      ProjectSearchModelWrapper(
+          projects: data.get(#projects, or: $value.projects));
+
+  @override
+  ProjectSearchModelWrapperCopyWith<$R2, ProjectSearchModelWrapper, $Out2>
+      $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+          _ProjectSearchModelWrapperCopyWithImpl($value, $cast, t);
+}
+
 class ProjectSearchModelMapper extends ClassMapperBase<ProjectSearchModel> {
   ProjectSearchModelMapper._();
 
@@ -240,6 +376,9 @@ class ProjectModelMapper extends ClassMapperBase<ProjectModel> {
 
   static String _$id(ProjectModel v) => v.id;
   static const Field<ProjectModel, String> _f$id = Field('id', _$id);
+  static String? _$projectType(ProjectModel v) => v.projectType;
+  static const Field<ProjectModel, String> _f$projectType =
+      Field('projectType', _$projectType, opt: true);
   static String? _$projectTypeId(ProjectModel v) => v.projectTypeId;
   static const Field<ProjectModel, String> _f$projectTypeId =
       Field('projectTypeId', _$projectTypeId, opt: true);
@@ -298,6 +437,7 @@ class ProjectModelMapper extends ClassMapperBase<ProjectModel> {
   @override
   final MappableFields<ProjectModel> fields = const {
     #id: _f$id,
+    #projectType: _f$projectType,
     #projectTypeId: _f$projectTypeId,
     #projectNumber: _f$projectNumber,
     #subProjectTypeId: _f$subProjectTypeId,
@@ -323,6 +463,7 @@ class ProjectModelMapper extends ClassMapperBase<ProjectModel> {
   static ProjectModel _instantiate(DecodingData data) {
     return ProjectModel(
         id: data.dec(_f$id),
+        projectType: data.dec(_f$projectType),
         projectTypeId: data.dec(_f$projectTypeId),
         projectNumber: data.dec(_f$projectNumber),
         subProjectTypeId: data.dec(_f$subProjectTypeId),
@@ -398,6 +539,7 @@ abstract class ProjectModelCopyWith<$R, $In extends ProjectModel, $Out>
   AddressModelCopyWith<$R, AddressModel, AddressModel>? get address;
   $R call(
       {String? id,
+      String? projectType,
       String? projectTypeId,
       String? projectNumber,
       String? subProjectTypeId,
@@ -431,6 +573,7 @@ class _ProjectModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {String? id,
+          Object? projectType = $none,
           Object? projectTypeId = $none,
           Object? projectNumber = $none,
           Object? subProjectTypeId = $none,
@@ -449,6 +592,7 @@ class _ProjectModelCopyWithImpl<$R, $Out>
           Object? endDate = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
+        if (projectType != $none) #projectType: projectType,
         if (projectTypeId != $none) #projectTypeId: projectTypeId,
         if (projectNumber != $none) #projectNumber: projectNumber,
         if (subProjectTypeId != $none) #subProjectTypeId: subProjectTypeId,
@@ -470,6 +614,7 @@ class _ProjectModelCopyWithImpl<$R, $Out>
   @override
   ProjectModel $make(CopyWithData data) => ProjectModel(
       id: data.get(#id, or: $value.id),
+      projectType: data.get(#projectType, or: $value.projectType),
       projectTypeId: data.get(#projectTypeId, or: $value.projectTypeId),
       projectNumber: data.get(#projectNumber, or: $value.projectNumber),
       subProjectTypeId:

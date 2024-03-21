@@ -7,6 +7,7 @@ import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
 import 'package:new_digit_app/blocs/localization.dart';
+import 'package:new_digit_app/blocs/project.dart';
 import 'package:new_digit_app/data/app_shared_preferences.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
 import 'package:new_digit_app/data/remote_client.dart';
@@ -76,6 +77,11 @@ class _MainAppState extends State<MainApp> {
               create: (context) {
                 //try to load credentials locally first to skip login page
                 return AuthBloc()..add(const AuthEvent.attemptLoad());
+              },
+            ),
+            BlocProvider<ProjectBloc>(
+              create: (context) {
+                return ProjectBloc();
               },
             )
           ],

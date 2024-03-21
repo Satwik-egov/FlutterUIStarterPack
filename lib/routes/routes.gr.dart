@@ -70,6 +70,17 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    ProjectSelectionRoute.name: (routeData) {
+      final args = routeData.argsAs<ProjectSelectionRouteArgs>(
+          orElse: () => const ProjectSelectionRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: ProjectSelectionScreen(
+          key: args.key,
+          appLocalizations: args.appLocalizations,
+        ),
+      );
+    },
   };
 
   @override
@@ -109,6 +120,11 @@ class _$AppRouter extends RootStackRouter {
             RouteConfig(
               ProfileRoute.name,
               path: 'profile',
+              parent: AuthenticatedRouteWrapper.name,
+            ),
+            RouteConfig(
+              ProjectSelectionRoute.name,
+              path: 'home/projects',
               parent: AuthenticatedRouteWrapper.name,
             ),
           ],
@@ -265,5 +281,39 @@ class ProfileRouteArgs {
   @override
   String toString() {
     return 'ProfileRouteArgs{key: $key, appLocalizations: $appLocalizations}';
+  }
+}
+
+/// generated route for
+/// [ProjectSelectionScreen]
+class ProjectSelectionRoute extends PageRouteInfo<ProjectSelectionRouteArgs> {
+  ProjectSelectionRoute({
+    Key? key,
+    AppLocalizations? appLocalizations,
+  }) : super(
+          ProjectSelectionRoute.name,
+          path: 'home/projects',
+          args: ProjectSelectionRouteArgs(
+            key: key,
+            appLocalizations: appLocalizations,
+          ),
+        );
+
+  static const String name = 'ProjectSelectionRoute';
+}
+
+class ProjectSelectionRouteArgs {
+  const ProjectSelectionRouteArgs({
+    this.key,
+    this.appLocalizations,
+  });
+
+  final Key? key;
+
+  final AppLocalizations? appLocalizations;
+
+  @override
+  String toString() {
+    return 'ProjectSelectionRouteArgs{key: $key, appLocalizations: $appLocalizations}';
   }
 }

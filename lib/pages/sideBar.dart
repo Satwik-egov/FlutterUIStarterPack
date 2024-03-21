@@ -28,6 +28,7 @@ class SideBar extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: state.maybeWhen(
                       orElse: () => const Offstage(),
+                      // orElse: () => const Text('Side Bar could not load'),
                       authenticated: (accessToken, refreshToken, userRequest) {
                         return Column(
                           children: [
@@ -39,10 +40,6 @@ class SideBar extends StatelessWidget {
                               userRequest.mobileNumber!,
                               style: theme.textTheme.displayMedium,
                             ),
-                            // Text(
-                            //   userRequest.emailId!,
-                            //   style: theme.textTheme.displayMedium,
-                            // ),
                           ],
                         );
                       }),

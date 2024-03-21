@@ -6,6 +6,13 @@ import 'package:new_digit_app/model/entities/address.dart';
 part 'project.mapper.dart';
 
 @MappableClass(ignoreNull: true, discriminatorValue: MappableClass.useAsDefault)
+class ProjectSearchModelWrapper with ProjectSearchModelWrapperMappable {
+  final List<ProjectSearchModel>? projects;
+
+  ProjectSearchModelWrapper({this.projects});
+}
+
+@MappableClass(ignoreNull: true, discriminatorValue: MappableClass.useAsDefault)
 class ProjectSearchModel with ProjectSearchModelMappable {
   final String? id;
   final String? projectTypeId;
@@ -70,6 +77,7 @@ class ProjectModel with ProjectModelMappable {
   static const schemaName = 'Project';
 
   final String id;
+  final String? projectType;
   final String? projectTypeId;
   final String? projectNumber;
   final String? subProjectTypeId;
@@ -90,6 +98,7 @@ class ProjectModel with ProjectModelMappable {
 
   ProjectModel({
     required this.id,
+    this.projectType,
     this.projectTypeId,
     this.projectNumber,
     this.subProjectTypeId,

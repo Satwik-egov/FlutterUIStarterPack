@@ -1,4 +1,5 @@
 import 'package:attendance_management/pages/manage_attendance.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,30 +64,9 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                               },
                             ),
                             DigitIconButton(
-                              icon: Icons.book,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ManageStocksPage(
-                                              projectId: "",
-                                              userId: "",
-                                              inventoryListener:
-                                                  HCMInventoryBloc(
-                                                      userId: '',
-                                                      uuid: userRequest.uuid,
-                                                      context: context,
-                                                      actionMap: actionMap,
-                                                      // userId: ''
-                                                      roles: user?.roles),
-                                              //TO-DO, what if the list of roles contains more elements
-                                              boundaryName: '',
-                                              isDistributor: true,
-                                              isWareHouseMgr: true,
-                                              transportType: [],
-                                            )));
-                              },
-                            ),
+                                icon: Icons.book,
+                                onPressed: () => AutoRouter.of(context)
+                                    .pushNamed('home/projects')),
                             //TO-DO
                             //create a way to verify if the person is indeed a distributor or a wareHouseManager
 

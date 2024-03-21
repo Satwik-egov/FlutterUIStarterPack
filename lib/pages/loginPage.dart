@@ -3,6 +3,7 @@ import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
+import 'package:new_digit_app/routes/routes.dart';
 import 'package:new_digit_app/widget/localized.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import '../utils/i18_key_constants.dart' as i18;
@@ -113,6 +114,7 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
                                 // AutoRouter.of(context)
                                 //     .navigate(const HomeRoute());
                                 AutoRouter.of(context).pushNamed('/home');
+                                // AutoRouter.of(context).pushNamed('/projects');
                               });
                         },
                         builder: (context, state) => DigitElevatedButton(
@@ -189,7 +191,7 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
 
   FormGroup buildForm() => fb.group(<String, Object>{
         _usernameController: FormControl<String>(
-          value: 'DS002',
+          value: 'SMZ45',
           validators: [Validators.required],
         ),
         _passwordController: FormControl<String>(
