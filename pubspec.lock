@@ -57,15 +57,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  attendance_management:
-    dependency: "direct main"
-    description:
-      path: "packages/attendance_management"
-      ref: master
-      resolved-ref: "5e482654bb6c84cebdd456c9eeaeef3c21835c88"
-      url: "https://github.com/egovernments/health-campaign-field-worker-app"
-    source: git
-    version: "0.0.1"
   audioplayers:
     dependency: transitive
     description:

@@ -34,13 +34,13 @@ class IndividualSearchRemoteRepository {
 
       final responseMap = (response.data);
 
-      if (responseMap is! Map<String, dynamic>) {
-        throw InvalidApiResponseException(
-          data: body.toMap(),
-          path: searchPath,
-          response: responseMap,
-        );
-      }
+      // if (responseMap is! Map<String, dynamic>) {
+      //   throw InvalidApiResponseException(
+      //     data: body.toMap(),
+      //     path: searchPath,
+      //     response: responseMap,
+      //   );
+      // }
 
       // if (!responseMap.containsKey(
       //   EntityPlurals.getPluralForEntityName(entityName),
@@ -57,13 +57,13 @@ class IndividualSearchRemoteRepository {
 
       final entityResponse = await responseMap[entityName];
 
-      if (entityResponse is! List) {
-        throw InvalidApiResponseException(
-          data: body.toMap(),
-          path: searchPath,
-          response: responseMap,
-        );
-      }
+      // if (entityResponse is! List) {
+      //   throw InvalidApiResponseException(
+      //     data: body.toMap(),
+      //     path: searchPath,
+      //     response: responseMap,
+      //   );
+      // }
 
       final entityList = entityResponse.whereType<Map<String, dynamic>>();
 

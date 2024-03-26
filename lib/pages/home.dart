@@ -1,14 +1,9 @@
-import 'package:attendance_management/pages/manage_attendance.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inventory_management/pages/manage_stocks.dart';
-import 'package:inventory_management/pages/record_stock/warehouse_details.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
-import 'package:new_digit_app/blocs/attendencebloc.dart';
 import 'package:new_digit_app/blocs/authbloc.dart';
-import 'package:new_digit_app/blocs/inventory.dart';
 import 'package:new_digit_app/blocs/localization.dart';
 import 'package:new_digit_app/blocs/userbloc.dart';
 import 'package:new_digit_app/pages/sideBar.dart';
@@ -45,23 +40,7 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                           children: [
                             DigitIconButton(
                               icon: Icons.fingerprint,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ManageAttendancePage(
-                                              projectId:
-                                                  "", //TO-DO change this line
-                                              userId: "",
-                                              appVersion: '1.3',
-                                              attendanceListeners:
-                                                  HCMAttendanceBloc(
-                                                actionMap: actionMap,
-                                                context: context,
-                                              ),
-                                            )));
-                              },
+                              onPressed: () {},
                             ),
                             DigitIconButton(
                                 icon: Icons.book,

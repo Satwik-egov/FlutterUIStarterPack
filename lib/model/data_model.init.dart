@@ -10,13 +10,13 @@ import 'entities/gender.dart' as p4;
 import 'entities/identifier.dart' as p5;
 import 'entities/locality.dart' as p6;
 import 'entities/name.dart' as p7;
-import 'package:attendance_management/models/staff.dart' as p8;
-import 'package:attendance_management/models/attendance_audit.dart' as p9;
-import 'package:attendance_management/models/attendance_log.dart' as p10;
-import 'package:attendance_management/models/attendance_register.dart' as p11;
-import 'package:attendance_management/models/attendee.dart' as p12;
-import 'package:attendance_management/models/enum_values.dart' as p13;
-import 'package:attendance_management/models/register_status.dart' as p14;
+// import 'package:attendance_management/models/staff.dart' as p8;
+// import 'package:attendance_management/models/attendance_audit.dart' as p9;
+// import 'package:attendance_management/models/attendance_log.dart' as p10;
+// import 'package:attendance_management/models/attendance_register.dart' as p11;
+// import 'package:attendance_management/models/attendee.dart' as p12;
+// import 'package:attendance_management/models/enum_values.dart' as p13;
+// import 'package:attendance_management/models/register_status.dart' as p14;
 
 void initializeMappers() {
   p1.AddressSearchModelMapper.ensureInitialized();
@@ -30,14 +30,14 @@ void initializeMappers() {
   p6.LocalityModelMapper.ensureInitialized();
   p7.NameSearchModelMapper.ensureInitialized();
   p7.NameModelMapper.ensureInitialized();
-  p8.StaffModelMapper.ensureInitialized();
-  p8.StaffSearchModelMapper.ensureInitialized();
-  p9.AttendanceAuditDetailsMapper.ensureInitialized();
-  p10.AttendanceLogModelMapper.ensureInitialized();
-  p10.AttendanceLogSearchModelMapper.ensureInitialized();
-  p11.AttendanceRegisterModelMapper.ensureInitialized();
-  p12.AttendeeModelMapper.ensureInitialized();
-  p12.AttendeeSearchModelMapper.ensureInitialized();
-  p13.EnumValuesMapper.ensureInitialized();
-  p14.RegisterStatusMapper.ensureInitialized();
+  // p8.StaffModelMapper.ensureInitialized();
+  // p8.StaffSearchModelMapper.ensureInitialized();
+  // p9.AttendanceAuditDetailsMapper.ensureInitialized();
+  // p10.AttendanceLogModelMapper.ensureInitialized();
+  // p10.AttendanceLogSearchModelMapper.ensureInitialized();
+  // p11.AttendanceRegisterModelMapper.ensureInitialized();
+  // p12.AttendeeModelMapper.ensureInitialized();
+  // p12.AttendeeSearchModelMapper.ensureInitialized();
+  // p13.EnumValuesMapper.ensureInitialized();
+  // p14.RegisterStatusMapper.ensureInitialized();
 }
