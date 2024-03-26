@@ -68,11 +68,13 @@ class _ProjectSelectionPageState
                               //               transportType: [],
                               //             )));
                               Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => StocksPage(
-                                  projectId: project.id,
-                                  
-                                ))
-                              )
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StocksPage(
+                                          projectId: project.id,
+                                          userId: user.uuid,
+                                          actionMap: actionMap,
+                                          roles: user.roles)));
                             },
                             //logic for selected project
                           )),

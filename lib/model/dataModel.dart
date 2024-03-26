@@ -18,7 +18,7 @@ enum DataModelType {
   projectStaff,
   projectResource,
   projectType,
-  Facility,
+  facility,
   product,
   productVariant,
   stock,

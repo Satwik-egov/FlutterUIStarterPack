@@ -27,7 +27,14 @@ class ProjectFacilityRemoteRepository {
         data: {"ProjectFacility": body.toMap()},
       );
 
-      return (response.data);
+      final responseMap = response.data['ProjectFacilities'];
+
+      List<ProjectFacilityModel> projectFacilityList = [];
+      for (final facility in responseMap) {
+        projectFacilityList.add(ProjectFacilityModelMapper.fromMap(facility));
+      }
+
+      return projectFacilityList;
     } catch (err) {
       rethrow;
     }

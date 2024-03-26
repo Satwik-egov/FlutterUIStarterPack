@@ -17,6 +17,15 @@ import 'package:attendance_management/models/attendance_register.dart' as p11;
 import 'package:attendance_management/models/attendee.dart' as p12;
 import 'package:attendance_management/models/enum_values.dart' as p13;
 import 'package:attendance_management/models/register_status.dart' as p14;
+import 'package:inventory_management/models/entities/inventory_facility.dart'
+    as p15;
+import 'package:inventory_management/models/entities/product_variant.dart'
+    as p16;
+import 'package:inventory_management/models/entities/project_product_variant.dart'
+    as p17;
+import 'package:inventory_management/models/entities/project_resource.dart'
+    as p18;
+import 'package:inventory_management/models/entities/stock.dart' as p19;
 
 void initializeMappers() {
   p1.AddressSearchModelMapper.ensureInitialized();
@@ -40,4 +49,16 @@ void initializeMappers() {
   p12.AttendeeSearchModelMapper.ensureInitialized();
   p13.EnumValuesMapper.ensureInitialized();
   p14.RegisterStatusMapper.ensureInitialized();
+  p15.InventoryFacilityModelMapper.ensureInitialized();
+  p15.InventoryFacilitySearchModelMapper.ensureInitialized();
+  p16.ProductVariantModelMapper.ensureInitialized();
+  p16.ProductVariantSearchModelMapper.ensureInitialized();
+  p17.ProjectProductVariantAdditionalFieldsMapper.ensureInitialized();
+  p17.ProjectProductVariantModelMapper.ensureInitialized();
+  p17.ProjectProductVariantSearchModelMapper.ensureInitialized();
+  p18.ProjectResourceAdditionalFieldsMapper.ensureInitialized();
+  p18.ProjectResourceSearchModelMapper.ensureInitialized();
+  p18.ProjectResourceModelMapper.ensureInitialized();
+  p19.StockModelMapper.ensureInitialized();
+  p19.StockSearchModelMapper.ensureInitialized();
 }

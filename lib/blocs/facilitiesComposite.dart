@@ -23,34 +23,38 @@ class FacilityCompositeBloc
     FacilityCompositeLoadForProjectEvent event,
     FacilityStateEmitter emit,
   ) async {
-    final facilityRemoteRepository = FacilityRemoteRepository();
-    final projectFacilityRemoteRepository = ProjectFacilityRemoteRepository();
-    emit(const FacilityCompositeLoadingState());
+    try {
+      emit(const FacilityCompositeLoadingState());
 
-    final projectFacilities = await projectFacilityRemoteRepository.search(
-        ProjectFacilitySearchModel(projectId: [event.projectId]),
-        event.actionMap);
+      final projectFacilities = await ProjectFacilityRemoteRepository().search(
+          ProjectFacilitySearchModel(projectId: [event.projectId]),
+          event
+              .actionMap); //type '_Map<String, dynamic>' is not a subtype of type 'FutureOr<List<ProjectFacilityModel>>'
 
-    List<FacilityModel> facilities = [];
+      List<FacilityModel> facilities = [];
 
-    for (final projectFacility in projectFacilities) {
-      var results = await facilityRemoteRepository.search(
-          FacilitySearchModel(id: [projectFacility.facilityId]),
-          event.actionMap);
+      for (final projectFacility in projectFacilities) {
+        var results = await FacilityRemoteRepository().search(
+            FacilitySearchModel(id: [projectFacility.facilityId]),
+            event.actionMap);
 
-      facilities.addAll(results);
-    }
+        facilities.addAll(results);
+      }
 
-    _facilityBloc
-        .add(FacilityEvent.loadForProjectId(projectId: event.projectId));
+      _facilityBloc
+          .add(FacilityEvent.loadForProjectId(projectId: event.projectId));
 
-    if (facilities.isEmpty) {
-      emit(const FacilityCompositeEmptyState());
-    } else {
-      emit(FacilityCompositeFetchedState(
-        facilities: facilities,
-        // allFacilities: allFacilities,
-      ));
+      if (facilities.isEmpty) {
+        emit(const FacilityCompositeEmptyState());
+      } else {
+        emit(FacilityCompositeFetchedState(
+          facilities: facilities,
+          // allFacilities: allFacilities,
+        ));
+      }
+    } catch (err) {
+      print(err);
+      rethrow;
     }
   }
 }

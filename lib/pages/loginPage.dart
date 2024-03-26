@@ -191,7 +191,7 @@ class _LoginScreenState extends LocalizedState<LoginScreen> {
 
   FormGroup buildForm() => fb.group(<String, Object>{
         _usernameController: FormControl<String>(
-          value: 'SMZ45',
+          value: 'Reg-2',
           validators: [Validators.required],
         ),
         _passwordController: FormControl<String>(

@@ -10,7 +10,9 @@ import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
 import 'package:new_digit_app/blocs/facilitiesComposite.dart';
+import 'package:new_digit_app/blocs/inventory_report_composite.dart';
 import 'package:new_digit_app/blocs/localization.dart';
+import 'package:new_digit_app/blocs/product_variants_composite.dart';
 import 'package:new_digit_app/blocs/project.dart';
 import 'package:new_digit_app/data/app_shared_preferences.dart';
 import 'package:new_digit_app/data/nosql/localization.dart';
@@ -116,7 +118,14 @@ class _MainAppState extends State<MainApp> {
               create: (_) {
                 return FacilityCompositeBloc();
               },
-            )
+            ),
+            BlocProvider(create: (_) {
+              return ProductVariantCompositeBloc(
+                  const ProductVariantCompositeEmptyState());
+            }),
+            BlocProvider(create: (_) {
+              return InventoryReportCompositeBloc();
+            }),
           ],
           child: BlocBuilder<AppInitialization, InitState>(
             builder: (context, state) => state.maybeWhen(

@@ -28,9 +28,14 @@ class ProductVariantRemoteRepository {
         data: {"ProductVariant": body.toMap()},
       );
 
-      final responseMap = (response.data);
+      final responseMap = response.data['ProductVariant'];
 
-      return responseMap;
+      final List<ProductVariantModel> projectResourcesList = [];
+      for (final pr in responseMap) {
+        projectResourcesList.add(ProductVariantModelMapper.fromMap(pr));
+      }
+
+      return projectResourcesList;
     } catch (err) {
       rethrow;
     }

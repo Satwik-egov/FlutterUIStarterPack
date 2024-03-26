@@ -105,8 +105,8 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return DataModelType.projectResource;
       case 'projectType':
         return DataModelType.projectType;
-      case 'Facility':
-        return DataModelType.Facility;
+      case 'facility':
+        return DataModelType.facility;
       case 'product':
         return DataModelType.product;
       case 'productVariant':
@@ -145,8 +145,8 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return 'projectResource';
       case DataModelType.projectType:
         return 'projectType';
-      case DataModelType.Facility:
-        return 'Facility';
+      case DataModelType.facility:
+        return 'facility';
       case DataModelType.product:
         return 'product';
       case DataModelType.productVariant:

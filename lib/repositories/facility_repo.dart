@@ -15,7 +15,7 @@ class FacilityRemoteRepository {
     try {
       Response response;
       String searchPath =
-          actionMap![DataModelType.Facility]![ApiOperation.search]!;
+          actionMap![DataModelType.facility]![ApiOperation.search]!;
 
       response = await dio.post(
         searchPath,
@@ -27,9 +27,14 @@ class FacilityRemoteRepository {
         data: {"Facility": body.toMap()},
       );
 
-      final responseMap = (response.data);
+      final responseMap = response.data['Facilities'];
 
-      return responseMap;
+      List<FacilityModel> facilityList = [];
+      for (final facility in responseMap) {
+        facilityList.add(FacilityModelMapper.fromMap(facility));
+      }
+
+      return facilityList;
     } catch (err) {
       rethrow;
     }

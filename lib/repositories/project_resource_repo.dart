@@ -27,10 +27,16 @@ class ProjectResourceRemoteRepository {
         data: {"ProjectResource": body.toMap()},
       );
 
-      final responseMap = (response.data);
+      final responseMap = response.data['ProjectResources'];
 
-      return responseMap;
+      final List<ProjectResourceModel> projectResourcesList = [];
+      for (final pr in responseMap) {
+        projectResourcesList.add(ProjectResourceModelMapper.fromMap(pr));
+      }
+
+      return projectResourcesList;
     } catch (err) {
+      print(err);
       rethrow;
     }
   }
