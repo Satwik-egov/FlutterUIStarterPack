@@ -31,6 +31,13 @@ dependencies:
       url: https://github.com/egovernments/health-campaign-field-worker-app
       ref: master
       path: ./packages/attendance_management
+
+  digit_scanner:
+      git:
+        url: https://github.com/egovernments/health-campaign-field-worker-app/
+        ref: HLM-5097
+        path: ./packages/digit_scanner
+  
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.2
@@ -42,6 +49,7 @@ dependencies:
       url: https://github.com/egovernments/health-campaign-field-worker-app
       ref: HLM-5094
       path: ./packages/inventory_management
+  date_format: ^2.0.7
       
 dev_dependencies:
   flutter_test:

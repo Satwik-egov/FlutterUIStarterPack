@@ -1,21 +1,21 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:inventory_management/models/entities/project_resource.dart';
 import 'package:new_digit_app/data/remote_client.dart';
 import 'package:new_digit_app/model/dataModel.dart';
-import 'package:new_digit_app/model/entities/project_facility.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
 
-class ProjectFacilityRemoteRepository {
-  ProjectFacilityRemoteRepository();
+class ProjectResourceRemoteRepository {
+  ProjectResourceRemoteRepository();
 
   final dio = DioClient().dio;
 
-  FutureOr<List<ProjectFacilityModel>> search(ProjectFacilitySearchModel body,
+  FutureOr<List<ProjectResourceModel>> search(ProjectResourceSearchModel body,
       Map<DataModelType, Map<ApiOperation, String>>? actionMap) async {
     try {
       Response response;
       String searchPath =
-          actionMap![DataModelType.projectFacility]![ApiOperation.search]!;
+          actionMap![DataModelType.projectResource]![ApiOperation.search]!;
 
       response = await dio.post(
         searchPath,
@@ -24,10 +24,12 @@ class ProjectFacilityRemoteRepository {
           'limit': 100,
           'offset': 0
         },
-        data: {"ProjectFacility": body.toMap()},
+        data: {"ProjectResource": body.toMap()},
       );
 
-      return (response.data);
+      final responseMap = (response.data);
+
+      return responseMap;
     } catch (err) {
       rethrow;
     }

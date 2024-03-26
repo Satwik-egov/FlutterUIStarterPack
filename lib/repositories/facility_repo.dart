@@ -10,7 +10,7 @@ class FacilityRemoteRepository {
 
   final dio = DioClient().dio;
 
-  FutureOr<List<FacilityModel>> searchStaff(FacilitySearchModel body,
+  FutureOr<List<FacilityModel>> search(FacilitySearchModel body,
       Map<DataModelType, Map<ApiOperation, String>>? actionMap) async {
     try {
       Response response;

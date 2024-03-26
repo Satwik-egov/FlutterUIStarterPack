@@ -19,7 +19,10 @@ enum DataModelType {
   projectResource,
   projectType,
   Facility,
+  product,
+  productVariant,
   stock,
+  stockReconciliation,
 }
 
 // // @MappableClass()

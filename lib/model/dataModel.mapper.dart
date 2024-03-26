@@ -107,8 +107,14 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return DataModelType.projectType;
       case 'Facility':
         return DataModelType.Facility;
+      case 'product':
+        return DataModelType.product;
+      case 'productVariant':
+        return DataModelType.productVariant;
       case 'stock':
         return DataModelType.stock;
+      case 'stockReconciliation':
+        return DataModelType.stockReconciliation;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -141,8 +147,14 @@ class DataModelTypeMapper extends EnumMapper<DataModelType> {
         return 'projectType';
       case DataModelType.Facility:
         return 'Facility';
+      case DataModelType.product:
+        return 'product';
+      case DataModelType.productVariant:
+        return 'productVariant';
       case DataModelType.stock:
         return 'stock';
+      case DataModelType.stockReconciliation:
+        return 'stockReconciliation';
     }
   }
 }

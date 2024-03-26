@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory_management/pages/manage_stocks.dart';
 import 'package:inventory_management/pages/record_stock/warehouse_details.dart';
+import 'package:inventory_management/utils/i18_key_constants.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/attendencebloc.dart';
 import 'package:new_digit_app/blocs/authbloc.dart';
@@ -65,6 +66,7 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                             ),
                             DigitIconButton(
                                 icon: Icons.book,
+                                iconText: 'Stock',
                                 onPressed: () => AutoRouter.of(context)
                                     .pushNamed('home/projects')),
                             //TO-DO

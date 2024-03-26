@@ -131,6 +131,8 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = HcmStockModelMapper._());
       StockModelMapper.ensureInitialized();
+      AuditDetailsMapper.ensureInitialized();
+      ClientAuditDetailsMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -141,16 +143,28 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
   static StockModel? _$stock(HcmStockModel v) => v.stock;
   static const Field<HcmStockModel, StockModel> _f$stock =
       Field('stock', _$stock, opt: true);
+  static AuditDetails? _$auditDetails(HcmStockModel v) => v.auditDetails;
+  static const Field<HcmStockModel, AuditDetails> _f$auditDetails =
+      Field('auditDetails', _$auditDetails, opt: true);
+  static ClientAuditDetails? _$clientAuditDetails(HcmStockModel v) =>
+      v.clientAuditDetails;
+  static const Field<HcmStockModel, ClientAuditDetails> _f$clientAuditDetails =
+      Field('clientAuditDetails', _$clientAuditDetails, opt: true);
 
   @override
   final MappableFields<HcmStockModel> fields = const {
     #stock: _f$stock,
+    #auditDetails: _f$auditDetails,
+    #clientAuditDetails: _f$clientAuditDetails,
   };
   @override
   final bool ignoreNull = true;
 
   static HcmStockModel _instantiate(DecodingData data) {
-    return HcmStockModel(stock: data.dec(_f$stock));
+    return HcmStockModel(
+        stock: data.dec(_f$stock),
+        auditDetails: data.dec(_f$auditDetails),
+        clientAuditDetails: data.dec(_f$clientAuditDetails));
   }
 
   @override
@@ -209,7 +223,13 @@ extension HcmStockModelValueCopy<$R, $Out>
 abstract class HcmStockModelCopyWith<$R, $In extends HcmStockModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   StockModelCopyWith<$R, StockModel, StockModel>? get stock;
-  $R call({StockModel? stock});
+  AuditDetailsCopyWith<$R, AuditDetails, AuditDetails>? get auditDetails;
+  ClientAuditDetailsCopyWith<$R, ClientAuditDetails, ClientAuditDetails>?
+      get clientAuditDetails;
+  $R call(
+      {StockModel? stock,
+      AuditDetails? auditDetails,
+      ClientAuditDetails? clientAuditDetails});
   HcmStockModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -225,11 +245,28 @@ class _HcmStockModelCopyWithImpl<$R, $Out>
   StockModelCopyWith<$R, StockModel, StockModel>? get stock =>
       $value.stock?.copyWith.$chain((v) => call(stock: v));
   @override
-  $R call({Object? stock = $none}) =>
-      $apply(FieldCopyWithData({if (stock != $none) #stock: stock}));
+  AuditDetailsCopyWith<$R, AuditDetails, AuditDetails>? get auditDetails =>
+      $value.auditDetails?.copyWith.$chain((v) => call(auditDetails: v));
   @override
-  HcmStockModel $make(CopyWithData data) =>
-      HcmStockModel(stock: data.get(#stock, or: $value.stock));
+  ClientAuditDetailsCopyWith<$R, ClientAuditDetails, ClientAuditDetails>?
+      get clientAuditDetails => $value.clientAuditDetails?.copyWith
+          .$chain((v) => call(clientAuditDetails: v));
+  @override
+  $R call(
+          {Object? stock = $none,
+          Object? auditDetails = $none,
+          Object? clientAuditDetails = $none}) =>
+      $apply(FieldCopyWithData({
+        if (stock != $none) #stock: stock,
+        if (auditDetails != $none) #auditDetails: auditDetails,
+        if (clientAuditDetails != $none) #clientAuditDetails: clientAuditDetails
+      }));
+  @override
+  HcmStockModel $make(CopyWithData data) => HcmStockModel(
+      stock: data.get(#stock, or: $value.stock),
+      auditDetails: data.get(#auditDetails, or: $value.auditDetails),
+      clientAuditDetails:
+          data.get(#clientAuditDetails, or: $value.clientAuditDetails));
 
   @override
   HcmStockModelCopyWith<$R2, HcmStockModel, $Out2> $chain<$R2, $Out2>(

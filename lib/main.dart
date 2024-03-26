@@ -1,11 +1,15 @@
 import 'package:digit_components/digit_components.dart';
+import 'package:digit_scanner/blocs/scanner.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:inventory_management/blocs/facility.dart';
+import 'package:inventory_management/blocs/product_variant.dart';
 import 'package:isar/isar.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
+import 'package:new_digit_app/blocs/facilitiesComposite.dart';
 import 'package:new_digit_app/blocs/localization.dart';
 import 'package:new_digit_app/blocs/project.dart';
 import 'package:new_digit_app/data/app_shared_preferences.dart';
@@ -82,6 +86,35 @@ class _MainAppState extends State<MainApp> {
             BlocProvider<ProjectBloc>(
               create: (context) {
                 return ProjectBloc();
+              },
+            ),
+            BlocProvider(
+              create: (_) {
+                return DigitScannerBloc(
+                  const DigitScannerState(),
+                );
+              },
+              lazy: false,
+            ),
+            BlocProvider(
+              create: (_) {
+                return FacilityBloc(
+                  const FacilityEmptyState(),
+                );
+              },
+              lazy: false,
+            ),
+            BlocProvider(
+              create: (_) {
+                return ProductVariantBloc(
+                  const ProductVariantEmptyState(),
+                );
+              },
+              lazy: false,
+            ),
+            BlocProvider(
+              create: (_) {
+                return FacilityCompositeBloc();
               },
             )
           ],
