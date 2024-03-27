@@ -42,17 +42,6 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                               icon: Icons.fingerprint,
                               onPressed: () {},
                             ),
-                            DigitIconButton(
-                                icon: Icons.book,
-                                onPressed: () => AutoRouter.of(context)
-                                    .pushNamed('home/projects')),
-                            //TO-DO
-                            //create a way to verify if the person is indeed a distributor or a wareHouseManager
-
-                            const Text(
-                                'Text below to see if translation occurs'),
-                            Text(localizations
-                                .translate(i18.common.coreCommonContinue))
                           ],
                         ),
                         drawer: Drawer(child: SideBar()),

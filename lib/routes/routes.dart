@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:new_digit_app/pages/loginPage.dart';
 import 'package:new_digit_app/pages/profile.dart';
-import 'package:new_digit_app/pages/projectSelection.dart';
 import '../blocs/app_localization.dart';
 import '../pages/authenticated.dart';
 import '../pages/home.dart';
@@ -19,7 +18,6 @@ part 'routes.gr.dart';
   AutoRoute(page: AuthenticatedScreenWrapper, path: '/', children: [
     AutoRoute(page: HomeScreen, path: 'home'),
     AutoRoute(page: ProfileScreen, path: 'profile'),
-    AutoRoute(page: ProjectSelectionScreen, path: 'home/projects')
   ])
 ])
 class AppRouter extends _$AppRouter {}
