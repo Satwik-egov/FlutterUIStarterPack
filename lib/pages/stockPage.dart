@@ -1,12 +1,11 @@
 import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_management/data/local_store/sql_store/tables/stock_reconciliation.dart';
 import 'package:inventory_management/pages/manage_stocks.dart';
-import 'package:inventory_management/pages/reports/report_details.dart';
 import 'package:inventory_management/pages/stock_reconciliation/stock_reconciliation.dart';
 import 'package:new_digit_app/blocs/inventory.dart';
 import 'package:new_digit_app/pages/sideBar.dart';
 import 'package:new_digit_app/widget/localized.dart';
+import 'package:inventory_management/pages/reports/report_selection.dart';
 
 class StocksPage extends LocalizedStatefulWidget {
   final projectId;
@@ -73,10 +72,25 @@ class _StocksPageState extends LocalizedState<StocksPage> {
                         isDistributor: true,
                         isWareHouseMgr: true,
                         loggedInUserUuid: widget.userId)))),
-        const DigitIconButton(
-          icon: Icons.report,
-          iconText: 'View Reports',
-        )
+        DigitIconButton(
+            icon: Icons.report,
+            iconText: 'View Reports',
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => InventoryReportSelectionPage(
+                          inventoryListener: HCMInventoryBloc(
+                              projectId: widget.projectId,
+                              userId: widget.userId,
+                              uuid: widget.userId,
+                              context: context,
+                              actionMap: widget.actionMap,
+                              roles: widget.roles),
+                          projectId: widget.projectId,
+                          isDistributor: true,
+                          isWareHouseMgr: true,
+                          loggedInUserUuid: widget.userId,
+                        )))),
       ]),
     );
   }

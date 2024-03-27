@@ -48,25 +48,6 @@ class _ProjectSelectionPageState
                               child: DigitOutLineButton(
                             label: project.name,
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => ManageStocksPage(
-                              //               projectId: project.id,
-                              //               userId: user.uuid!,
-                              //               inventoryListener: HCMInventoryBloc(
-                              //                   projectId: project.id,
-                              //                   userId: user.uuid,
-                              //                   uuid: user.uuid!,
-                              //                   context: context,
-                              //                   actionMap: actionMap,
-                              //                   roles: user.roles),
-                              //               //TO-DO, what if the list of roles contains more elements
-                              //               boundaryName: '',
-                              //               isDistributor: true,
-                              //               isWareHouseMgr: true,
-                              //               transportType: [],
-                              //             )));
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -3,13 +3,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:digit_components/digit_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inventory_management/pages/manage_stocks.dart';
-import 'package:inventory_management/pages/record_stock/warehouse_details.dart';
-import 'package:inventory_management/utils/i18_key_constants.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/attendencebloc.dart';
 import 'package:new_digit_app/blocs/authbloc.dart';
-import 'package:new_digit_app/blocs/inventory.dart';
 import 'package:new_digit_app/blocs/localization.dart';
 import 'package:new_digit_app/blocs/userbloc.dart';
 import 'package:new_digit_app/pages/sideBar.dart';
@@ -69,9 +65,6 @@ class _HomeScreenState extends LocalizedState<HomeScreen> {
                                 iconText: 'Stock',
                                 onPressed: () => AutoRouter.of(context)
                                     .pushNamed('home/projects')),
-                            //TO-DO
-                            //create a way to verify if the person is indeed a distributor or a wareHouseManager
-
                             const Text(
                                 'Text below to see if translation occurs'),
                             Text(localizations
