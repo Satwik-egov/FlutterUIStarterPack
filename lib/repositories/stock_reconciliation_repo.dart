@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:inventory_management/models/entities/stock_reconciliation.dart';
 import 'package:new_digit_app/data/remote_client.dart';
 import 'package:new_digit_app/model/dataModel.dart';
+import 'package:new_digit_app/model/inventory/stock_reconciliation.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
 
 class StockReconciliationRemoteRepository {
@@ -10,7 +11,7 @@ class StockReconciliationRemoteRepository {
 
   final dio = DioClient().dio;
 
-  FutureOr<List<StockReconciliationModel>> search(
+  FutureOr<List<HcmStockReconciliationModel>> search(
       StockReconciliationSearchModel body,
       Map<DataModelType, Map<ApiOperation, String>>? actionMap) async {
     try {
@@ -28,9 +29,15 @@ class StockReconciliationRemoteRepository {
         data: {"StockReconciliation": body.toMap()},
       );
 
-      final responseMap = (response.data);
+      final responseMap = response.data['StockReconciliation'];
 
-      return responseMap;
+      List<HcmStockReconciliationModel> stockReconciliationList = [];
+      for (final staff in responseMap) {
+        stockReconciliationList
+            .add(HcmStockReconciliationModelMapper.fromMap(staff));
+      }
+
+      return stockReconciliationList;
     } catch (err) {
       rethrow;
     }

@@ -25,6 +25,22 @@ class HcmStockModel with HcmStockModelMappable {
   final StockModel? stock;
   final AuditDetails? auditDetails;
   final ClientAuditDetails? clientAuditDetails;
+  final HcmStockModelAdditionalFields additionalFields;
 
-  HcmStockModel({this.stock, this.auditDetails, this.clientAuditDetails});
+  HcmStockModel({
+    required this.additionalFields,
+    this.stock,
+    this.auditDetails,
+    this.clientAuditDetails,
+  });
+}
+
+@MappableClass(ignoreNull: true, discriminatorValue: MappableClass.useAsDefault)
+class HcmStockModelAdditionalFields extends AdditionalFields
+    with HcmStockModelAdditionalFieldsMappable {
+  HcmStockModelAdditionalFields({
+    super.schema = 'StockReconciliation',
+    required super.version,
+    super.fields,
+  });
 }

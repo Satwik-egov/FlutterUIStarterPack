@@ -1,19 +1,27 @@
 import 'dart:async';
-
+import 'package:collection/collection.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory_management/blocs/inventory_listener.dart';
+import 'package:inventory_management/blocs/inventory_report.dart';
 import 'package:inventory_management/models/entities/inventory_facility.dart';
 import 'package:inventory_management/models/entities/product_variant.dart';
 import 'package:inventory_management/models/entities/project_resource.dart';
 import 'package:inventory_management/models/entities/stock.dart';
+import 'package:inventory_management/models/entities/stock_reconciliation.dart';
+import 'package:inventory_management/models/entities/transaction_reason.dart';
+import 'package:inventory_management/models/entities/transaction_type.dart';
 import 'package:new_digit_app/blocs/facilitiesComposite.dart';
 import 'package:new_digit_app/blocs/inventory_report_composite.dart';
 import 'package:new_digit_app/blocs/product_variants_composite.dart';
+import 'package:new_digit_app/data/secure_storage/secureStore.dart';
 import 'package:new_digit_app/model/dataModel.dart';
+import 'package:new_digit_app/model/inventory/stock_reconciliation.dart';
 import 'package:new_digit_app/model/stock/stock_model.dart';
 import 'package:new_digit_app/model/user/userModel.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
+import 'package:new_digit_app/repositories/stock_reconciliation_repo.dart';
 import 'package:new_digit_app/repositories/stock_repo.dart';
 
 class HCMInventoryBloc extends InventoryListener {
@@ -85,12 +93,95 @@ class HCMInventoryBloc extends InventoryListener {
   @override
   Future<void> fetchInventoryReports(
       FetchInventoryReports fetchInventoryReports) async {
-    context.read<InventoryReportCompositeBloc>().add(
-        InventoryReportCompositeLoadStockDataEvent(
-            reportType: fetchInventoryReports.reportType,
-            facilityId: fetchInventoryReports.facilityId,
-            productVariantId: fetchInventoryReports.productVariantId,
-            actionMap: actionMap));
+    final _stockModelsLoaded = fetchInventoryReports.stocks;
+
+    final reportType = fetchInventoryReports.reportType;
+    final facilityId = fetchInventoryReports.facilityId;
+    final productVariantId = fetchInventoryReports.productVariantId;
+
+    if (reportType == InventoryReportType.reconciliation) {
+      throw Exception(
+        'Invalid report type: ${fetchInventoryReports.reportType}',
+      );
+    }
+
+    List<TransactionReason>? transactionReason;
+    List<TransactionType>? transactionType;
+    String? senderId;
+    String? receiverId;
+
+    if (reportType == InventoryReportType.receipt) {
+      transactionType = [TransactionType.received];
+      transactionReason = [TransactionReason.received];
+      receiverId = facilityId;
+      senderId = null;
+    } else if (reportType == InventoryReportType.dispatch) {
+      transactionType = [TransactionType.dispatched];
+      transactionReason = [];
+      receiverId = null;
+      senderId = facilityId;
+    } else if (reportType == InventoryReportType.returned) {
+      transactionType = [TransactionType.received];
+      transactionReason = [TransactionReason.returned];
+      receiverId = null;
+      senderId = facilityId;
+    } else if (reportType == InventoryReportType.damage) {
+      transactionType = [TransactionType.dispatched];
+      transactionReason = [
+        TransactionReason.damagedInStorage,
+        TransactionReason.damagedInTransit,
+      ];
+      receiverId = facilityId;
+      senderId = null;
+    } else if (reportType == InventoryReportType.loss) {
+      transactionType = [TransactionType.dispatched];
+      transactionReason = [
+        TransactionReason.lostInStorage,
+        TransactionReason.lostInTransit,
+      ];
+      receiverId = facilityId;
+      senderId = null;
+    }
+    final user = await SecureStore().getAccessInfo();
+
+    final data = (receiverId != null
+            ? await StockRemoteRepository().search(
+                HcmStockSearchModel(
+                  stock: StockSearchModel(
+                    transactionType: transactionType,
+                    tenantId: envConfig.variables.tenantId,
+                    receiverId: receiverId,
+                    productVariantId: productVariantId,
+                    transactionReason: transactionReason,
+                  ),
+                ),
+                actionMap)
+            : await StockRemoteRepository().search(
+                HcmStockSearchModel(
+                  stock: StockSearchModel(
+                    transactionType: transactionType,
+                    tenantId: envConfig.variables.tenantId,
+                    senderId: senderId,
+                    productVariantId: productVariantId,
+                    transactionReason: transactionReason,
+                  ),
+                ),
+                actionMap))
+        .where((element) =>
+            element.auditDetails != null &&
+            element.auditDetails?.createdBy == user?.userRequest?.uuid);
+
+    final groupedData = data.groupListsBy(
+      (element) => DateFormat('dd MMM yyyy').format(
+        DateTime.fromMillisecondsSinceEpoch(
+          element.auditDetails!.createdTime,
+        ),
+      ),
+    );
+
+    _stockModelsLoaded(groupedData.map((key, value) {
+      return MapEntry(key, value.map((e) => e.stock!).toList());
+    }));
   }
 
   @override
@@ -145,61 +236,80 @@ class HCMInventoryBloc extends InventoryListener {
   @override
   Future<void> fetchStockReconciliationDetails(
       FetchStockReconDetails fetchStockReconDetails) async {
-    // context.read<InventoryReportCompositeBloc>().add(
-    //     InventoryReportCompositeEvent.loadStockReconciliationData(
-    //         facilityId: fetchStockReconDetails.facilityId,
-    //         actionMap: actionMap,
-    //         productVariantId: fetchStockReconDetails.productVariantId));
+    final Iterable<HcmStockModel> sentStocks =
+        (await StockRemoteRepository().search(
+                HcmStockSearchModel(
+                  stock: StockSearchModel(
+                      facilityId: fetchStockReconDetails.facilityId,
+                      productVariantId:
+                          fetchStockReconDetails.productVariantId),
+                ),
+                actionMap))
+            .where((element) =>
+                element.auditDetails != null &&
+                element.auditDetails?.createdBy == uuid)
+            .toList();
 
-    final Iterable<HcmStockModel> senderData =
-        await StockRemoteRepository().search(
-            HcmStockSearchModel(
-              stock: StockSearchModel(
-                transactionType: transactionType,
-                tenantId: envConfig.variables.tenantId,
-                senderId: senderId,
-                productVariantId: productVariantId,
-                transactionReason: transactionReason,
-              ),
-            ),
-            actionMap);
+    final Iterable<HcmStockModel> receivedStocks =
+        (await StockRemoteRepository().search(
+                HcmStockSearchModel(
+                  stock: StockSearchModel(
+                      facilityId: fetchStockReconDetails.facilityId,
+                      productVariantId:
+                          fetchStockReconDetails.productVariantId),
+                ),
+                actionMap))
+            .where((element) =>
+                element.auditDetails != null &&
+                element.auditDetails?.createdBy == uuid)
+            .toList();
 
-    final Iterable<HcmStockModel> receiverData =
-        await StockRemoteRepository().search(
-            HcmStockSearchModel(
-              stock: StockSearchModel(
-                transactionType: transactionType,
-                tenantId: envConfig.variables.tenantId,
-                receiverId: receiverId,
-                productVariantId: productVariantId,
-                transactionReason: transactionReason,
-              ),
-            ),
-            actionMap);
+    var received = receivedStocks.map((e) => e.stock!).toList();
+    var sent = sentStocks.map((e) => e.stock!).toList();
+
+    fetchStockReconDetails.stockReconDetails(sent, received);
   }
 
   @override
   Future<void> handleStockReconciliationReport(
-      StockReconciliationReport stockReconciliationReport) {
-    // TODO: implement handleStockReconciliationReport
-    throw UnimplementedError();
+      StockReconciliationReport stockReconciliationReport) async {
+    final Iterable<HcmStockReconciliationModel> data =
+        await StockReconciliationRemoteRepository().search(
+            StockReconciliationSearchModel(
+                tenantId: envConfig.variables.tenantId,
+                facilityId: stockReconciliationReport.facilityId,
+                productVariantId: stockReconciliationReport.productVariantId),
+            actionMap);
+
+    final groupedData = data
+        .groupListsBy((element) =>
+            DateFormat('dd MMM yyyy').format(element.dateOfReconciliationTime))
+        .map((key, value) {
+      return MapEntry(key, value);
+    });
+
+    final additionalData = data.map((e) => e.additionalFields).toList();
+    var moreDetails = additionalData.map((e) => e?.fields).toList();
+    var additionalFields = moreDetails.map((e) => e!.map((e) {
+          return MapEntry(e.key, e.value);
+        }));
+    stockReconciliationReport.stockReconciliationReport(
+        groupedData, additionalFields);
   }
 
   @override
   Future<void> saveStockDetails(SaveStockDetails saveStockDetails) async {
-    final stockRemoteRepository = StockRemoteRepository();
-
-    var response = await stockRemoteRepository.create(
+    await StockRemoteRepository().create(
         HcmStockModel(
           stock: saveStockDetails.stockModel.copyWith(
             facilityId: saveStockDetails.stockModel.facilityId,
             rowVersion: 1,
             tenantId: envConfig.variables.tenantId,
           ),
-          // additionalFields: StockAdditionalFields(
-          //   version: 1,
-          //   fields: getAdditionalData(saveStockDetails.additionalData),
-          // ),
+          additionalFields: HcmStockModelAdditionalFields(
+            version: 1,
+            fields: getAdditionalData(saveStockDetails.additionalData),
+          ),
           auditDetails: AuditDetails(
               createdBy: userId.toString(),
               createdTime: DateTime.now().millisecondsSinceEpoch),
@@ -211,6 +321,18 @@ class HCMInventoryBloc extends InventoryListener {
           ),
         ),
         actionMap);
+
+    saveStockDetails.isStockSaved(true);
+  }
+
+  getAdditionalData(Map<String, Object> additionalData) {
+    List<AdditionalField> additionalFields = [];
+
+    additionalData.forEach((key, value) {
+      additionalFields.add(AdditionalField(key, value));
+    });
+
+    return additionalFields;
   }
 
   @override

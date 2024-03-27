@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:inventory_management/blocs/facility.dart';
 import 'package:inventory_management/blocs/product_variant.dart';
 import 'package:isar/isar.dart';
+import 'package:location/location.dart';
 import 'package:new_digit_app/blocs/app_init.dart';
 import 'package:new_digit_app/blocs/app_localization.dart';
 import 'package:new_digit_app/blocs/facilitiesComposite.dart';
@@ -124,11 +125,8 @@ class _MainAppState extends State<MainApp> {
                   const ProductVariantCompositeEmptyState());
             }),
             BlocProvider(create: (_) {
-              return InventoryReportCompositeBloc();
-            }),
-            // BlocProvider(create: (_) {
-            //   return LocationBloc(location:);
-            // })
+              return LocationBloc(location: Location());
+            })
           ],
           child: BlocBuilder<AppInitialization, InitState>(
             builder: (context, state) => state.maybeWhen(

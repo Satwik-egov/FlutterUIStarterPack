@@ -130,6 +130,7 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
   static HcmStockModelMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = HcmStockModelMapper._());
+      HcmStockModelAdditionalFieldsMapper.ensureInitialized();
       StockModelMapper.ensureInitialized();
       AuditDetailsMapper.ensureInitialized();
       ClientAuditDetailsMapper.ensureInitialized();
@@ -140,6 +141,10 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
   @override
   final String id = 'HcmStockModel';
 
+  static HcmStockModelAdditionalFields _$additionalFields(HcmStockModel v) =>
+      v.additionalFields;
+  static const Field<HcmStockModel, HcmStockModelAdditionalFields>
+      _f$additionalFields = Field('additionalFields', _$additionalFields);
   static StockModel? _$stock(HcmStockModel v) => v.stock;
   static const Field<HcmStockModel, StockModel> _f$stock =
       Field('stock', _$stock, opt: true);
@@ -153,6 +158,7 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
 
   @override
   final MappableFields<HcmStockModel> fields = const {
+    #additionalFields: _f$additionalFields,
     #stock: _f$stock,
     #auditDetails: _f$auditDetails,
     #clientAuditDetails: _f$clientAuditDetails,
@@ -162,6 +168,7 @@ class HcmStockModelMapper extends ClassMapperBase<HcmStockModel> {
 
   static HcmStockModel _instantiate(DecodingData data) {
     return HcmStockModel(
+        additionalFields: data.dec(_f$additionalFields),
         stock: data.dec(_f$stock),
         auditDetails: data.dec(_f$auditDetails),
         clientAuditDetails: data.dec(_f$clientAuditDetails));
@@ -222,12 +229,15 @@ extension HcmStockModelValueCopy<$R, $Out>
 
 abstract class HcmStockModelCopyWith<$R, $In extends HcmStockModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  HcmStockModelAdditionalFieldsCopyWith<$R, HcmStockModelAdditionalFields,
+      HcmStockModelAdditionalFields> get additionalFields;
   StockModelCopyWith<$R, StockModel, StockModel>? get stock;
   AuditDetailsCopyWith<$R, AuditDetails, AuditDetails>? get auditDetails;
   ClientAuditDetailsCopyWith<$R, ClientAuditDetails, ClientAuditDetails>?
       get clientAuditDetails;
   $R call(
-      {StockModel? stock,
+      {HcmStockModelAdditionalFields? additionalFields,
+      StockModel? stock,
       AuditDetails? auditDetails,
       ClientAuditDetails? clientAuditDetails});
   HcmStockModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
@@ -242,6 +252,11 @@ class _HcmStockModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<HcmStockModel> $mapper =
       HcmStockModelMapper.ensureInitialized();
   @override
+  HcmStockModelAdditionalFieldsCopyWith<$R, HcmStockModelAdditionalFields,
+          HcmStockModelAdditionalFields>
+      get additionalFields => $value.additionalFields.copyWith
+          .$chain((v) => call(additionalFields: v));
+  @override
   StockModelCopyWith<$R, StockModel, StockModel>? get stock =>
       $value.stock?.copyWith.$chain((v) => call(stock: v));
   @override
@@ -253,16 +268,20 @@ class _HcmStockModelCopyWithImpl<$R, $Out>
           .$chain((v) => call(clientAuditDetails: v));
   @override
   $R call(
-          {Object? stock = $none,
+          {HcmStockModelAdditionalFields? additionalFields,
+          Object? stock = $none,
           Object? auditDetails = $none,
           Object? clientAuditDetails = $none}) =>
       $apply(FieldCopyWithData({
+        if (additionalFields != null) #additionalFields: additionalFields,
         if (stock != $none) #stock: stock,
         if (auditDetails != $none) #auditDetails: auditDetails,
         if (clientAuditDetails != $none) #clientAuditDetails: clientAuditDetails
       }));
   @override
   HcmStockModel $make(CopyWithData data) => HcmStockModel(
+      additionalFields:
+          data.get(#additionalFields, or: $value.additionalFields),
       stock: data.get(#stock, or: $value.stock),
       auditDetails: data.get(#auditDetails, or: $value.auditDetails),
       clientAuditDetails:
@@ -272,4 +291,164 @@ class _HcmStockModelCopyWithImpl<$R, $Out>
   HcmStockModelCopyWith<$R2, HcmStockModel, $Out2> $chain<$R2, $Out2>(
           Then<$Out2, $R2> t) =>
       _HcmStockModelCopyWithImpl($value, $cast, t);
+}
+
+class HcmStockModelAdditionalFieldsMapper
+    extends SubClassMapperBase<HcmStockModelAdditionalFields> {
+  HcmStockModelAdditionalFieldsMapper._();
+
+  static HcmStockModelAdditionalFieldsMapper? _instance;
+  static HcmStockModelAdditionalFieldsMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals
+          .use(_instance = HcmStockModelAdditionalFieldsMapper._());
+      AdditionalFieldsMapper.ensureInitialized().addSubMapper(_instance!);
+      AdditionalFieldMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'HcmStockModelAdditionalFields';
+
+  static String _$schema(HcmStockModelAdditionalFields v) => v.schema;
+  static const Field<HcmStockModelAdditionalFields, String> _f$schema =
+      Field('schema', _$schema, opt: true, def: 'StockReconciliation');
+  static int _$version(HcmStockModelAdditionalFields v) => v.version;
+  static const Field<HcmStockModelAdditionalFields, int> _f$version =
+      Field('version', _$version);
+  static List<AdditionalField> _$fields(HcmStockModelAdditionalFields v) =>
+      v.fields;
+  static const Field<HcmStockModelAdditionalFields, List<AdditionalField>>
+      _f$fields = Field('fields', _$fields, opt: true, def: const []);
+
+  @override
+  final MappableFields<HcmStockModelAdditionalFields> fields = const {
+    #schema: _f$schema,
+    #version: _f$version,
+    #fields: _f$fields,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  @override
+  final String discriminatorKey = 'type';
+  @override
+  final dynamic discriminatorValue = MappableClass.useAsDefault;
+  @override
+  late final ClassMapperBase superMapper =
+      AdditionalFieldsMapper.ensureInitialized();
+
+  static HcmStockModelAdditionalFields _instantiate(DecodingData data) {
+    return HcmStockModelAdditionalFields(
+        schema: data.dec(_f$schema),
+        version: data.dec(_f$version),
+        fields: data.dec(_f$fields));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static HcmStockModelAdditionalFields fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<HcmStockModelAdditionalFields>(map);
+  }
+
+  static HcmStockModelAdditionalFields fromJson(String json) {
+    return ensureInitialized().decodeJson<HcmStockModelAdditionalFields>(json);
+  }
+}
+
+mixin HcmStockModelAdditionalFieldsMappable {
+  String toJson() {
+    return HcmStockModelAdditionalFieldsMapper.ensureInitialized()
+        .encodeJson<HcmStockModelAdditionalFields>(
+            this as HcmStockModelAdditionalFields);
+  }
+
+  Map<String, dynamic> toMap() {
+    return HcmStockModelAdditionalFieldsMapper.ensureInitialized()
+        .encodeMap<HcmStockModelAdditionalFields>(
+            this as HcmStockModelAdditionalFields);
+  }
+
+  HcmStockModelAdditionalFieldsCopyWith<HcmStockModelAdditionalFields,
+          HcmStockModelAdditionalFields, HcmStockModelAdditionalFields>
+      get copyWith => _HcmStockModelAdditionalFieldsCopyWithImpl(
+          this as HcmStockModelAdditionalFields, $identity, $identity);
+  @override
+  String toString() {
+    return HcmStockModelAdditionalFieldsMapper.ensureInitialized()
+        .stringifyValue(this as HcmStockModelAdditionalFields);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            HcmStockModelAdditionalFieldsMapper.ensureInitialized()
+                .isValueEqual(this as HcmStockModelAdditionalFields, other));
+  }
+
+  @override
+  int get hashCode {
+    return HcmStockModelAdditionalFieldsMapper.ensureInitialized()
+        .hashValue(this as HcmStockModelAdditionalFields);
+  }
+}
+
+extension HcmStockModelAdditionalFieldsValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, HcmStockModelAdditionalFields, $Out> {
+  HcmStockModelAdditionalFieldsCopyWith<$R, HcmStockModelAdditionalFields, $Out>
+      get $asHcmStockModelAdditionalFields => $base.as(
+          (v, t, t2) => _HcmStockModelAdditionalFieldsCopyWithImpl(v, t, t2));
+}
+
+abstract class HcmStockModelAdditionalFieldsCopyWith<
+    $R,
+    $In extends HcmStockModelAdditionalFields,
+    $Out> implements AdditionalFieldsCopyWith<$R, $In, $Out> {
+  @override
+  ListCopyWith<$R, AdditionalField,
+      AdditionalFieldCopyWith<$R, AdditionalField, AdditionalField>> get fields;
+  @override
+  $R call({String? schema, int? version, List<AdditionalField>? fields});
+  HcmStockModelAdditionalFieldsCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
+}
+
+class _HcmStockModelAdditionalFieldsCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, HcmStockModelAdditionalFields, $Out>
+    implements
+        HcmStockModelAdditionalFieldsCopyWith<$R, HcmStockModelAdditionalFields,
+            $Out> {
+  _HcmStockModelAdditionalFieldsCopyWithImpl(
+      super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<HcmStockModelAdditionalFields> $mapper =
+      HcmStockModelAdditionalFieldsMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, AdditionalField,
+          AdditionalFieldCopyWith<$R, AdditionalField, AdditionalField>>
+      get fields => ListCopyWith($value.fields, (v, t) => v.copyWith.$chain(t),
+          (v) => call(fields: v));
+  @override
+  $R call({String? schema, int? version, List<AdditionalField>? fields}) =>
+      $apply(FieldCopyWithData({
+        if (schema != null) #schema: schema,
+        if (version != null) #version: version,
+        if (fields != null) #fields: fields
+      }));
+  @override
+  HcmStockModelAdditionalFields $make(CopyWithData data) =>
+      HcmStockModelAdditionalFields(
+          schema: data.get(#schema, or: $value.schema),
+          version: data.get(#version, or: $value.version),
+          fields: data.get(#fields, or: $value.fields));
+
+  @override
+  HcmStockModelAdditionalFieldsCopyWith<$R2, HcmStockModelAdditionalFields,
+      $Out2> $chain<$R2, $Out2>(
+          Then<$Out2, $R2> t) =>
+      _HcmStockModelAdditionalFieldsCopyWithImpl($value, $cast, t);
 }
