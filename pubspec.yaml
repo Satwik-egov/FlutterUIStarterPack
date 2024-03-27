@@ -37,6 +37,12 @@ dependencies:
         url: https://github.com/egovernments/health-campaign-field-worker-app/
         ref: HLM-5097
         path: ./packages/digit_scanner
+
+  inventory_management:
+    git:
+      url: https://github.com/egovernments/health-campaign-field-worker-app
+      ref: HLM-5094
+      path: ./packages/inventory_management
   
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
@@ -44,11 +50,7 @@ dependencies:
   shared_preferences: ^2.1.0
   uuid: ^3.0.6
   collection: ^1.16.0
-  inventory_management:
-    git:
-      url: https://github.com/egovernments/health-campaign-field-worker-app
-      ref: HLM-5094
-      path: ./packages/inventory_management
+  
   date_format: ^2.0.7
       
 dev_dependencies:

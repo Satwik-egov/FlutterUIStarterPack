@@ -6,11 +6,11 @@ import 'package:inventory_management/blocs/inventory_listener.dart';
 import 'package:inventory_management/models/entities/inventory_facility.dart';
 import 'package:inventory_management/models/entities/product_variant.dart';
 import 'package:inventory_management/models/entities/project_resource.dart';
+import 'package:inventory_management/models/entities/stock.dart';
 import 'package:new_digit_app/blocs/facilitiesComposite.dart';
 import 'package:new_digit_app/blocs/inventory_report_composite.dart';
 import 'package:new_digit_app/blocs/product_variants_composite.dart';
 import 'package:new_digit_app/model/dataModel.dart';
-import 'package:new_digit_app/model/facilities/facility.dart';
 import 'package:new_digit_app/model/stock/stock_model.dart';
 import 'package:new_digit_app/model/user/userModel.dart';
 import 'package:new_digit_app/repositories/app_init_Repo.dart';
@@ -35,57 +35,51 @@ class HCMInventoryBloc extends InventoryListener {
     required this.projectId,
   });
 
-  late Function(List<InventoryFacilityModel> facilities) _facilitiesLoaded;
-  late Function(List<ProductVariantModel> productVariants)
-      _productVariantsLoaded;
+  // late Function(List<InventoryFacilityModel> facilities) _facilitiesLoaded;
+  // late Function(List<ProductVariantModel> productVariants)
+  //     _productVariantsLoaded;
 
   //ignore
   @override
   void callSyncMethod() {}
 
   @override
-  Future<void> fetchFacilitiesForProjectId(
-      Function(List<InventoryFacilityModel> facilitiesModel) facilities) {
-    _facilitiesLoaded = facilities;
-
-    return fetchFacilities();
-  }
-
-  Future<void> fetchFacilities() async {
+  Future<List<InventoryFacilityModel>> fetchFacilitiesForProjectId() async {
     if (roles!
         .map((e) => e.code == 'DISTRICT_SUPERVISOR')
         .toList()
         .isNotEmpty) {
-      final facilities = context.read<FacilityCompositeBloc>()
+      final facilitiesBloc = context.read<FacilityCompositeBloc>()
         ..add(FacilityCompositeLoadForProjectEvent(
             projectId: projectId!, actionMap: actionMap));
 
-      facilities.state.whenOrNull(
-            fetched: (facilities) {
-              _facilitiesLoaded(loadInventoryFacilities(facilities));
-            },
-          ) ??
-          [];
-    }
-  }
+      final facilitiesState = await facilitiesBloc.stream.firstWhere((state) =>
+          state.maybeWhen(orElse: () => false, fetched: (facilities) => true));
 
-  loadInventoryFacilities(List<FacilityModel> facilities) {
-    List<InventoryFacilityModel> hcmInventoryFacilityModel = [];
-    for (var element in facilities) {
-      hcmInventoryFacilityModel.add(
-        InventoryFacilityModel(
-          id: element.id,
-          isPermanent: element.isPermanent,
-          nonRecoverableError: element.nonRecoverableError,
-          rowVersion: element.rowVersion,
-          storageCapacity: element.storageCapacity,
-          tenantId: element.tenantId,
-          usage: element.usage,
-        ),
+      List<InventoryFacilityModel> hcmInventoryFacilityModel = [];
+      facilitiesState.maybeWhen(
+        fetched: (facilities) {
+          for (var element in facilities) {
+            hcmInventoryFacilityModel.add(
+              InventoryFacilityModel(
+                id: element.id,
+                isPermanent: element.isPermanent,
+                nonRecoverableError: element.nonRecoverableError,
+                rowVersion: element.rowVersion,
+                storageCapacity: element.storageCapacity,
+                tenantId: element.tenantId,
+                usage: element.usage,
+              ),
+            );
+          }
+        },
+        orElse: () {},
       );
-    }
 
-    return hcmInventoryFacilityModel;
+      return hcmInventoryFacilityModel;
+    } else {
+      return [];
+    }
   }
 
   @override
@@ -100,15 +94,7 @@ class HCMInventoryBloc extends InventoryListener {
   }
 
   @override
-  Future<void> fetchProductVariants(
-      Function(List<ProductVariantModel> productVariantsModel)
-          productVariants) {
-    _productVariantsLoaded = productVariants;
-    return fetchProducts();
-  }
-
-  Future<void> fetchProducts() async {
-    // for (final projectStaff in projectStaffList) {
+  Future<List<ProductVariantModel>> fetchProductVariants() async {
     if (roles!
         .map((e) => e.code == 'DISTRICT_SUPERVISOR')
         .toList()
@@ -116,52 +102,80 @@ class HCMInventoryBloc extends InventoryListener {
       //Created a composite class called productVariantCompositeBloc because
       //the Bloc in the inventory package does not make an API call
 
-      final products = context.read<ProductVariantCompositeBloc>()
+      final productsBloc = context.read<ProductVariantCompositeBloc>()
         ..add(ProductVariantCompositeLoadEvent(
             query: ProjectResourceSearchModel(
               projectId: projectId!,
             ),
             actionMap: actionMap));
 
-      products.state.whenOrNull(
-            fetched: (productVariants) {
-              _productVariantsLoaded(loadProductVariants(productVariants));
-            },
-          ) ??
-          [];
-    }
-  }
-
-  List<ProductVariantModel> loadProductVariants(
-    List<ProductVariantModel> productVariants,
-  ) {
-    List<ProductVariantModel> hcmProductVariantModel = [];
-
-    for (var element in productVariants) {
-      hcmProductVariantModel.add(
-        ProductVariantModel(
-          id: element.id,
-          variation: element.variation,
-          rowVersion: element.rowVersion,
-          tenantId: element.tenantId,
-          nonRecoverableError: element.nonRecoverableError,
-          productId: element.productId,
-          sku: element.sku,
+      final productVariantsState = await productsBloc.stream.firstWhere(
+        (state) => state.maybeWhen(
+          fetched: (productVariants) => true,
+          orElse: () => false,
         ),
       );
-    }
 
-    return hcmProductVariantModel;
+      List<ProductVariantModel> hcmProductVariantModel = [];
+      productVariantsState.maybeWhen(
+        fetched: (productVariants) {
+          for (var element in productVariants) {
+            hcmProductVariantModel.add(
+              ProductVariantModel(
+                id: element.id,
+                variation: element.variation,
+                rowVersion: element.rowVersion,
+                tenantId: element.tenantId,
+                nonRecoverableError: element.nonRecoverableError,
+                productId: element.productId,
+                sku: element.sku,
+              ),
+            );
+          }
+        },
+        orElse: () {},
+      );
+
+      return hcmProductVariantModel;
+    } else {
+      return [];
+    }
   }
 
   @override
   Future<void> fetchStockReconciliationDetails(
       FetchStockReconDetails fetchStockReconDetails) async {
-    context.read<InventoryReportCompositeBloc>().add(
-        InventoryReportCompositeEvent.loadStockReconciliationData(
-            facilityId: fetchStockReconDetails.facilityId,
-            actionMap: actionMap,
-            productVariantId: fetchStockReconDetails.productVariantId));
+    // context.read<InventoryReportCompositeBloc>().add(
+    //     InventoryReportCompositeEvent.loadStockReconciliationData(
+    //         facilityId: fetchStockReconDetails.facilityId,
+    //         actionMap: actionMap,
+    //         productVariantId: fetchStockReconDetails.productVariantId));
+
+    final Iterable<HcmStockModel> senderData =
+        await StockRemoteRepository().search(
+            HcmStockSearchModel(
+              stock: StockSearchModel(
+                transactionType: transactionType,
+                tenantId: envConfig.variables.tenantId,
+                senderId: senderId,
+                productVariantId: productVariantId,
+                transactionReason: transactionReason,
+              ),
+            ),
+            actionMap);
+
+    final Iterable<HcmStockModel> receiverData =
+        await StockRemoteRepository().search(
+            HcmStockSearchModel(
+              stock: StockSearchModel(
+                transactionType: transactionType,
+                tenantId: envConfig.variables.tenantId,
+                receiverId: receiverId,
+                productVariantId: productVariantId,
+                transactionReason: transactionReason,
+              ),
+            ),
+            actionMap);
   }
 
   @override
@@ -204,5 +218,10 @@ class HCMInventoryBloc extends InventoryListener {
       SaveStockReconciliationModel stockReconciliationModel) {
     // TODO: implement saveStockReconciliationDetails
     throw UnimplementedError();
+  }
+
+  @override
+  void listenToDispose(Function(bool isDisposePackage) disposePackage) {
+    // TODO: implement listenToDispose
   }
 }

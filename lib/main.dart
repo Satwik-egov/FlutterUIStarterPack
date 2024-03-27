@@ -126,6 +126,9 @@ class _MainAppState extends State<MainApp> {
             BlocProvider(create: (_) {
               return InventoryReportCompositeBloc();
             }),
+            // BlocProvider(create: (_) {
+            //   return LocationBloc(location:);
+            // })
           ],
           child: BlocBuilder<AppInitialization, InitState>(
             builder: (context, state) => state.maybeWhen(

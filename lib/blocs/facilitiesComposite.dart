@@ -31,15 +31,11 @@ class FacilityCompositeBloc
           event
               .actionMap); //type '_Map<String, dynamic>' is not a subtype of type 'FutureOr<List<ProjectFacilityModel>>'
 
-      List<FacilityModel> facilities = [];
+      final projectFacility =
+          projectFacilities.map((e) => e.facilityId).toList();
 
-      for (final projectFacility in projectFacilities) {
-        var results = await FacilityRemoteRepository().search(
-            FacilitySearchModel(id: [projectFacility.facilityId]),
-            event.actionMap);
-
-        facilities.addAll(results);
-      }
+      var facilities = await FacilityRemoteRepository()
+          .search(FacilitySearchModel(id: projectFacility), event.actionMap);
 
       _facilityBloc
           .add(FacilityEvent.loadForProjectId(projectId: event.projectId));

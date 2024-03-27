@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inventory_management/blocs/inventory_listener.dart';
 import 'package:inventory_management/blocs/inventory_report.dart';
 import 'package:inventory_management/models/entities/stock.dart';
 import 'package:inventory_management/models/entities/stock_reconciliation.dart';
@@ -80,40 +81,66 @@ class InventoryReportCompositeBloc
     final secureStore = SecureStore();
     final user = await secureStore.getAccessInfo();
 
-    final Iterable<HcmStockModel> data = (receiverId != null
-            ? await StockRemoteRepository().search(
-                HcmStockSearchModel(
-                  stock: StockSearchModel(
-                    transactionType: transactionType,
-                    tenantId: envConfig.variables.tenantId,
-                    receiverId: receiverId,
-                    productVariantId: productVariantId,
-                    transactionReason: transactionReason,
-                  ),
-                ),
-                event.actionMap)
-            : await StockRemoteRepository().search(
-                HcmStockSearchModel(
-                  stock: StockSearchModel(
-                    transactionType: transactionType,
-                    tenantId: envConfig.variables.tenantId,
-                    senderId: senderId,
-                    productVariantId: productVariantId,
-                    transactionReason: transactionReason,
-                  ),
-                ),
-                event.actionMap))
-        .where((element) =>
-            element.auditDetails != null &&
-            element.auditDetails?.createdBy == user?.userRequest?.uuid);
+    // final Iterable<HcmStockModel> data = (receiverId != null
+    //         ? await StockRemoteRepository().search(
+    //             HcmStockSearchModel(
+    //               stock: StockSearchModel(
+    //                 transactionType: transactionType,
+    //                 tenantId: envConfig.variables.tenantId,
+    //                 receiverId: receiverId,
+    //                 productVariantId: productVariantId,
+    //                 transactionReason: transactionReason,
+    //               ),
+    //             ),
+    //             event.actionMap)
+    //         : await StockRemoteRepository().search(
+    //             HcmStockSearchModel(
+    //               stock: StockSearchModel(
+    //                 transactionType: transactionType,
+    //                 tenantId: envConfig.variables.tenantId,
+    //                 senderId: senderId,
+    //                 productVariantId: productVariantId,
+    //                 transactionReason: transactionReason,
+    //               ),
+    //             ),
+    //             event.actionMap))
+    //     .where((element) =>
+    //         element.auditDetails != null &&
+    //         element.auditDetails?.createdBy == user?.userRequest?.uuid);
 
-    final groupedData = data.groupListsBy(
-      (element) => DateFormat('dd MMM yyyy').format(
-        DateTime.fromMillisecondsSinceEpoch(
-          element.auditDetails!.createdTime,
-        ),
-      ),
-    );
+    // final groupedData = data.groupListsBy(
+    //   (element) => DateFormat('dd MMM yyyy').format(
+    //     DateTime.fromMillisecondsSinceEpoch(
+    //       element.auditDetails!.createdTime,
+    //     ),
+    //   ),
+    // );
+
+    // final Iterable<HcmStockModel> senderData =
+    //     await StockRemoteRepository().search(
+    //         HcmStockSearchModel(
+    //           stock: StockSearchModel(
+    //             transactionType: transactionType,
+    //             tenantId: envConfig.variables.tenantId,
+    //             senderId: senderId,
+    //             productVariantId: productVariantId,
+    //             transactionReason: transactionReason,
+    //           ),
+    //         ),
+    //         event.actionMap);
+
+    // final Iterable<HcmStockModel> receiverData =
+    //     await StockRemoteRepository().search(
+    //         HcmStockSearchModel(
+    //           stock: StockSearchModel(
+    //             transactionType: transactionType,
+    //             tenantId: envConfig.variables.tenantId,
+    //             receiverId: receiverId,
+    //             productVariantId: productVariantId,
+    //             transactionReason: transactionReason,
+    //           ),
+    //         ),
+    //         event.actionMap);
 
     _inventoryreportBloc.add(InventoryReportLoadStockDataEvent(
         reportType: reportType,
@@ -152,8 +179,9 @@ class InventoryReportCompositeBloc
     );
 
     _inventoryreportBloc.add(InventoryReportEvent.loadStockReconciliationData(
-        facilityId: event.facilityId,
-        productVariantId: event.productVariantId));
+      facilityId: event.facilityId,
+      productVariantId: event.productVariantId,
+    ));
 
     emit(InventoryReportCompositeStockReconciliationState(
       data: groupedData,
