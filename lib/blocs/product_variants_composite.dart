@@ -41,7 +41,7 @@ class ProductVariantCompositeBloc
       event.actionMap,
     );
 
-    _productVariantBloc.add(ProductVariantEvent.load(query: event.query));
+    // _productVariantBloc.add(ProductVariantEvent.load(query: event.query));
 
     if (variants.isEmpty) {
       emit(const ProductVariantCompositeEmptyState());

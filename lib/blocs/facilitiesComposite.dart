@@ -17,15 +17,12 @@ class FacilityCompositeBloc
     on(_handleLoadFacilitiesForProjectId);
   }
 
-  final _facilityBloc = FacilityBloc(const FacilityEmptyState());
-
   Future<void> _handleLoadFacilitiesForProjectId(
     FacilityCompositeLoadForProjectEvent event,
     FacilityStateEmitter emit,
   ) async {
     try {
       emit(const FacilityCompositeLoadingState());
-
       final projectFacilities = await ProjectFacilityRemoteRepository().search(
           ProjectFacilitySearchModel(projectId: [event.projectId]),
           event
@@ -37,9 +34,9 @@ class FacilityCompositeBloc
       var facilities = await FacilityRemoteRepository()
           .search(FacilitySearchModel(id: projectFacility), event.actionMap);
 
-      _facilityBloc
-          .add(FacilityEvent.loadForProjectId(projectId: event.projectId));
-
+      // _facilityBloc
+      //     .add(FacilityEvent.loadForProjectId(projectId: event.projectId));
+      print(facilities);
       if (facilities.isEmpty) {
         emit(const FacilityCompositeEmptyState());
       } else {

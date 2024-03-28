@@ -22,63 +22,98 @@ class HomeScreen extends LocalizedStatefulWidget {
 class _HomeScreenState extends LocalizedState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppInitialization, InitState>(builder: (context, state) {
-      final actionMap = state.entityActionMapping;
-      return BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) => state.maybeWhen(
-                orElse: () => const CircularProgressIndicator(),
-                authenticated: (accesstoken, refreshtoken, userRequest) =>
-                    BlocBuilder<UserBloc, UserState>(
-                        builder: (context, currentUserState) {
-                  context.read<UserBloc>().add(UserEvent.searchUser(
-                      uuid: userRequest!.uuid, actionMap: actionMap));
-                  if (currentUserState is UserUserState) {
-                    final user = currentUserState.userModel;
-                    return BlocBuilder<LocalizationBloc, LocalizationState>(
-                        builder: (context, state) {
-                      return Scaffold(
-                        appBar: AppBar(),
-                        body: Column(
-                          children: [
-                            DigitIconButton(
-                              icon: Icons.fingerprint,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ManageAttendancePage(
-                                              projectId:
-                                                  "", //TO-DO change this line
-                                              userId: "",
-                                              appVersion: '1.3',
-                                              attendanceListeners:
-                                                  HCMAttendanceBloc(
-                                                actionMap: actionMap,
-                                                context: context,
-                                              ),
-                                            )));
-                              },
-                            ),
-                            DigitIconButton(
-                                icon: Icons.book,
-                                iconText: 'Stock',
-                                onPressed: () => AutoRouter.of(context)
-                                    .pushNamed('home/projects')),
-                            const Text(
-                                'Text below to see if translation occurs'),
-                            Text(localizations
-                                .translate(i18.common.coreCommonContinue))
-                          ],
-                        ),
-                        drawer: Drawer(child: SideBar()),
-                      );
-                    });
-                  } else {
-                    return Text('User not fetched');
-                  }
-                }),
-              ));
-    });
+    return PopScope(
+      canPop: true,
+      onPopInvoked: _alternateLogout,
+      child:
+          BlocBuilder<AppInitialization, InitState>(builder: (context, state) {
+        final actionMap = state.entityActionMapping;
+        return BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) => state.maybeWhen(
+                  orElse: () => const CircularProgressIndicator(),
+                  authenticated: (accesstoken, refreshtoken, userRequest) =>
+                      BlocBuilder<UserBloc, UserState>(
+                          builder: (context, currentUserState) {
+                    context.read<UserBloc>().add(UserEvent.searchUser(
+                        uuid: userRequest!.uuid, actionMap: actionMap));
+                    if (currentUserState is UserUserState) {
+                      final user = currentUserState.userModel;
+                      return BlocBuilder<LocalizationBloc, LocalizationState>(
+                          builder: (context, state) {
+                        return Scaffold(
+                          appBar: AppBar(),
+                          body: Column(
+                            children: [
+                              DigitIconButton(
+                                icon: Icons.fingerprint,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ManageAttendancePage(
+                                                projectId:
+                                                    "", //TO-DO change this line
+                                                userId: "",
+                                                appVersion: '1.3',
+                                                attendanceListeners:
+                                                    HCMAttendanceBloc(
+                                                  actionMap: actionMap,
+                                                  context: context,
+                                                ),
+                                              )));
+                                },
+                              ),
+                              DigitIconButton(
+                                  icon: Icons.book,
+                                  iconText: 'Stock',
+                                  onPressed: () => AutoRouter.of(context)
+                                      .pushNamed('home/projects')),
+                              const Text(
+                                  'Text below to see if translation occurs'),
+                              Text(localizations
+                                  .translate(i18.common.coreCommonContinue))
+                            ],
+                          ),
+                          drawer: Drawer(child: SideBar()),
+                        );
+                      });
+                    } else {
+                      return Text('User not fetched');
+                    }
+                  }),
+                ));
+      }),
+    );
+  }
+
+  Future<bool> _alternateLogout(bool didPop) async {
+    bool confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure'),
+          content: Row(
+            children: [
+              ElevatedButton(
+                child: const Text('Yes'),
+                onPressed: () {
+                  context.read<AuthBloc>().add(const AuthEvent.logout());
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              ElevatedButton(
+                child: const Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    return confirmed ?? false;
   }
 }

@@ -42,4 +42,19 @@ class StockReconciliationRemoteRepository {
       rethrow;
     }
   }
+
+  FutureOr<void> create(HcmStockReconciliationModel body,
+      Map<DataModelType, Map<ApiOperation, String>>? actionMap) async {
+    try {
+      String? searchPath =
+          actionMap![DataModelType.stockReconciliation]![ApiOperation.create];
+
+      Response response = await dio.post(searchPath!,
+          queryParameters: {"tenantId": envConfig.variables.tenantId},
+          data: {"StockReconciliation": body.toMap()});
+    } catch (err) {
+      print(err);
+      rethrow;
+    }
+  }
 }

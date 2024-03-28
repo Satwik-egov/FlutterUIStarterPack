@@ -16,6 +16,7 @@ class SelectLanguageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
+        drawer: null,
         backgroundColor: Theme.of(context).colorScheme.primary,
         body: context.read<AppInitialization>().state.maybeWhen(
             orElse: () => const CircularProgressIndicator(),

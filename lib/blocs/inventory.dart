@@ -42,9 +42,7 @@ class HCMInventoryBloc extends InventoryListener {
     required this.projectId,
   });
 
-  // late Function(List<InventoryFacilityModel> facilities) _facilitiesLoaded;
-  // late Function(List<ProductVariantModel> productVariants)
-  //     _productVariantsLoaded;
+  late Function(bool) _onTriggerDetected = (bool) {};
 
   //ignore
   @override
@@ -52,40 +50,46 @@ class HCMInventoryBloc extends InventoryListener {
 
   @override
   Future<List<InventoryFacilityModel>> fetchFacilitiesForProjectId() async {
-    if (roles!
-        .map((e) => e.code == 'DISTRICT_SUPERVISOR')
-        .toList()
-        .isNotEmpty) {
-      final facilitiesBloc = context.read<FacilityCompositeBloc>()
-        ..add(FacilityCompositeLoadForProjectEvent(
-            projectId: projectId!, actionMap: actionMap));
+    try {
+      if (roles!
+          .map((e) => e.code == 'DISTRICT_SUPERVISOR')
+          .toList()
+          .isNotEmpty) {
+        final facilitiesBloc = context.read<FacilityCompositeBloc>()
+          ..add(FacilityCompositeLoadForProjectEvent(
+              projectId: projectId!, actionMap: actionMap));
 
-      final facilitiesState = await facilitiesBloc.stream.firstWhere((state) =>
-          state.maybeWhen(orElse: () => false, fetched: (facilities) => true));
+        final facilitiesState = await facilitiesBloc.stream.firstWhere(
+            (state) => state.maybeWhen(
+                orElse: () => false, fetched: (facilities) => true));
 
-      List<InventoryFacilityModel> hcmInventoryFacilityModel = [];
-      facilitiesState.maybeWhen(
-        fetched: (facilities) {
-          for (var element in facilities) {
-            hcmInventoryFacilityModel.add(
-              InventoryFacilityModel(
-                id: element.id,
-                isPermanent: element.isPermanent,
-                nonRecoverableError: element.nonRecoverableError,
-                rowVersion: element.rowVersion,
-                storageCapacity: element.storageCapacity,
-                tenantId: element.tenantId,
-                usage: element.usage,
-              ),
-            );
-          }
-        },
-        orElse: () {},
-      );
+        List<InventoryFacilityModel> hcmInventoryFacilityModel = [];
+        facilitiesState.maybeWhen(
+          fetched: (facilities) {
+            for (var element in facilities) {
+              hcmInventoryFacilityModel.add(
+                InventoryFacilityModel(
+                  id: element.id,
+                  isPermanent: element.isPermanent,
+                  nonRecoverableError: element.nonRecoverableError,
+                  rowVersion: element.rowVersion,
+                  storageCapacity: element.storageCapacity,
+                  tenantId: element.tenantId,
+                  usage: element.usage,
+                ),
+              );
+            }
+          },
+          orElse: () {},
+        );
 
-      return hcmInventoryFacilityModel;
-    } else {
-      return [];
+        return hcmInventoryFacilityModel;
+      } else {
+        return [];
+      }
+    } catch (err) {
+      print(err);
+      rethrow;
     }
   }
 
@@ -336,13 +340,41 @@ class HCMInventoryBloc extends InventoryListener {
 
   @override
   Future<void> saveStockReconciliationDetails(
-      SaveStockReconciliationModel stockReconciliationModel) {
-    // TODO: implement saveStockReconciliationDetails
-    throw UnimplementedError();
+      SaveStockReconciliationModel stockReconciliationModel) async {
+    await StockReconciliationRemoteRepository().create(
+        HcmStockReconciliationModel(
+          // stockReconciliation:
+          //     stockReconciliationModel.stockReconciliationModel.copyWith(
+          tenantId: envConfig.variables.tenantId,
+          referenceId: projectId,
+          referenceIdType: 'PROJECT',
+          clientReferenceId: stockReconciliationModel
+              .stockReconciliationModel.clientReferenceId,
+          dateOfReconciliation: stockReconciliationModel
+              .stockReconciliationModel.dateOfReconciliation,
+          additionalFields: StockReconciliationAdditionalFields(
+            version: 1,
+            fields: getAdditionalData(stockReconciliationModel.additionalData),
+          ),
+
+          // auditDetails: AuditDetails(
+          //   createdBy: context!.loggedInUserUuid,
+          //   createdTime: context!.millisecondsSinceEpoch(),
+          // ),
+          // clientAuditDetails: ClientAuditDetails(
+          //   createdBy: context!.loggedInUserUuid,
+          //   createdTime: context!.millisecondsSinceEpoch(),
+          //   lastModifiedBy: context!.loggedInUserUuid,
+          //   lastModifiedTime: context!.millisecondsSinceEpoch(),
+          // ),
+        ),
+        actionMap);
+
+    stockReconciliationModel.isStockReconciliationSaved(true);
   }
 
   @override
   void listenToDispose(Function(bool isDisposePackage) disposePackage) {
-    // TODO: implement listenToDispose
+    _onTriggerDetected = disposePackage;
   }
 }
